@@ -5,8 +5,12 @@
         "outDir": "dist",
         "rootDir": "src",
         "esModuleInterop": true,
-        "strict": true
+        "strict": true,
+        "allowJs": true
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx"],
-    "exclude": ["node_modules", "dist"]
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*", "src/**/*.js"],
+    "exclude": ["node_modules", "dist"],
+    "scripts": {
+        "start": "node dist/index.js"
+    }
 }
