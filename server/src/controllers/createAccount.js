@@ -37,6 +37,17 @@ app.post('/create-account', (req, res) => {
     }
 });
 
+exports.createAccount = (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ message: 'Bad Request' });
+    }
+
+    // Lägg till logik för att skapa ett konto här
+    res.status(201).json({ message: 'Account created successfully!' });
+};
+
 app.listen(8080, () => {
     console.log('Server is running on http://localhost:8080');
 });

@@ -1,8 +1,7 @@
-const express = require('express');
 import { Router } from 'express';
-
 const createAccountController = require('../controllers/createAccount');
 const loginController = require('../controllers/login');
+
 const router = Router();
 
 // Skapa konto

@@ -1,1 +1,1 @@
-{"root":["./src/index.ts"],"version":"5.8.3"}
+{"root":["./src/index.ts","./src/routes/accountroutes.ts","./src/routes/chatroutes.ts","./src/controllers/chat.js","./src/controllers/createaccount.js","./src/controllers/login.js"],"version":"5.8.3"}
