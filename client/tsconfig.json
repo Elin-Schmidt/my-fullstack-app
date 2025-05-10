@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "target": "ES6", // Målversion för JavaScript
+        "lib": ["DOM", "DOM.Iterable", "ES2020"], // Vilka bibliotek som ska inkluderas
         "module": "ESNext", // Modulsystemet som används
         "moduleResolution": "node", // Hur moduler ska lösas (typiskt för Node.js)
         "outDir": "./dist", // Var den komplierade koden ska placeras
