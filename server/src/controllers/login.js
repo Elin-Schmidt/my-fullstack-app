@@ -28,7 +28,3 @@ app.post('/login', (req, res) => {
         res.status(401).json({ message: 'Unauthorized' });
     }
 });
-
-app.listen(8080, () => {
-    console.log('Server is running on http://localhost:8080');
-});

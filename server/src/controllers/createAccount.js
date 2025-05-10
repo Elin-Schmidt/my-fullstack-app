@@ -47,7 +47,3 @@ exports.createAccount = (req, res) => {
     // Lägg till logik för att skapa ett konto här
     res.status(201).json({ message: 'Account created successfully!' });
 };
-
-app.listen(8080, () => {
-    console.log('Server is running on http://localhost:8080');
-});

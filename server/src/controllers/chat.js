@@ -90,10 +90,6 @@ app.post('/messages', upload.single('image'), (req, res) => {
     res.redirect('/messages');
 });
 
-app.listen(8080, () => {
-    console.log('Server is running on http://localhost:8080');
-});
-
 exports.getMessages = (req, res) => {
     res.send('Get messages');
 };
