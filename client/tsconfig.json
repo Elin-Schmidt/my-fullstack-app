@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "target": "ES6", // Målversion för JavaScript
+        "module": "ESNext", // Modulsystemet som används
+        "moduleResolution": "node", // Hur moduler ska lösas (typiskt för Node.js)
+        "outDir": "./dist", // Var den komplierade koden ska placeras
+        "rootDir": "./src", // Källkoden för TypeScript (där dina ts-filer finns)
+        "strict": true, // Aktivera strikt typkontroll
+        "esModuleInterop": true, // Möjliggör kompatibilitet med CommonJS-moduler
+        "skipLibCheck": true, // Hoppa över kontroll av deklarationsfiler
+        "forceConsistentCasingInFileNames": true, // Se till att filnamn har konsekvent versalisering
+        "resolveJsonModule": true, // Tillåt att importera JSON-filer
+        "jsx": "react-jsx", // Om du använder React, ställ in JSX-syntax
+        "baseUrl": ".", // Sätt baseUrl till rotmappen för att göra importvägar enklare
+        "paths": {
+            "@/*": ["src/*"] // Gör det möjligt att använda '@' för enklare imports
+        }
+    },
+    "include": [
+        "src/**/*.ts", // Inkludera alla .ts filer i src-mappen
+        "src/**/*.tsx" // Om du använder React, inkludera även .tsx filer
+    ],
+    "exclude": [
+        "node_modules", // Uteslut node_modules mappen
+        "dist" // Uteslut dist-mappen där komplierade filer hamnar
+    ]
+}
