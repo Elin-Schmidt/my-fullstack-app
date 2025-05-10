@@ -1,0 +1,23 @@
+# Node modules (backend)
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# SQLite database files
+*.sqlite
+*.sqlite3
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Compiled output (om du t.ex. transpilerar med TypeScript i backend)
+dist/
+build/
