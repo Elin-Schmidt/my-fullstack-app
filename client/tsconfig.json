@@ -1,28 +1,30 @@
 {
+    "extends": "expo/tsconfig.base",
     "compilerOptions": {
-        "target": "ES6", // Målversion för JavaScript
-        "lib": ["DOM", "DOM.Iterable", "ES2020"], // Vilka bibliotek som ska inkluderas
-        "module": "ESNext", // Modulsystemet som används
-        "moduleResolution": "node", // Hur moduler ska lösas (typiskt för Node.js)
-        "outDir": "./dist", // Var den komplierade koden ska placeras
-        "rootDir": "./src", // Källkoden för TypeScript (där dina ts-filer finns)
-        "strict": true, // Aktivera strikt typkontroll
-        "esModuleInterop": true, // Möjliggör kompatibilitet med CommonJS-moduler
-        "skipLibCheck": true, // Hoppa över kontroll av deklarationsfiler
-        "forceConsistentCasingInFileNames": true, // Se till att filnamn har konsekvent versalisering
-        "resolveJsonModule": true, // Tillåt att importera JSON-filer
-        "jsx": "react-jsx", // Om du använder React, ställ in JSX-syntax
-        "baseUrl": ".", // Sätt baseUrl till rotmappen för att göra importvägar enklare
+        "target": "ESNext",
+        "useDefineForClassFields": true,
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "allowJs": false,
+        "skipLibCheck": true,
+        "esModuleInterop": false,
+        "allowSyntheticDefaultImports": true,
+        "allowImportingTsExtensions": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "node16",
+        "moduleResolution": "node16",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "baseUrl": ".",
         "paths": {
-            "@/*": ["src/*"] // Gör det möjligt att använda '@' för enklare imports
-        }
+            "@/*": ["src/*"],
+            "@components/*": ["src/components/*"],
+            "@utils/*": ["src/utils/*"]
+        },
+        "rootDir": "."
     },
-    "include": [
-        "src/**/*.ts", // Inkludera alla .ts filer i src-mappen
-        "src/**/*.tsx" // Om du använder React, inkludera även .tsx filer
-    ],
-    "exclude": [
-        "node_modules", // Uteslut node_modules mappen
-        "dist" // Uteslut dist-mappen där komplierade filer hamnar
-    ]
+    "include": ["src", "App.tsx"],
+    "exclude": ["node_modules", "dist"]
 }

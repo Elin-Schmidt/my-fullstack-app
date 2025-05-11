@@ -1,24 +1,13 @@
+const express = require('express');
+const app = express();
+const authRoutes = require('./routes/auth');
 require('dotenv').config();
 
-import express from 'express';
-import cors from 'cors';
-import chatRoutes from './routes/chatRoutes';
-import accountRoutes from './routes/accountRoutes';
+app.use(express.json()); // Viktigt för att kunna läsa JSON-kroppar från requesten
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+app.use('/api', authRoutes); // Alla autentisering-related routes börjar med /api
 
-app.use(cors());
-app.use(express.json());
-
-app.get('/', (_req: any, res: { send: (arg0: string) => void }) => {
-    res.send('Servern är igång!');
-});
-
-// Prefixa med /api
-app.use('/api/chat', chatRoutes);
-app.use('/api/account', accountRoutes);
-
+const PORT = process.env.serverPORT || 8000;
 app.listen(PORT, () => {
-    console.log(`Servern körs på http://localhost:${PORT}`);
+    console.log(`Servern körs på port ${PORT}`);
 });

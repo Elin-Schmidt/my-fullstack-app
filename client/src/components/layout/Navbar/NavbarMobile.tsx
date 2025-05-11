@@ -2,10 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { RxAvatar } from 'react-icons/rx';
 import { FiClock } from 'react-icons/fi';
-import { useAppContext } from '../../../context/NavbarHandeler'; // Importera kontexten
+import { useAppContext } from '../../../context/NavbarHandeler.tsx'; // Importera kontexten
 import styles from './NavbarMobile.module.css';
-import DigitalClock from '../DigitalClock';
-
+import DigitalClock from '../DigitalClock.tsx'; // Importera DigitalClock komponenten
 function NavbarMobile() {
     // Använd kontexten istället för lokal state
     const { menuOpen, toggleMenu } = useAppContext(); // Hämtar menuOpen och toggleMenu från kontexten

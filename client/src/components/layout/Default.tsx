@@ -1,7 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useState } from 'react';
 import reactLogo from '../../assets/react.svg';
-import viteLogo from '/vite.svg';
+import viteLogo from './client/src/assets/vite.svg';
+
 
 function Default() {
     const [count, setCount] = useState(0);
@@ -26,7 +27,7 @@ function Default() {
                     count is {count}
                 </button>
                 <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
+                    Edit <code>src/App.js</code> and save to test HMR
                 </p>
             </div>
             <p className="read-the-docs">
