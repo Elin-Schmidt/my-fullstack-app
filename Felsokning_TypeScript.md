@@ -63,8 +63,6 @@
 -   För att kunna importera .ts/.tsx-filer med filändelse direkt:
     "allowImportingTsExtensions": true
 
-Tidsförlopp: 9 timmar
+Tidsförlopp: 12 timmar
 
-Mitt slutgiltiga beslut blev att ta bort expo och bara köra via vite. Det jag har lärt mig är hur icke kompatibel expo är med vite för att de är byggda för olika ekosystem och har fundamentalt olika sätt att hantera bundling, runtime-miljöer och utvecklingsservrar då Vite är designad för snabb utveckling med ESM (ECMAScript Modules) och modern webbläsarsupport medan Expo är ett ramverk ovanpå React Native för att bygga appar för iOS, Android, men inte för vanlig webbutveckling.. Skulle jag vilja köra appen med expo så får jag kopiera projektet och avinstallera vite.
-
-Detta skulle kunna bli nästa utmaning för mig dock.
+Efter att ha suttit med felsökning av mitt fullstack-projekt i över 12 timmar har jag lärt mig otroligt mycket, särskilt om kompatibiliteten mellan olika verktyg. Jag har nu en mycket tydligare förståelse för varför Vite och Expo inte fungerar bra tillsammans. Under processen insåg jag att valet av verktyg till stor del handlar om vilket mål man har med projektet: om jag vill skapa en webbapplikation är Vite ett utmärkt verktyg, men om jag istället vill bygga en mobilapplikation för exempelvis publicering på Google Play Store, då är det React Native tillsammans med Expo som gäller. Den här lärdomen har gjort att jag kunnat ta ett steg tillbaka, tänka om och anpassa mitt projekt efter rätt förutsättningar.
