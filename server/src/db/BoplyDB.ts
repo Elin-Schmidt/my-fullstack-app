@@ -4,9 +4,10 @@ dotenv.config();
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false // Render kräver SSL
-    }
+    ssl:
+        process.env.NODE_ENV === 'production'
+            ? { rejectUnauthorized: false }
+            : false
 });
 
 // Lägg till en enkel testfråga för att se om anslutningen fungerar
