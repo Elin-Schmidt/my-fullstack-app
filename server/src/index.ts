@@ -9,7 +9,10 @@ app.use(express.json());
 
 app.use(
     cors({
-        origin: 'http://localhost:5173', // Byt ut mot din frontend-URL
+        origin:
+            process.env.NODE_ENV === 'production'
+                ? ['https://emibop-dxqe.onrender.com'] // Render frontend-URL
+                : ['http://localhost:5173'], // Lokal frontend-URL
         methods: ['GET', 'POST', 'PUT', 'DELETE'], // Tillåtna metoder
         credentials: true // Om du skickar cookies eller autentisering
     })
