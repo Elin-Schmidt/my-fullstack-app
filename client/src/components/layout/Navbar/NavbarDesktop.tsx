@@ -2,14 +2,14 @@ import { useRef, useEffect, useState } from 'react';
 import { RxAvatar } from 'react-icons/rx';
 import { FaTimes } from 'react-icons/fa';
 import { FiClock, FiSearch } from 'react-icons/fi';
-import { useAppContext } from '../../../context/NavbarHandeler'; // Importera kontexten
+import { useNavbarContext } from '../../../context/NavbarHandeler.tsx';
 import styles from './NavbarDesktop.module.css';
-import DigitalClock from '../DigitalClock';
+import DigitalClock from '../DigitalClock.tsx';
 import { Link } from 'react-router-dom';
 
 function NavbarDesktop() {
     // Använd kontexten istället för lokal state
-    const { menuOpen, toggleMenu } = useAppContext(); // Hämtar menuOpen och toggleMenu från kontexten
+    const { menuOpen, toggleMenu } = useNavbarContext(); // Hämtar menuOpen och toggleMenu från kontexten
     const [clockOpen, setClockOpen] = useState<boolean>(false);
 
     // Ref-typer
