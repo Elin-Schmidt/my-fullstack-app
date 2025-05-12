@@ -13,9 +13,6 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const useAppContext = (): AppContextType => {
     const context = useContext(AppContext);
     if (!context) {
-        console.error(
-            'useAppContext måste användas inom en AppContext.Provider'
-        );
         throw new Error(
             'useAppContext måste användas inom en AppContext.Provider'
         );

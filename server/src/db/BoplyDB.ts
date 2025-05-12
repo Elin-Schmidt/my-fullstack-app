@@ -18,5 +18,14 @@ pool.query('SELECT NOW()', (err, res) => {
     }
 });
 
+// Lägg till en fråga för att hämta alla användare
+pool.query('SELECT * FROM users', (err, res) => {
+    if (err) {
+        console.error('Database query error:', err);
+    } else {
+        console.log('Users in database:', res.rows);
+    }
+});
+
 // Exportera poolen
 export default pool;

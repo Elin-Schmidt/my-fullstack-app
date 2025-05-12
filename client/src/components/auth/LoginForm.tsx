@@ -15,30 +15,33 @@ const LoginForm = () => {
         e.preventDefault();
         setError('');
 
+        console.log('Inloggningsuppgifter:', { email, password });
+
         try {
-            const response = await axios.post('/api/login', {
-                email,
-                password
-            });
+            const response = await axios.post(
+                'http://localhost:5000/api/auth/login',
+                {
+                    email,
+                    password
+                }
+            );
 
             if (response.status === 200) {
-                // Här förutsätter vi att ditt svar innehåller en JWT-token och användardata
+                console.log('Login Successful'); // Logga vid lyckad inloggning
                 const { token, user } = response.data;
 
-                // ✅ Spara token och användardata i localStorage
-                localStorage.setItem('token', token); // Spara token
-                localStorage.setItem('user', JSON.stringify(user)); // Spara användardata
+                localStorage.setItem('token', token);
+                localStorage.setItem('user', JSON.stringify(user));
 
-                // Uppdatera login-status i context
                 setLoginStatus(true);
-
-                // Navigera till startsidan eller annan sida efter lyckad inloggning
-                navigate('/'); // Använd rätt URL som du vill navigera till
+                navigate('/');
             }
         } catch (err: any) {
             if (err.response?.status === 401) {
+                console.log('Login Failed'); // Logga vid misslyckad inloggning
                 setError('Fel e-post eller lösenord.');
             } else {
+                console.log('Login Failed: Server error'); // Logga vid serverfel
                 setError('Ett fel uppstod. Försök igen senare.');
             }
         }
