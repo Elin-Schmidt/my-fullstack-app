@@ -1,16 +1,19 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { useAppContext } from './LoginHandeler.tsx';
 
 // Definiera typen för kontextens värde
-interface AppContextType {
+interface useNavbarContextType {
     menuOpen: boolean;
     toggleMenu: () => void;
 }
 
 // Skapa kontexten
-const AppContext = createContext<AppContextType | undefined>(undefined);
+const NavbarContext = createContext<useNavbarContextType | undefined>(
+    undefined
+);
 
 // Skapa en provider-komponent
-export const AppProvider: React.FC<{ children: ReactNode }> = ({
+export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
     children
 }) => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -20,17 +23,22 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     };
 
     return (
-        <AppContext.Provider value={{ menuOpen, toggleMenu }}>
+        <NavbarContext.Provider value={{ menuOpen, toggleMenu }}>
             {children}
-        </AppContext.Provider>
+        </NavbarContext.Provider>
     );
 };
 
 // Anpassad hook för att använda kontexten
-export const useAppContext = (): AppContextType => {
-    const context = useContext(AppContext);
+export const useNavbarContext = () => {
+    const context = useContext(NavbarContext);
     if (!context) {
-        throw new Error('useAppContext must be used within an AppProvider');
+        console.error(
+            'useNavbarContext måste användas inom en NavbarContext.Provider'
+        );
+        throw new Error(
+            'useNavbarContext måste användas inom en NavbarContext.Provider'
+        );
     }
     return context;
 };

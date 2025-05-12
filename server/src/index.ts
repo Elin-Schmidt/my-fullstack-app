@@ -1,11 +1,12 @@
-const express = require('express');
-const app = express();
-const authRoutes = require('./routes/auth');
-require('dotenv').config();
-console.log('Server PORT:', process.env.PORT);
-app.use(express.json()); // Viktigt för att kunna läsa JSON-kroppar från requesten
+import express from 'express';
+import dotenv from 'dotenv';
+import authRoutes from './routes/auth'; // auth.ts
+dotenv.config();
 
-app.use('/api', authRoutes); // Alla autentisering-related routes börjar med /api
+const app = express();
+app.use(express.json());
+
+app.use('/api', authRoutes);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppRoutes from './src/routes/AppRoutes.tsx';
 import '../client/src/index.css';
-import { AppProvider } from './src/context/NavbarHandeler.tsx';
+import { AppProvider } from './src/context/LoginHandeler.tsx';
+import { NavbarProvider } from './src/context/NavbarHandeler.tsx';
 import NavbarDesktop from './src/components/layout/Navbar/NavbarDesktop.tsx';
 import NavbarMobile from './src/components/layout/Navbar/NavbarMobile.tsx';
 
@@ -23,10 +24,12 @@ const App = () => {
 
     return (
         <AppProvider>
-            <Router>
-                {isMobile ? <NavbarMobile /> : <NavbarDesktop />}
-                <AppRoutes />
-            </Router>
+            <NavbarProvider>
+                <Router>
+                    {isMobile ? <NavbarMobile /> : <NavbarDesktop />}
+                    <AppRoutes />
+                </Router>
+            </NavbarProvider>
         </AppProvider>
     );
 };

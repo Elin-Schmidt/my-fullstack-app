@@ -2,28 +2,29 @@ import { useEffect, useRef, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { RxAvatar } from 'react-icons/rx';
 import { FiClock } from 'react-icons/fi';
-import { useAppContext } from '../../../context/NavbarHandeler.tsx'; // Importera kontexten
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '@/context/LoginHandeler.tsx';
+import { useNavbarContext } from '../../../context/NavbarHandeler.tsx';
 import styles from './NavbarMobile.module.css';
-import DigitalClock from '../DigitalClock.tsx'; // Importera DigitalClock komponenten
+import DigitalClock from '../DigitalClock.tsx';
+
 function NavbarMobile() {
-    // Använd kontexten istället för lokal state
-    const { menuOpen, toggleMenu } = useAppContext(); // Hämtar menuOpen och toggleMenu från kontexten
+    const { menuOpen, toggleMenu } = useNavbarContext();
+    const { isLoggedIn } = useAuthContext();
     const [clockOpen, setClockOpen] = useState<boolean>(false);
 
-    // Ref-typer för att hantera DOM-elementen
     const menuRef = useRef<HTMLDivElement | null>(null);
     const clockRef = useRef<HTMLDivElement | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            // Kontrollera om klicket är utanför menyn
             if (
                 menuRef.current &&
                 !menuRef.current.contains(event.target as Node)
             ) {
-                toggleMenu(); // Använd toggleMenu från kontexten
+                toggleMenu();
             }
-            // Kontrollera om klicket är utanför klockan
             if (
                 clockRef.current &&
                 !clockRef.current.contains(event.target as Node)
@@ -37,6 +38,14 @@ function NavbarMobile() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [toggleMenu]);
+
+    const handleProfileClick = () => {
+        if (isLoggedIn) {
+            toggleMenu();
+        } else {
+            navigate('/login'); // Skicka till login-sida om man inte är inloggad
+        }
+    };
 
     return (
         <nav className={styles['navbar-mobile']}>
@@ -64,14 +73,15 @@ function NavbarMobile() {
             </div>
 
             <div className={styles.profileContainer}>
-                <button className={styles.profile} onClick={toggleMenu}>
-                    {menuOpen ? <FaTimes /> : <RxAvatar />}
+                <button className={styles.profile} onClick={handleProfileClick}>
+                    {menuOpen && isLoggedIn ? <FaTimes /> : <RxAvatar />}
                 </button>
-                {menuOpen && (
+
+                {menuOpen && isLoggedIn && (
                     <>
                         <div
                             className={styles.overlay}
-                            onClick={() => toggleMenu()} // Stäng menyn när overlay klickas
+                            onClick={toggleMenu}
                         ></div>
                         <div
                             ref={menuRef}
