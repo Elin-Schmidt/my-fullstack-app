@@ -19,6 +19,11 @@ app.use(
     })
 );
 
+app.use((req, res, next) => {
+    console.log(`Incoming request: ${req.method} ${req.url}`);
+    next();
+});
+
 app.use(
     (
         req: express.Request,
@@ -32,16 +37,6 @@ app.use(
 );
 
 app.use('/api/auth', authRoutes);
-
-app.use(express.static(path.resolve(__dirname, '../../client/dist')));
-
-app.get('*', (req, res) => {
-    if (!req.url.startsWith('/api')) {
-        res.sendFile(path.resolve(__dirname, '../../client/dist/index.html'));
-    } else {
-        res.status(404).send('API route not found');
-    }
-});
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
