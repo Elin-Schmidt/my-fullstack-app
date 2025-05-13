@@ -34,7 +34,7 @@ const LoginForm = () => {
                 localStorage.setItem('user', JSON.stringify(user));
 
                 setLoginStatus(true);
-                navigate('/');
+                navigate('/personal-space'); // Navigera till personlig sida
             }
         } catch (err: any) {
             if (err.response?.status === 401) {
