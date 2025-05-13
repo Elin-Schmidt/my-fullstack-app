@@ -5,12 +5,13 @@ import { FiClock, FiSearch } from 'react-icons/fi';
 import { useNavbarContext } from '../../../context/NavbarHandeler.tsx';
 import styles from './NavbarDesktop.module.css';
 import DigitalClock from '../DigitalClock.tsx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function NavbarDesktop() {
     // Använd kontexten istället för lokal state
     const { menuOpen, toggleMenu } = useNavbarContext(); // Hämtar menuOpen och toggleMenu från kontexten
     const [clockOpen, setClockOpen] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     // Ref-typer
     const menuRef = useRef<HTMLDivElement | null>(null);
@@ -30,6 +31,10 @@ function NavbarDesktop() {
         ) {
             setClockOpen(false);
         }
+    };
+
+    const handleProfileClick = () => {
+        navigate('/auth'); // Navigera till auth-sidan
     };
 
     // Lägg till event listener vid mount och ta bort den vid unmount
@@ -76,7 +81,7 @@ function NavbarDesktop() {
                         className={styles.searchBar}
                     />
                 </div>
-                <button className={styles.profile} onClick={toggleMenu}>
+                <button className={styles.profile} onClick={handleProfileClick}>
                     {menuOpen ? <FaTimes /> : <RxAvatar />}
                 </button>
                 {menuOpen && (

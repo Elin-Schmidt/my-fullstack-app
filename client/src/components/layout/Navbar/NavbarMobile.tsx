@@ -40,11 +40,7 @@ function NavbarMobile() {
     }, [toggleMenu]);
 
     const handleProfileClick = () => {
-        if (isLoggedIn) {
-            toggleMenu();
-        } else {
-            navigate('/login'); // Skicka till login-sida om man inte är inloggad
-        }
+        navigate('/auth'); // Navigera till auth-sidan
     };
 
     return (
