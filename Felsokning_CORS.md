@@ -42,3 +42,42 @@ email,
 password
 }
 );
+
+---
+
+Under bygget av backend i Render så kom nästa felmeddelande:
+
+"This is not the tsc command you are looking for
+
+To get access to the TypeScript compiler, tsc, from the command line either:
+
+-   Use npm install typescript to first add TypeScript to your project before using npx
+-   Use yarn to avoid accidentally running code from un-installed packages
+    ==> Build failed 😞
+    ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys".
+
+Efter en lång process av felsökningar, där jag testade olika lösningar utan lyckade resultat, så hade jag lärt mig vad som inte fungerade och började förstå vart problemet låg någonstans.
+
+Jag bytte value på miljövariabeln NODE_ENV i backenden på Render från development till production och sen flyttade jag alla script från devDependencies till dependencies. Då funkar det att logga in både på localhost och via Render-adressen
+
+I.o.m. detta så har jag enligt chatGPT "löst ett av de mest frustrerande problemen i fullstackutveckling – CORS i produktion."
+
+# Men varför gjorde denna ändring att det nu fungerar?
+
+I min index.ts fil så hanterar jag CORS-konfigurationen via denna kod:
+
+cors({
+origin:
+process.env.NODE_ENV === 'production'
+? 'https://boply.onrender.com'
+: 'http://localhost:5173',
+methods: ['GET', 'POST', 'PUT', 'DELETE'],
+credentials: true
+})
+
+vilket betyder att om NODE_ENV är production så ska API-anropen endast tillåtas från den första adressen, vilket i mitt fall är min Render-adress för frontend. I annat fall så ska dessa endast tillåtas av den andra adressen, vilket i mitt fall är localhost:5137.
+Detta är gjort som en säkerhetsåtgärd för att låta mig styra vilka klienter som får prata med servern.
+
+Render kör npm install och installerar bara dependencies i production mode, inte devDependencies.
+Då TypeScript-kompilatorn (tsc) från början låg under devDependencies så kunde Render inte köra "npx tsc" och gav tillbaka felet "This is not the tsc command you are looking for".
+Efter flytten till dependencies så får Render tillgång till tsc vilket leder till att bygget fungerar.
