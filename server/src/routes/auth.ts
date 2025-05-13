@@ -7,6 +7,8 @@ import db from '../db/BoplyDB'; // Justerat till default-import
 
 dotenv.config();
 
+console.log('Ansluter till databasen:', process.env.DATABASE_URL);
+
 const router: Router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_key';
 
@@ -114,6 +116,8 @@ router.post(
             profile_picture
         } = req.body;
 
+        console.log('Mottagna registreringsuppgifter:', req.body);
+
         if (!username || !firstname || !lastname || !email || !password) {
             res.status(400).json({
                 message: 'Alla obligatoriska fält måste fyllas i.'
@@ -125,6 +129,7 @@ router.post(
             const saltRounds = 10;
             const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+            console.log('Försöker spara användare i databasen...');
             await db.query(
                 `INSERT INTO users (username, firstname, lastname, email, password, profile_picture)
              VALUES ($1, $2, $3, $4, $5, $6)`,
