@@ -1,17 +1,14 @@
 #!/usr/bin/env bash
 
-# Exit immediately on error
-set -e
-
-echo "🔧 Installerar och bygger frontend..."
+# Steg 1: Bygg frontend
 cd client
 npm install
 npm run build
 
-echo "✅ Frontend byggd!"
-
-echo "📦 Installerar backend beroenden..."
-cd ../server
+# Steg 2: Gå tillbaka och installera backend
+cd ..
 npm install
 
-echo "✅ Backend klar!"
+# Steg 3: Bygg TypeScript om det behövs (om du har tsconfig.json i /server)
+cd server
+npm run build
