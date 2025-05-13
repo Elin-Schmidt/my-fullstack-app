@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth'; // auth.ts
 import cors from 'cors';
+import path from 'path';
 dotenv.config();
 
 const app = express();
@@ -31,6 +32,18 @@ app.use(
 );
 
 app.use('/api/auth', authRoutes);
+
+// Serve static files from the frontend
+app.use(express.static(path.resolve(__dirname, '../../client/dist')));
+
+// Serve frontend for unknown routes
+app.use((req, res, next) => {
+    if (!req.url.startsWith('/api')) {
+        res.sendFile(path.resolve(__dirname, '../../client/dist/index.html'));
+    } else {
+        next();
+    }
+});
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
