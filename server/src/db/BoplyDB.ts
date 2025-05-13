@@ -8,7 +8,7 @@ const pool = new Pool({
 });
 
 // Lägg till en enkel testfråga för att se om anslutningen fungerar
-pool.query('SELECT NOW()', (err, res) => {
+pool.query('SELECT NOW()', (err: Error, res: any) => {
     if (err) {
         console.error('Database connection error:', err);
     } else {
