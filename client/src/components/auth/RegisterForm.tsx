@@ -15,14 +15,17 @@ const RegisterForm = () => {
         setMessage('');
 
         try {
-            const response = await axios.post('/api/auth/register', {
-                username,
-                firstname,
-                lastname,
-                email,
-                password,
-                profile_picture: profilePicture || null
-            });
+            const response = await axios.post(
+                `${import.meta.env.VITE_BACKEND_URL}/api/auth/register`,
+                {
+                    username,
+                    firstname,
+                    lastname,
+                    email,
+                    password,
+                    profile_picture: profilePicture || null
+                }
+            );
 
             if (response.status === 201) {
                 setMessage('Registrering lyckades! Du kan nu logga in.');
