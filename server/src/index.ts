@@ -11,10 +11,10 @@ app.use(
     cors({
         origin:
             process.env.NODE_ENV === 'production'
-                ? ['https://boply.onrender.com'] // Render frontend-URL
-                : ['http://localhost:5173'], // Lokal frontend-URL
-        methods: ['GET', 'POST', 'PUT', 'DELETE'], // Tillåtna metoder
-        credentials: true // Om du skickar cookies eller autentisering
+                ? 'https://boply.onrender.com'
+                : 'http://localhost:5173',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        credentials: true
     })
 );
 
