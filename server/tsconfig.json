@@ -2,13 +2,14 @@
     "compilerOptions": {
         "target": "ES6",
         "module": "commonjs",
-        "outDir": "dist",
-        "rootDir": "src",
+        "outDir": "./dist",
+        "rootDir": "./src",
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "moduleResolution": "node",
         "strict": true,
-        "allowJs": true
+        "allowJs": true,
+        "typeRoots": ["./node_modules/@types", "./types"]
     },
     "include": ["src/**/*.ts", "src/**/*.js", "src/**/*", "src/**/*.js"],
     "exclude": ["node_modules", "dist"],
