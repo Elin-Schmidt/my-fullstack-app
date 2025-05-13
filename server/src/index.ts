@@ -18,11 +18,17 @@ app.use(
     })
 );
 
-app.use((req, res, next) => {
-    console.log(`Inkommande förfrågan: ${req.method} ${req.url}`);
-    console.log('Body:', req.body);
-    next();
-});
+app.use(
+    (
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction
+    ) => {
+        console.log(`Inkommande förfrågan: ${req.method} ${req.url}`);
+        console.log('Body:', req.body);
+        next();
+    }
+);
 
 app.use('/api/auth', authRoutes);
 

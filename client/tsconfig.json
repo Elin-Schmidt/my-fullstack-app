@@ -1,17 +1,17 @@
 {
     "extends": "expo/tsconfig.base",
     "compilerOptions": {
-        "target": "ESNext",
+        "target": "ES6",
         "useDefineForClassFields": true,
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
-        "allowJs": false,
+        "allowJs": true,
         "skipLibCheck": true,
-        "esModuleInterop": false,
+        "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "allowImportingTsExtensions": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
-        "module": "node16",
+        "module": "Node16",
         "moduleResolution": "node16",
         "resolveJsonModule": true,
         "isolatedModules": true,
@@ -23,8 +23,9 @@
             "@components/*": ["src/components/*"],
             "@utils/*": ["src/utils/*"]
         },
-        "rootDir": "."
+        "rootDir": "src",
+        "outDir": "dist"
     },
-    "include": ["src", "App.tsx"],
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/vite-env.d.ts"],
     "exclude": ["node_modules", "dist"]
 }
