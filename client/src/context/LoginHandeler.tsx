@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 // Skapa en ny kontext för inloggningsstatus
 interface AppContextType {
@@ -20,14 +20,24 @@ export const useAppContext = (): AppContextType => {
     return context;
 };
 
-export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
+export const AppProvider: React.FC<React.PropsWithChildren<object>> = ({
     children
 }) => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Default är inte inloggad
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+        // Läs från localStorage vid första render
+        return localStorage.getItem('isLoggedIn') === 'true';
+    });
 
     const toggleMenu = () => setMenuOpen((prev) => !prev);
-    const setLoginStatus = (status: boolean) => setIsLoggedIn(status);
+    const setLoginStatus = (status: boolean) => {
+        setIsLoggedIn(status);
+        if (status) {
+            localStorage.setItem('isLoggedIn', 'true');
+        } else {
+            localStorage.removeItem('isLoggedIn');
+        }
+    };
 
     return (
         <AppContext.Provider
