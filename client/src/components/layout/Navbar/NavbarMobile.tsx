@@ -40,7 +40,11 @@ function NavbarMobile() {
     }, [toggleMenu]);
 
     const handleProfileClick = () => {
-        navigate('/auth'); // Navigera till auth-sidan
+        if (isLoggedIn) {
+            toggleMenu();
+        } else {
+            navigate('/auth');
+        }
     };
 
     return (
