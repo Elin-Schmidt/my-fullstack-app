@@ -32,6 +32,7 @@ const LoginForm = () => {
 
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('isLoggedIn', 'true');
 
                 setLoginStatus(true);
                 navigate('/personal-space'); // Navigera till personlig sida

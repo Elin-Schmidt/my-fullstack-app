@@ -10,6 +10,7 @@ const LogoutButton = () => {
         // Ta bort token och användardata från localStorage
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        localStorage.removeItem('isLoggedIn');
 
         // Uppdatera login-status i context
         setLoginStatus(false);
