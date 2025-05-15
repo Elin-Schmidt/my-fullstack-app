@@ -21,7 +21,7 @@ interface LoginRequestBody {
 router.post(
     '/register',
     async (
-        req: Request<{}, {}, RegisterRequestBody>,
+        req: Request<object, object, RegisterRequestBody>, // Byt ut {} mot object
         res: Response
     ): Promise<void> => {
         console.log('📨 [REGISTER] Begäran mottagen:', req.body);
@@ -64,21 +64,23 @@ router.post(
 
             console.log('✅ [REGISTER] Användare registrerad:', email);
             res.status(201).json({ message: 'User registered successfully' });
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('💥 [REGISTER] Fel vid registrering:', error);
 
-            if (error.code === '23505') {
-                console.log(
-                    '⚠️ [REGISTER] E-post eller användarnamn finns redan'
-                );
-                res.status(400).json({
-                    message: 'Email or username already exists'
-                });
-            } else {
-                res.status(500).json({
-                    message: 'Server error during registration'
-                });
+            if (error instanceof Error && 'code' in error) {
+                if (error.code === '23505') {
+                    console.log(
+                        '⚠️ [REGISTER] E-post eller användarnamn finns redan'
+                    );
+                    res.status(400).json({
+                        message: 'Email or username already exists'
+                    });
+                    return;
+                }
             }
+            res.status(500).json({
+                message: 'Server error during registration'
+            });
         }
     }
 );
@@ -86,7 +88,7 @@ router.post(
 router.post(
     '/login',
     async (
-        req: Request<{}, {}, LoginRequestBody>,
+        req: Request<object, object, LoginRequestBody>, // Byt ut {} mot object
         res: Response
     ): Promise<void> => {
         console.log('📨 [LOGIN] Begäran mottagen:', req.body);

@@ -1,31 +1,31 @@
-const fs = require('fs');
-const path = require('path');
-const express = require('express');
+import { existsSync, mkdirSync, readdirSync, unlinkSync } from 'fs';
+import { join } from 'path';
+import express from 'express';
 const app = express();
-const multer = require('multer');
+const { json, urlencoded, static: expressStatic } = express;
+import multer from 'multer';
 const upload = multer({ dest: 'files/' });
 
-const filesDir = path.join(__dirname, 'files');
-if (!fs.existsSync(filesDir)) {
-    fs.mkdirSync(filesDir);
+const filesDir = join(__dirname, 'files');
+if (!existsSync(filesDir)) {
+    mkdirSync(filesDir);
 }
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 // Gör katalogen 'files/' tillgänglig som en statisk resurs
-app.use('/files', express.static('files'));
+app.use('/files', expressStatic('files'));
 
 const messages = [];
 
 // Funktion för att rensa oanvända bilder
 function cleanUpUnusedImages() {
     const usedImages = messages.map((message) => message.image);
-    const files = fs.readdirSync(path.join(__dirname, 'files'));
+    const files = readdirSync(join(__dirname, 'files'));
 
     files.forEach((file) => {
         if (!usedImages.includes(file)) {
-            fs.unlinkSync(path.join(__dirname, 'files', file)); // Ta bort filen
+            unlinkSync(join(__dirname, 'files', file)); // Ta bort filen
         }
     });
 }
@@ -90,10 +90,10 @@ app.post('/messages', upload.single('image'), (req, res) => {
     res.redirect('/messages');
 });
 
-exports.getMessages = (req, res) => {
+export function getMessages(req, res) {
     res.send('Get messages');
-};
+}
 
-exports.sendMessage = (req, res) => {
+export function sendMessage(req, res) {
     res.send('Send message');
-};
+}

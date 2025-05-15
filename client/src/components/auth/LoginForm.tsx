@@ -36,8 +36,8 @@ const LoginForm = () => {
                 setLoginStatus(true);
                 navigate('/personal-space'); // Navigera till personlig sida
             }
-        } catch (err: any) {
-            if (err.response?.status === 401) {
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err) && err.response?.status === 401) {
                 console.log('Login Failed'); // Logga vid misslyckad inloggning
                 setError('Fel e-post eller lösenord.');
             } else {

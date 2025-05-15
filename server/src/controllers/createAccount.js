@@ -1,8 +1,8 @@
-const express = require('express');
+import express, { json, urlencoded } from 'express';
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 const accounts = [];
 
@@ -37,7 +37,7 @@ app.post('/create-account', (req, res) => {
     }
 });
 
-exports.createAccount = (req, res) => {
+export function createAccount(req, res) {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -46,4 +46,4 @@ exports.createAccount = (req, res) => {
 
     // Lägg till logik för att skapa ett konto här
     res.status(201).json({ message: 'Account created successfully!' });
-};
+}

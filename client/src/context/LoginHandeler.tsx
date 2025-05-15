@@ -20,7 +20,7 @@ export const useAppContext = (): AppContextType => {
     return context;
 };
 
-export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
+export const AppProvider: React.FC<React.PropsWithChildren<object>> = ({
     children
 }) => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false);

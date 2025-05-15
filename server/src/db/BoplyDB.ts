@@ -8,13 +8,16 @@ const pool = new Pool({
 });
 
 // Lägg till en enkel testfråga för att se om anslutningen fungerar
-pool.query('SELECT NOW()', (err: Error, res: any) => {
-    if (err) {
-        console.error('Database connection error:', err);
-    } else {
-        console.log('Successfully connected to the database:', res.rows[0]);
+pool.query(
+    'SELECT NOW()',
+    (err: Error, res: { rows: { [key: string]: unknown }[] }) => {
+        if (err) {
+            console.error('Database connection error:', err);
+        } else {
+            console.log('Successfully connected to the database:', res.rows[0]);
+        }
     }
-});
+);
 
 // Lägg till en fråga för att hämta alla användare
 pool.query('SELECT * FROM users', (err, res) => {
