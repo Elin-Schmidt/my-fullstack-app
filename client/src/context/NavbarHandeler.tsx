@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { useAppContext } from './LoginHandeler.tsx';
 
 // Definiera typen för kontextens värde
 interface useNavbarContextType {

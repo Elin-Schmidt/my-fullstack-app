@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 // Skapa en ny kontext för inloggningsstatus
 interface AppContextType {

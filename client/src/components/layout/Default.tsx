@@ -1,4 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope */
+ 
 import { useState } from 'react';
 import reactLogo from '../../assets/react.svg';
 import viteLogo from './client/src/assets/vite.svg';

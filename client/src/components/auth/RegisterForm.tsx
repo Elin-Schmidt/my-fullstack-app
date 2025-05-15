@@ -30,10 +30,14 @@ const RegisterForm = () => {
             if (response.status === 201) {
                 setMessage('Registrering lyckades! Du kan nu logga in.');
             }
-        } catch (err: any) {
-            setMessage(
-                err.response?.data?.message || 'Registrering misslyckades.'
-            );
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                setMessage(
+                    err.response?.data?.message || 'Registrering misslyckades.'
+                );
+            } else {
+                setMessage('Registrering misslyckades.');
+            }
         }
     };
 
