@@ -15,7 +15,7 @@ const LogoutButton = () => {
         setLoginStatus(false);
 
         // Navigera till login-sidan eller annan sida
-        navigate('/login');
+        navigate('/');
     };
 
     return (

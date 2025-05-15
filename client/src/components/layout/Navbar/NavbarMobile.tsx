@@ -7,6 +7,7 @@ import { useAuthContext } from '@/context/LoginHandeler.tsx';
 import { useNavbarContext } from '../../../context/NavbarHandeler.tsx';
 import styles from './NavbarMobile.module.css';
 import DigitalClock from '../DigitalClock.tsx';
+import LogoutButton from '../../auth/LogoutButton.tsx';
 
 function NavbarMobile() {
     const { menuOpen, toggleMenu } = useNavbarContext();
@@ -91,7 +92,9 @@ function NavbarMobile() {
                                 <li>Extra Link 1</li>
                                 <li>Extra Link 2</li>
                                 <li>Extra Link 3</li>
-                                <li>Extra Link 4</li>
+                                <li>
+                                    <LogoutButton />
+                                </li>
                             </ul>
                         </div>
                     </>
