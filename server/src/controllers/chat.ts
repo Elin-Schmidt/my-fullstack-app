@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const express = require('express');
+import fs from 'fs';
+import path from 'path';
+import express from 'express';
+import multer from 'multer';
 const app = express();
-const multer = require('multer');
 const upload = multer({ dest: 'files/' });
 
 const filesDir = path.join(__dirname, 'files');
@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 // Gör katalogen 'files/' tillgänglig som en statisk resurs
 app.use('/files', express.static('files'));
 
-const messages = [];
+const messages: { name: string; text: unknown; image: string }[] = [];
 
 // Funktion för att rensa oanvända bilder
 function cleanUpUnusedImages() {
@@ -90,10 +90,12 @@ app.post('/messages', upload.single('image'), (req, res) => {
     res.redirect('/messages');
 });
 
-exports.getMessages = (req, res) => {
+import { Request, Response } from 'express';
+
+exports.getMessages = (_req: Request, res: Response) => {
     res.send('Get messages');
 };
 
-exports.sendMessage = (req, res) => {
+exports.sendMessage = (_req: Request, res: Response) => {
     res.send('Send message');
 };

@@ -1,0 +1,167 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.main {
+    display: grid;
+    grid-template-areas:
+        'cover'
+        'profile';
+    grid-template-rows: 1fr auto;
+    position: relative;
+}
+
+.coverImage {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    grid-area: cover;
+}
+
+.profileImage {
+    position: absolute;
+    left: 50%;
+    top: 100px; /* Justera så att den överlappar omslagsbilden och profil-wrappern */
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 3px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    object-fit: cover;
+    object-position: center;
+}
+
+.profileWrapper {
+    align-items: center;
+    grid-area: profile;
+    display: grid;
+    grid-template-areas:
+        'username'
+        'bio'
+        'friends'
+        'posts';
+    grid-template-rows: auto auto auto auto;
+    width: 100%;
+    height: auto;
+    background: #8cb1e9;
+    margin-bottom: 50px;
+    padding-top: 190px;
+}
+.username {
+    grid-area: username;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.userInfoWrapper {
+    grid-area: bio;
+    width: 95%;
+    height: 300px;
+    background: #dfecff;
+    justify-self: center;
+    margin-bottom: 15px;
+    margin-top: 20px;
+    border-radius: 15px;
+}
+.userInfoWrapper > div,
+p {
+    padding: 10px;
+}
+.about {
+    display: block;
+}
+
+.friendsWrapper {
+    grid-area: friends;
+    width: 95%;
+    height: 150px;
+    background: #dfecff;
+    justify-self: center;
+    margin-bottom: 15px;
+}
+
+.postsWrapper {
+    grid-area: posts;
+    width: 95%;
+    height: 250px;
+    background: #dfecff;
+    justify-self: center;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+/* Nedan är placeholders för klasser som används i TSX men saknades i CSS */
+
+.iconWrapper {
+    /* Lägg till styling om du vill */
+}
+
+.addFriend {
+    /* Lägg till styling om du vill */
+}
+
+.sendMessage {
+    /* Lägg till styling om du vill */
+}
+
+.firstname {
+    /* Lägg till styling om du vill */
+}
+
+.lastname {
+    /* Lägg till styling om du vill */
+}
+
+.email {
+    /* Lägg till styling om du vill */
+}
+
+.about {
+    /* Lägg till styling om du vill */
+}
+
+.friendList {
+    /* Lägg till styling om du vill */
+}
+
+.posts {
+    /* Lägg till styling om du vill */
+}
+
+.postLikes {
+    /* Lägg till styling om du vill */
+}
+
+.likesIcon {
+    /* Lägg till styling om du vill */
+}
+
+.likesCount {
+    /* Lägg till styling om du vill */
+}
+
+.postCreated {
+    /* Lägg till styling om du vill */
+}
+
+.commentWrapper {
+    /* Lägg till styling om du vill */
+}
+
+.comment {
+    /* Lägg till styling om du vill */
+}
+
+.commentFrom {
+    /* Lägg till styling om du vill */
+}
