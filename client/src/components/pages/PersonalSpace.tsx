@@ -54,8 +54,11 @@ function PersonalSpace() {
         if (!file || !user) return;
 
         try {
-            const updatedUser = await uploadCoverImage(file, user.id); // ändra till user.id
-            setUser(updatedUser);
+            const updatedUser = await uploadCoverImage(
+                file,
+                user.id.toString()
+            ); // ändra till user.id
+            setUser(updatedUser.user);
         } catch (err) {
             console.error(err);
         }
@@ -66,13 +69,17 @@ function PersonalSpace() {
     return (
         <main className={styles.main}>
             <section className={styles.coverImage}>
-                <div className={styles.coverImageWrapper}>
+                <div className={styles.coverImageHoverWrapper}>
                     <img
                         src={
                             user.cover_image
                                 ? `http://localhost:5000${user.cover_image}`
-                                : '/default_cover_2.png'
+                                : '/images/default_cover_2.png'
                         }
+                        onError={(e) => {
+                            e.currentTarget.onerror = null; // undvik oändlig loop
+                            e.currentTarget.src = '/images/default_cover_2.png';
+                        }}
                         alt="Omslagsbild"
                         className={styles.coverImageDisplay}
                     />
@@ -107,10 +114,15 @@ function PersonalSpace() {
                         src={
                             user.profile_picture
                                 ? `http://localhost:5000${user.profile_picture}`
-                                : '/default_profile.png'
+                                : '/images/default_profile.png'
                         }
+                        onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = '/images/default_profile.png';
+                        }}
                         alt="Profile Picture"
                     />
+
                     <input
                         type="file"
                         accept="image/*"

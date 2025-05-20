@@ -1,18 +1,15 @@
 // src/utils/uploadCoverImage.ts
-export async function uploadCoverImage(file: File, userId: number) {
+export async function uploadCoverImage(file: File, userId: string) {
     const formData = new FormData();
-    formData.append('profile_picture', file);
+    formData.append('cover_image', file);
 
-    const response = await fetch(
-        `/api/users/${userId}/upload-profile-picture`,
-        {
-            method: 'POST',
-            body: formData
-        }
-    );
+    const response = await fetch(`/api/users/${userId}/upload-cover-image`, {
+        method: 'POST',
+        body: formData
+    });
 
     if (!response.ok) {
-        throw new Error('Misslyckades med att ladda upp profilbild');
+        throw new Error('Misslyckades med att ladda upp omslagsbild');
     }
 
     return await response.json();

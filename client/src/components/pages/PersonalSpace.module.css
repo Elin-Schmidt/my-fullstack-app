@@ -12,11 +12,11 @@ body {
     position: relative;
 }
 
-.coverImageWrapper {
+.coverImageHoverWrapper {
+    position: relative;
     width: 100%;
-    height: 200px; /* samma som coverImage */
-    position: relative; /* om du vill positionera overlay-element */
-    overflow: hidden; /* för att klippa bilden om den "går utanför" */
+    height: 200px;
+    overflow: hidden;
 }
 
 .coverImage {
@@ -35,6 +35,27 @@ body {
     object-fit: cover;
     object-position: center;
     display: block; /* tar bort ev. extra mellanrum */
+}
+
+.coverImageHoverWrapper:hover .coverIconOverlay {
+    opacity: 1;
+}
+
+.coverIconOverlay {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border-radius: 50%;
+    padding: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 3;
 }
 
 .profileImageWrapper {
