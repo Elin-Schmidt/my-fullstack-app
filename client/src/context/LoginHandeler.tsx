@@ -6,6 +6,16 @@ interface AppContextType {
     toggleMenu: () => void;
     isLoggedIn: boolean; // Här lagras inloggningsstatus
     setLoginStatus: (status: boolean) => void; // För att uppdatera status
+
+    user: User | null; // <-- lägg till user
+    setUser: (user: User | null) => void; // <-- och setUser
+}
+
+interface User {
+    id: number;
+    username: string;
+    email: string;
+    // ev fler fält beroende på vad du sparar i user-objektet
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -25,23 +35,34 @@ export const AppProvider: React.FC<React.PropsWithChildren<object>> = ({
 }) => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-        // Läs från localStorage vid första render
         return localStorage.getItem('isLoggedIn') === 'true';
+    });
+
+    const [user, setUser] = useState<User | null>(() => {
+        const savedUser = localStorage.getItem('user');
+        return savedUser ? JSON.parse(savedUser) : null;
     });
 
     const toggleMenu = () => setMenuOpen((prev) => !prev);
     const setLoginStatus = (status: boolean) => {
         setIsLoggedIn(status);
-        if (status) {
-            localStorage.setItem('isLoggedIn', 'true');
-        } else {
+        if (!status) {
             localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('user');
+            setUser(null);
         }
     };
 
     return (
         <AppContext.Provider
-            value={{ menuOpen, toggleMenu, isLoggedIn, setLoginStatus }}
+            value={{
+                menuOpen,
+                toggleMenu,
+                isLoggedIn,
+                setLoginStatus,
+                user,
+                setUser
+            }}
         >
             {children}
         </AppContext.Provider>

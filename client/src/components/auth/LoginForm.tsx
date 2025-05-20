@@ -4,7 +4,7 @@ import { useAppContext } from '../../context/LoginHandeler.tsx'; // Din kontext
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-    const { setLoginStatus } = useAppContext();
+    const { setLoginStatus, setUser } = useAppContext();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
@@ -35,6 +35,7 @@ const LoginForm = () => {
                 localStorage.setItem('isLoggedIn', 'true');
 
                 setLoginStatus(true);
+                setUser(user);
                 navigate('/personal-space'); // Navigera till personlig sida
             }
         } catch (err: unknown) {

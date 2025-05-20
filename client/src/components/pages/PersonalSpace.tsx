@@ -1,15 +1,18 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import styles from './PersonalSpace.module.css';
 import { uploadProfilePicture } from '@/utils/uploadProfilePicture.ts';
+import { uploadCoverImage } from '@/utils/uploadCoverImage.ts';
 import { Camera } from 'lucide-react';
 
 interface User {
+    id: number;
     username: string;
     firstname: string;
     lastname: string;
     email: string;
     profile_picture?: string;
     bio: string;
+    cover_image?: string;
 }
 
 function PersonalSpace() {
@@ -23,8 +26,12 @@ function PersonalSpace() {
 
         fetch(`/api/users/${id}`)
             .then((res) => res.json())
-            .then((data) => setUser(data));
+            .then((data) => {
+                console.log('Hämtad användare:', data);
+                setUser(data);
+            });
     }, []);
+
     const handleProfilePictureChange = async (
         e: ChangeEvent<HTMLInputElement>
     ) => {
@@ -32,7 +39,22 @@ function PersonalSpace() {
         if (!file || !user) return;
 
         try {
-            const updatedUser = await uploadProfilePicture(file, user.username);
+            const updatedUserResponse = await uploadProfilePicture(
+                file,
+                user.id.toString()
+            );
+            setUser(updatedUserResponse.user); // <-- Viktigt!
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleCoverImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file || !user) return;
+
+        try {
+            const updatedUser = await uploadCoverImage(file, user.id); // ändra till user.id
             setUser(updatedUser);
         } catch (err) {
             console.error(err);
@@ -44,7 +66,30 @@ function PersonalSpace() {
     return (
         <main className={styles.main}>
             <section className={styles.coverImage}>
-                <img src="#" alt="Omslagsbild" />
+                <div className={styles.coverImageWrapper}>
+                    <img
+                        src={
+                            user.cover_image
+                                ? `http://localhost:5000${user.cover_image}`
+                                : '/default_cover_2.png'
+                        }
+                        alt="Omslagsbild"
+                        className={styles.coverImageDisplay}
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleCoverImageChange}
+                        className={styles.uploadInput}
+                        id="cover-upload"
+                    />
+                    <label
+                        htmlFor="cover-upload"
+                        className={styles.coverIconOverlay}
+                    >
+                        <Camera size={20} color="white" />
+                    </label>
+                </div>
             </section>
             <div
                 className={styles.profileImageWrapper}
@@ -59,7 +104,11 @@ function PersonalSpace() {
                 <div className={styles.imageHoverWrapper}>
                     <img
                         className={styles.profileImage}
-                        src={user.profile_picture || '#'}
+                        src={
+                            user.profile_picture
+                                ? `http://localhost:5000${user.profile_picture}`
+                                : '/default_profile.png'
+                        }
                         alt="Profile Picture"
                     />
                     <input
@@ -97,9 +146,9 @@ function PersonalSpace() {
                     <div className={styles.friendList}></div>
                 </section>
                 <section className={styles.postsWrapper}>
-                    <div className={styles.posts}></div>
+                    <div className={styles.posts}>Post</div>
                     <div className={styles.postLikes}>
-                        <div className={styles.likesIcon}></div>
+                        <div className={styles.likesIcon}>*heart*</div>
                         <div className={styles.likesCount}>0</div>
                     </div>
                     <div className={styles.postCreated}></div>

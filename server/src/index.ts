@@ -36,6 +36,7 @@ app.use(
         next();
     }
 );
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 if (process.env.SERVE_FRONTEND === 'true') {
     // Serve static files from the frontend

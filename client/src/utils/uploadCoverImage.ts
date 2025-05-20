@@ -1,4 +1,5 @@
-export async function uploadProfilePicture(file: File, userId: string) {
+// src/utils/uploadCoverImage.ts
+export async function uploadCoverImage(file: File, userId: number) {
     const formData = new FormData();
     formData.append('profile_picture', file);
 
