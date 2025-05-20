@@ -91,7 +91,7 @@ function NavbarMobile() {
                             <ul>
                                 <li>Extra Link 1</li>
                                 <li>Extra Link 2</li>
-                                <li>Extra Link 3</li>
+                                <li>Inställningar</li>
                                 <li>
                                     <LogoutButton />
                                 </li>

@@ -1,11 +1,12 @@
 {
-    "type": "commonjs",
+    "type": "module",
     "scripts": {
         "dev": "nodemon --exec ts-node src/index.ts",
         "build": "tsc",
         "start": "node dist/index.js"
     },
     "dependencies": {
+        "@eslint/js": "^9.27.0",
         "@types/bcrypt": "^5.0.2",
         "@types/cors": "^2.8.18",
         "@types/express": "^5.0.1",
@@ -15,7 +16,10 @@
         "bcrypt": "^5.1.1",
         "cors": "^2.8.5",
         "dotenv": "^16.5.0",
+        "eslint": "^9.27.0",
+        "eslint-plugin-react": "^7.37.5",
         "express": "^5.1.0",
+        "globals": "^16.1.0",
         "jsonwebtoken": "^9.0.2",
         "multer": "^1.4.5-lts.2",
         "nodemon": "^3.1.10",
@@ -23,6 +27,10 @@
         "pg": "^8.15.6",
         "ts-node": "^10.9.2",
         "ts-node-dev": "^2.0.0",
-        "typescript": "^5.8.3"
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.32.1"
+    },
+    "devDependencies": {
+        "@types/multer": "^1.4.12"
     }
 }
