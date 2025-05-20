@@ -1,13 +1,33 @@
 import express, { Request, Response } from 'express';
+import multer from 'multer';
+import path from 'path';
 import db from '../db/BoplyDB';
+import fs from 'fs';
 
 const router = express.Router();
+
+const profileStorage = multer.diskStorage({
+    destination: path.join(__dirname, '../../uploads/profilepic'),
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+export const uploadProfile = multer({ storage: profileStorage });
+
+// För omslagsbilder
+const coverStorage = multer.diskStorage({
+    destination: path.join(__dirname, '../../uploads/coverpic'),
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+export const uploadCover = multer({ storage: coverStorage });
 
 router.get('/:id', async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
     try {
         const result = await db.query(
-            'SELECT username, firstname, lastname, email, profile_picture, bio FROM users WHERE id = $1',
+            'SELECT id, username, firstname, lastname, email, profile_picture, bio, cover_image FROM users WHERE id = $1',
             [id]
         );
         if (result.rows.length === 0) {
@@ -19,5 +39,103 @@ router.get('/:id', async (req: Request, res: Response): Promise<void> => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+router.post(
+    '/:userId/upload-profile-picture',
+    uploadProfile.single('profile_picture'),
+    async (req, res) => {
+        const userId = req.params.userId;
+        const file = req.file;
+
+        if (!file) {
+            res.status(400).json({ message: 'Ingen fil uppladdad' });
+            return;
+        }
+
+        const imagePath = `/uploads/profilepic/${file.filename}`;
+
+        try {
+            // Hämta nuvarande bildväg
+            const userResult = await db.query(
+                'SELECT profile_picture FROM users WHERE id = $1',
+                [userId]
+            );
+            const oldImagePath = userResult.rows[0]?.profile_picture;
+
+            // Ta bort gammal bild från filsystemet
+            if (oldImagePath) {
+                const fullPath = path.join(__dirname, '../../', oldImagePath);
+                if (fs.existsSync(fullPath)) {
+                    fs.unlinkSync(fullPath);
+                }
+            }
+
+            // Uppdatera användaren
+            const result = await db.query(
+                'UPDATE users SET profile_picture = $1 WHERE id = $2 RETURNING *',
+                [imagePath, userId]
+            );
+
+            const updatedUser = result.rows[0];
+
+            res.json({
+                message: 'Profilbild uppladdad och sparad i databasen',
+                user: updatedUser
+            });
+        } catch (error) {
+            console.error('Fel vid uppdatering av profilbild:', error);
+            res.status(500).json({ message: 'Kunde inte spara profilbilden' });
+        }
+    }
+);
+
+router.post(
+    '/:userId/upload-cover-image',
+    uploadCover.single('cover_image'),
+    async (req, res) => {
+        const userId = req.params.userId;
+        const file = req.file;
+
+        if (!file) {
+            res.status(400).json({ message: 'Ingen fil uppladdad' });
+            return;
+        }
+
+        const imagePath = `/uploads/coverpic/${file.filename}`;
+
+        try {
+            // Hämta nuvarande omslagsbild
+            const userResult = await db.query(
+                'SELECT cover_image FROM users WHERE id = $1',
+                [userId]
+            );
+            const oldCoverPath = userResult.rows[0]?.cover_image;
+
+            // Ta bort gammal omslagsbild
+            if (oldCoverPath) {
+                const fullPath = path.join(__dirname, '../../', oldCoverPath);
+                if (fs.existsSync(fullPath)) {
+                    fs.unlinkSync(fullPath);
+                }
+            }
+
+            // Uppdatera användaren
+            const result = await db.query(
+                'UPDATE users SET cover_image = $1 WHERE id = $2 RETURNING *',
+                [imagePath, userId]
+            );
+
+            const updatedUser = result.rows[0];
+
+            res.json({
+                message: 'Omslagsbild uppladdad och sparad i databasen',
+                user: updatedUser
+            });
+        } catch (error) {
+            console.error('Fel vid uppdatering av omslagsbild:', error);
+            res.status(500).json({ message: 'Kunde inte spara omslagsbilden' });
+        }
+    }
+);
 
 export default router;

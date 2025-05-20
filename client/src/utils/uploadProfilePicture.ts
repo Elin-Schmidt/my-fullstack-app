@@ -14,6 +14,5 @@ export async function uploadProfilePicture(file: File, userId: string) {
         throw new Error('Misslyckades med att ladda upp profilbild');
     }
 
-    const updatedUser = await response.json();
-    return updatedUser;
+    return await response.json();
 }
