@@ -7,7 +7,7 @@ router.get('/:id', async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
     try {
         const result = await db.query(
-            'SELECT username, firstname, lastname, email, profile_picture FROM users WHERE id = $1',
+            'SELECT username, firstname, lastname, email, profile_picture, bio FROM users WHERE id = $1',
             [id]
         );
         if (result.rows.length === 0) {
