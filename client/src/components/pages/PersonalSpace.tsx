@@ -130,13 +130,10 @@ function PersonalSpace() {
                         className={styles.uploadInput}
                         id="upload-input"
                     />
-                    <label
-                        htmlFor="upload-input"
-                        className={styles.iconOverlay}
-                    >
-                        <Camera size={20} color="white" />
-                    </label>
                 </div>
+                <label htmlFor="upload-input" className={styles.iconOverlay}>
+                    <Camera size={20} color="white" />
+                </label>
             </div>
             <section className={styles.profileWrapper}>
                 <section className={styles.iconWrapper}>
@@ -145,14 +142,27 @@ function PersonalSpace() {
                 </section>
                 <div className={styles.username}>{user.username}</div>
                 <section className={styles.userInfoWrapper}>
-                    <div className={styles.firstname}>{user.firstname}</div>
-                    <div className={styles.lastname}>{user.lastname}</div>
-                    <div className={styles.email}>{user.email}</div>
-                    <label htmlFor="about">
-                        <p className={styles.aboutMeHeading}>Om mig</p>
+                    <div className={styles.firstname}>
+                        Förnamn:
+                        <span className={styles.firstnameValue}>
+                            {user.firstname}
+                        </span>
+                    </div>
+                    <div className={styles.lastname}>
+                        Efternamn:
+                        <span className={styles.lastnameValue}>
+                            {user.lastname}
+                        </span>
+                    </div>
+                    <div className={styles.email}>
+                        E-mail:
+                        <span className={styles.emailValue}>{user.email}</span>
+                    </div>
+                    <div className={styles.sectionDivider}></div>
+                    <div className={styles.aboutMeWrapper}>
+                        <span className={styles.aboutMeHeading}>Om mig:</span>
                         <p className={styles.aboutMeContent}>{user.bio}</p>
-                        <span></span>
-                    </label>
+                    </div>
                 </section>
                 <section className={styles.friendsWrapper}>
                     <div className={styles.friendList}></div>
