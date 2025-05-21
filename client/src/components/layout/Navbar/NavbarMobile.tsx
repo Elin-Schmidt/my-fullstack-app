@@ -3,8 +3,8 @@ import { FaTimes } from 'react-icons/fa';
 import { RxAvatar } from 'react-icons/rx';
 import { FiClock } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '@/context/LoginHandeler.tsx';
-import { useNavbarContext } from '../../../context/NavbarHandeler.tsx';
+import { useAuthContext } from '@/context/LoginHandler.tsx';
+import { useNavbarContext } from '../../../context/NavbarHandler.tsx';
 import styles from './NavbarMobile.module.css';
 import DigitalClock from '../DigitalClock.tsx';
 import LogoutButton from '../../auth/LogoutButton.tsx';
@@ -89,9 +89,13 @@ function NavbarMobile() {
                             className={`${styles.flyoutMenu} ${menuOpen ? styles.open : ''}`}
                         >
                             <ul>
-                                <li>Extra Link 1</li>
+                                <li onClick={() => navigate('/personal-space')}>
+                                    Min sida
+                                </li>
                                 <li>Extra Link 2</li>
-                                <li>Inställningar</li>
+                                <li onClick={() => navigate('/settings')}>
+                                    Inställningar
+                                </li>
                                 <li>
                                     <LogoutButton />
                                 </li>

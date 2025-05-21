@@ -1,6 +1,6 @@
 // src/components/LogoutButton.tsx
 import { useNavigate } from 'react-router-dom';
-import { useAppContext } from '../../context/LoginHandeler.tsx'; // Din kontext
+import { useAppContext } from '../../context/LoginHandler.tsx'; // Din kontext
 
 const LogoutButton = () => {
     const { setLoginStatus } = useAppContext();
