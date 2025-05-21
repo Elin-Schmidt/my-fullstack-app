@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { RxAvatar } from 'react-icons/rx';
 import { FaTimes } from 'react-icons/fa';
 import { FiClock, FiSearch } from 'react-icons/fi';
-import { useNavbarContext } from '../../../context/NavbarHandeler.tsx';
+import { useNavbarContext } from '../../../context/NavbarHandler.tsx';
 import styles from './NavbarDesktop.module.css';
 import DigitalClock from '../DigitalClock.tsx';
 import { Link, useNavigate } from 'react-router-dom';

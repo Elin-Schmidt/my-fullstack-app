@@ -40,6 +40,40 @@ router.get('/:id', async (req: Request, res: Response): Promise<void> => {
     }
 });
 
+router.put('/:id', async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { username, firstname, lastname, email, bio } = req.body;
+
+    try {
+        const result = await db.query(
+            `UPDATE users
+             SET username = $1,
+                 firstname = $2,
+                 lastname = $3,
+                 email = $4,
+                 bio = $5
+             WHERE id = $6
+             RETURNING id, username, firstname, lastname, email, bio, profile_picture, cover_image`,
+            [username, firstname, lastname, email, bio, id]
+        );
+
+        if (result.rows.length === 0) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+
+        res.json({
+            message: 'Användarinformation uppdaterad',
+            user: result.rows[0]
+        });
+    } catch (error) {
+        console.error('Fel vid uppdatering av användare:', error);
+        res.status(500).json({
+            message: 'Kunde inte uppdatera användarinformation'
+        });
+    }
+});
+
 router.post(
     '/:userId/upload-profile-picture',
     uploadProfile.single('profile_picture'),

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppRoutes from './routes/AppRoutes.tsx';
 import './index.css';
-import { AppProvider } from './context/LoginHandeler.tsx';
-import { NavbarProvider } from './context/NavbarHandeler.tsx';
+import { AppProvider } from './context/LoginHandler.tsx';
+import { NavbarProvider } from './context/NavbarHandler.tsx';
 import NavbarDesktop from './components/layout/Navbar/NavbarDesktop.tsx';
 import NavbarMobile from './components/layout/Navbar/NavbarMobile.tsx';
 
