@@ -1,6 +1,8 @@
 // src/components/LogoutButton.tsx
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../context/LoginHandler.tsx'; // Din kontext
+import { FiLogOut } from 'react-icons/fi';
+import styles from './LogoutButton.module.css'; // Importera din CSS-modul
 
 const LogoutButton = () => {
     const { setLoginStatus } = useAppContext();
@@ -20,10 +22,8 @@ const LogoutButton = () => {
     };
 
     return (
-        <button
-            onClick={handleLogout}
-            className="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700"
-        >
+        <button className={styles.logoutButton} onClick={handleLogout}>
+            <FiLogOut className={styles.icon} />
             Logga ut
         </button>
     );
