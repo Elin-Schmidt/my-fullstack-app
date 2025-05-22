@@ -1,12 +1,13 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, RequestHandler } from 'express';
 import db from '../db/BoplyDB'; // samma pool som i din användar-router
 
-const router = express.Router();
+const router: express.Router = express.Router();
 
 type CreatePostBody = {
     userId: number;
     content: string;
     image_url?: string;
+    likes?: number;
 };
 
 // GET /api/posts/:userId - hämta alla posts för en användare
@@ -81,5 +82,40 @@ router.post(
         }
     }
 );
+
+const likeHandler: RequestHandler<{ id: string }> = async (req, res) => {
+    const postId = parseInt(req.params.id, 10);
+
+    if (isNaN(postId)) {
+        res.status(400).json({ message: 'Invalid post ID' });
+        return;
+    }
+
+    try {
+        const result = await db.query<{ likes: number }>(
+            'SELECT likes FROM posts WHERE id = $1',
+            [postId]
+        );
+
+        if (result.rowCount === 0) {
+            res.status(404).json({ message: 'Post not found' });
+            return;
+        }
+
+        const currentLikes = result.rows[0].likes || 0;
+
+        const updateResult = await db.query(
+            'UPDATE posts SET likes = $1 WHERE id = $2 RETURNING *',
+            [currentLikes + 1, postId]
+        );
+
+        res.json(updateResult.rows[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+router.patch('/:id/like', likeHandler);
 
 export default router;
