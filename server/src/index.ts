@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth'; // auth.ts
 import usersRouter from './routes/users';
+import postsRouter from './routes/posts'; // posts.ts
 import cors from 'cors';
 import path from 'path';
 dotenv.config();
@@ -54,6 +55,7 @@ if (process.env.SERVE_FRONTEND === 'true') {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRouter);
+app.use('/api/posts', postsRouter);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
