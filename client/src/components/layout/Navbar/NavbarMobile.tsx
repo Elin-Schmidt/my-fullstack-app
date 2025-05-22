@@ -23,6 +23,7 @@ function NavbarMobile() {
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
+                menuOpen &&
                 menuRef.current &&
                 !menuRef.current.contains(event.target as Node)
             ) {
@@ -46,7 +47,7 @@ function NavbarMobile() {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [toggleMenu]);
+    }, [menuOpen, toggleMenu]);
 
     const handleProfileClick = () => {
         if (isLoggedIn) {
@@ -82,7 +83,11 @@ function NavbarMobile() {
             </div>
 
             <div className={styles.profileContainer}>
-                <button className={styles.profile} onClick={handleProfileClick}>
+                <button
+                    aria-label="Profilmeny"
+                    className={styles.profile}
+                    onClick={handleProfileClick}
+                >
                     {menuOpen && isLoggedIn ? <FaTimes /> : <RxAvatar />}
                 </button>
 
@@ -105,20 +110,20 @@ function NavbarMobile() {
                                     className={styles.extraMenu}
                                 >
                                     <button
-                                        className={styles.extraButton}
+                                        className={`${styles.extraButton} ${extraMenuOpen ? styles.expanded : ''}`}
                                         onClick={() =>
                                             setExtraMenuOpen((prev) => !prev)
                                         }
                                     >
-                                        Extra Link 2{' '}
+                                        Relationer
                                         <span className={styles.arrow}>
-                                            {extraMenuOpen ? '▲' : '▶'}
+                                            {extraMenuOpen ? '▼' : '▶'}
                                         </span>
                                     </button>
 
                                     {extraMenuOpen && (
                                         <ul className={styles.expandMenu}>
-                                            <li>Suboption A</li>
+                                            <li>Alla användare</li>
                                             <li>Suboption B</li>
                                             <li>Suboption C</li>
                                         </ul>
