@@ -19,9 +19,9 @@ Teknikkrav
 
 · - Minst 2 tabeller med primärnycklar och sekundärnycklar ✅
 
-· Databaskoppling: GET/SELECT och POST/INSERT ska fungera
+· Databaskoppling: GET/SELECT och POST/INSERT ska fungera ✅
 
-· TypeScript: Valfritt
+· TypeScript: Valfritt ✅
 
 · Externt API får användas om baskraven uppfylls
 
@@ -56,13 +56,13 @@ Teknikkrav (utöver G)
 
 · Notifikationer
 
-· Profilbilduppladdning
+· Profilbilduppladdning ✅
 
 · Databas: Användare, inlägg, relationer, kommentarer
 
 ---
 
-Projekt och redovisning
+Projekt och redovisning - 3/6-2025
 · Projektet ska motsvara fyra veckors arbete
 
 · Redovisning sker på plats sista kursdagen (10 minuter)
@@ -75,7 +75,7 @@ Projekt och redovisning
 
 ---
 
-Inlämning (obligatoriskt för alla)
+Inlämning (obligatoriskt för alla) - 6/6-2025
 · Lämna in en ZIP-fil via ITHS Distans:
 
 · - Frontendmapp (utan node_modules)

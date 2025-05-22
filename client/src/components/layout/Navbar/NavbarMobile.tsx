@@ -11,16 +11,19 @@ import LogoutButton from '../../auth/LogoutButton.tsx';
 
 function NavbarMobile() {
     const { menuOpen, toggleMenu } = useNavbarContext();
+    const [extraMenuOpen, setExtraMenuOpen] = useState(false);
     const { isLoggedIn } = useAuthContext();
     const [clockOpen, setClockOpen] = useState<boolean>(false);
 
     const menuRef = useRef<HTMLDivElement | null>(null);
+    const extraMenuRef = useRef<HTMLLIElement | null>(null);
     const clockRef = useRef<HTMLDivElement | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
+                menuOpen &&
                 menuRef.current &&
                 !menuRef.current.contains(event.target as Node)
             ) {
@@ -32,13 +35,19 @@ function NavbarMobile() {
             ) {
                 setClockOpen(false);
             }
+            if (
+                extraMenuRef.current &&
+                !extraMenuRef.current.contains(event.target as Node)
+            ) {
+                setExtraMenuOpen(false);
+            }
         };
 
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [toggleMenu]);
+    }, [menuOpen, toggleMenu]);
 
     const handleProfileClick = () => {
         if (isLoggedIn) {
@@ -74,7 +83,11 @@ function NavbarMobile() {
             </div>
 
             <div className={styles.profileContainer}>
-                <button className={styles.profile} onClick={handleProfileClick}>
+                <button
+                    aria-label="Profilmeny"
+                    className={styles.profile}
+                    onClick={handleProfileClick}
+                >
                     {menuOpen && isLoggedIn ? <FaTimes /> : <RxAvatar />}
                 </button>
 
@@ -92,7 +105,31 @@ function NavbarMobile() {
                                 <li onClick={() => navigate('/personal-space')}>
                                     Min sida
                                 </li>
-                                <li>Extra Link 2</li>
+                                <li
+                                    ref={extraMenuRef}
+                                    className={styles.extraMenu}
+                                >
+                                    <button
+                                        className={`${styles.extraButton} ${extraMenuOpen ? styles.expanded : ''}`}
+                                        onClick={() =>
+                                            setExtraMenuOpen((prev) => !prev)
+                                        }
+                                    >
+                                        Relationer
+                                        <span className={styles.arrow}>
+                                            {extraMenuOpen ? '▼' : '▶'}
+                                        </span>
+                                    </button>
+
+                                    {extraMenuOpen && (
+                                        <ul className={styles.expandMenu}>
+                                            <li>Alla användare</li>
+                                            <li>Suboption B</li>
+                                            <li>Suboption C</li>
+                                        </ul>
+                                    )}
+                                </li>
+
                                 <li onClick={() => navigate('/settings')}>
                                     Inställningar
                                 </li>

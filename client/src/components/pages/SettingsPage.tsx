@@ -1,9 +1,10 @@
 // src/pages/SettingsPage.tsx
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useAuthContext } from '@/context/LoginHandler.tsx';
+import styles from './SettingsPage.module.css';
 
 interface FormData {
     username: string;
@@ -16,7 +17,6 @@ interface FormData {
 export default function SettingsPage() {
     const { user } = useAuthContext();
 
-    // Om ingen användare är inloggad → skicka till login
     if (!user) {
         return <Navigate to="/login" replace />;
     }
@@ -33,7 +33,6 @@ export default function SettingsPage() {
 
     const [showBio, setShowBio] = useState<boolean>(false);
 
-    // Hämta befintlig data när vi vet userId
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -48,8 +47,15 @@ export default function SettingsPage() {
                     email: data.email || '',
                     aboutMe: data.bio || ''
                 });
-            } catch (err) {
-                console.error('Kunde inte hämta användardata:', err);
+            } catch (error) {
+                if (isAxiosError(error)) {
+                    console.error(
+                        'Axios error:',
+                        error.response?.data || error.message
+                    );
+                } else {
+                    console.error('Unexpected error:', error);
+                }
             }
         };
         fetchUserData();
@@ -65,7 +71,6 @@ export default function SettingsPage() {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // Grundläggande validering
         if (!formData.username || !formData.email) {
             alert('Fyll i både användarnamn och e-mail.');
             return;
@@ -91,30 +96,43 @@ export default function SettingsPage() {
                 alert('Något gick fel vid uppdateringen.');
             }
         } catch (error) {
-            console.error('Fel vid uppdatering:', error);
-            alert('Ett fel uppstod när informationen skulle skickas.');
+            if (isAxiosError(error)) {
+                console.error(
+                    'Axios error:',
+                    error.response?.data || error.message
+                );
+            } else {
+                console.error('Unexpected error:', error);
+            }
         }
     };
 
     return (
-        <div className="settings-page p-4">
-            <div className="bioWrapper">
+        <div className={styles.settingsPage}>
+            <div className={styles.bioWrapper}>
                 <button
-                    className="flex items-center gap-2 mb-2"
+                    className={styles.toggleButton}
                     onClick={() => setShowBio((prev) => !prev)}
                     type="button"
                 >
-                    {showBio ? <ChevronDown /> : <ChevronRight />}
-                    <span className="font-semibold">Bio</span>
+                    {showBio ? (
+                        <ChevronDown size={20} />
+                    ) : (
+                        <ChevronRight size={20} />
+                    )}
+                    <span className={styles.toggleLabel}>Bio</span>
                 </button>
 
                 {showBio && (
                     <form
                         onSubmit={handleSubmit}
-                        className="flex flex-col gap-4"
+                        className={styles.settingsForm}
                     >
                         <label htmlFor="username">
-                            Användarnamn:
+                            <span className={styles.labelHeader}>
+                                <span className={styles.required}>*</span>
+                                Användarnamn:
+                            </span>
                             <input
                                 id="username"
                                 type="text"
@@ -123,6 +141,9 @@ export default function SettingsPage() {
                                 onChange={handleChange}
                                 placeholder="Användarnamn"
                                 required
+                                className={styles.input}
+                                data-filled={!!formData.username}
+                                aria-required="true"
                             />
                         </label>
 
@@ -135,6 +156,8 @@ export default function SettingsPage() {
                                 value={formData.firstName}
                                 onChange={handleChange}
                                 placeholder="Förnamn"
+                                className={styles.input}
+                                data-filled={!!formData.username}
                             />
                         </label>
 
@@ -147,11 +170,16 @@ export default function SettingsPage() {
                                 value={formData.lastName}
                                 onChange={handleChange}
                                 placeholder="Efternamn"
+                                className={styles.input}
+                                data-filled={!!formData.username}
                             />
                         </label>
 
                         <label htmlFor="email">
-                            E-mail:
+                            <span className={styles.labelHeader}>
+                                <span className={styles.required}>*</span>
+                                E-mail:
+                            </span>
                             <input
                                 id="email"
                                 type="email"
@@ -160,6 +188,9 @@ export default function SettingsPage() {
                                 onChange={handleChange}
                                 placeholder="exempel@mail.com"
                                 required
+                                className={styles.input}
+                                data-filled={!!formData.username}
+                                aria-required="true"
                             />
                         </label>
 
@@ -171,13 +202,12 @@ export default function SettingsPage() {
                                 value={formData.aboutMe}
                                 onChange={handleChange}
                                 placeholder="Skriv något om dig själv..."
+                                className={styles.input}
+                                data-filled={!!formData.username}
                             />
                         </label>
 
-                        <button
-                            type="submit"
-                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-                        >
+                        <button type="submit" className={styles.saveButton}>
                             Spara ändringar
                         </button>
                     </form>
