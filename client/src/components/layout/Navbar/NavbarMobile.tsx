@@ -11,10 +11,12 @@ import LogoutButton from '../../auth/LogoutButton.tsx';
 
 function NavbarMobile() {
     const { menuOpen, toggleMenu } = useNavbarContext();
+    const [extraMenuOpen, setExtraMenuOpen] = useState(false);
     const { isLoggedIn } = useAuthContext();
     const [clockOpen, setClockOpen] = useState<boolean>(false);
 
     const menuRef = useRef<HTMLDivElement | null>(null);
+    const extraMenuRef = useRef<HTMLLIElement | null>(null);
     const clockRef = useRef<HTMLDivElement | null>(null);
     const navigate = useNavigate();
 
@@ -31,6 +33,12 @@ function NavbarMobile() {
                 !clockRef.current.contains(event.target as Node)
             ) {
                 setClockOpen(false);
+            }
+            if (
+                extraMenuRef.current &&
+                !extraMenuRef.current.contains(event.target as Node)
+            ) {
+                setExtraMenuOpen(false);
             }
         };
 
@@ -92,7 +100,31 @@ function NavbarMobile() {
                                 <li onClick={() => navigate('/personal-space')}>
                                     Min sida
                                 </li>
-                                <li>Extra Link 2</li>
+                                <li
+                                    ref={extraMenuRef}
+                                    className={styles.extraMenu}
+                                >
+                                    <button
+                                        className={styles.extraButton}
+                                        onClick={() =>
+                                            setExtraMenuOpen((prev) => !prev)
+                                        }
+                                    >
+                                        Extra Link 2{' '}
+                                        <span className={styles.arrow}>
+                                            {extraMenuOpen ? '▲' : '▶'}
+                                        </span>
+                                    </button>
+
+                                    {extraMenuOpen && (
+                                        <ul className={styles.expandMenu}>
+                                            <li>Suboption A</li>
+                                            <li>Suboption B</li>
+                                            <li>Suboption C</li>
+                                        </ul>
+                                    )}
+                                </li>
+
                                 <li onClick={() => navigate('/settings')}>
                                     Inställningar
                                 </li>
