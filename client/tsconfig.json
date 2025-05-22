@@ -21,7 +21,8 @@
         "paths": {
             "@/*": ["src/*"],
             "@components/*": ["src/components/*"],
-            "@utils/*": ["src/utils/*"]
+            "@utils/*": ["src/utils/*"],
+            "@hooks/*": ["src/components/hooks/*"]
         },
         "rootDir": "src",
         "outDir": "dist"

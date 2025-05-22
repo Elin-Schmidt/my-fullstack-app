@@ -3,6 +3,7 @@ import styles from './PersonalSpace.module.css';
 import { uploadProfilePicture } from '@/utils/uploadProfilePicture.ts';
 import { uploadCoverImage } from '@/utils/uploadCoverImage.ts';
 import { Camera } from 'lucide-react';
+import PostForm from '../layout/PostInput.tsx';
 
 interface User {
     id: number;
@@ -14,23 +15,32 @@ interface User {
     bio: string;
     cover_image?: string;
 }
+interface Post {
+    id: number;
+    user_id: number;
+    content: string;
+    image_url?: string;
+    created_at: string;
+}
 
 function PersonalSpace() {
     const [user, setUser] = useState<User | null>(null);
+    const [posts, setPosts] = useState<Post[]>([]);
 
-    useEffect(() => {
-        // Hämta användar-id från localStorage (eller context)
-        const userData = localStorage.getItem('user');
-        if (!userData) return;
-        const { id } = JSON.parse(userData);
+    const handleCoverImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file || !user) return;
 
-        fetch(`/api/users/${id}`)
-            .then((res) => res.json())
-            .then((data) => {
-                console.log('Hämtad användare:', data);
-                setUser(data);
-            });
-    }, []);
+        try {
+            const updatedUser = await uploadCoverImage(
+                file,
+                user.id.toString()
+            ); // ändra till user.id
+            setUser(updatedUser.user);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     const handleProfilePictureChange = async (
         e: ChangeEvent<HTMLInputElement>
@@ -49,18 +59,36 @@ function PersonalSpace() {
         }
     };
 
-    const handleCoverImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file || !user) return;
+    useEffect(() => {
+        const userData = localStorage.getItem('user');
+        if (!userData) return;
+        const { id } = JSON.parse(userData);
+
+        // Hämta användardata
+        fetch(`/api/users/${id}`)
+            .then((res) => res.json())
+            .then(setUser);
+
+        // Hämta poster för användaren
+        fetch(`/api/posts/user/${id}`)
+            .then((res) => res.json())
+            .then((data: Post[]) => setPosts(data))
+            .catch(console.error);
+    }, []);
+
+    const addPost = async (content: string) => {
+        if (!user) return;
 
         try {
-            const updatedUser = await uploadCoverImage(
-                file,
-                user.id.toString()
-            ); // ändra till user.id
-            setUser(updatedUser.user);
-        } catch (err) {
-            console.error(err);
+            const res = await fetch('/api/posts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: user.id, content })
+            });
+            const newPost = await res.json();
+            setPosts((prev) => [newPost, ...prev]);
+        } catch (error) {
+            console.error('Kunde inte posta:', error);
         }
     };
 
@@ -168,7 +196,20 @@ function PersonalSpace() {
                     <div className={styles.friendList}></div>
                 </section>
                 <section className={styles.postsWrapper}>
-                    <div className={styles.posts}>Post</div>
+                    <PostForm onAddPost={addPost} />
+                    <div className={styles.posts}>
+                        {posts.length === 0 && <p>Inga inlägg än...</p>}
+                        {posts.map((post) => (
+                            <div key={post.id}>
+                                <p>{post.content}</p>
+                                <small>
+                                    {new Date(
+                                        post.created_at || ''
+                                    ).toLocaleString()}
+                                </small>
+                            </div>
+                        ))}
+                    </div>
                     <div className={styles.postLikes}>
                         <div className={styles.likesIcon}>*heart*</div>
                         <div className={styles.likesCount}>0</div>
