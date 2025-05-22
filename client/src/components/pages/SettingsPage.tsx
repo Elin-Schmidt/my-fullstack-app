@@ -1,7 +1,7 @@
 // src/pages/SettingsPage.tsx
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useAuthContext } from '@/context/LoginHandler.tsx';
 import styles from './SettingsPage.module.css';
@@ -47,8 +47,15 @@ export default function SettingsPage() {
                     email: data.email || '',
                     aboutMe: data.bio || ''
                 });
-            } catch (err) {
-                console.error('Kunde inte hämta användardata:', err);
+            } catch (error) {
+                if (isAxiosError(error)) {
+                    console.error(
+                        'Axios error:',
+                        error.response?.data || error.message
+                    );
+                } else {
+                    console.error('Unexpected error:', error);
+                }
             }
         };
         fetchUserData();
@@ -89,8 +96,14 @@ export default function SettingsPage() {
                 alert('Något gick fel vid uppdateringen.');
             }
         } catch (error) {
-            console.error('Fel vid uppdatering:', error);
-            alert('Ett fel uppstod när informationen skulle skickas.');
+            if (isAxiosError(error)) {
+                console.error(
+                    'Axios error:',
+                    error.response?.data || error.message
+                );
+            } else {
+                console.error('Unexpected error:', error);
+            }
         }
     };
 
