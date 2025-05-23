@@ -285,9 +285,21 @@ function PersonalSpace() {
                     </div>
                 </section>
 
-                {/* === FRIENDS === */}
-                <section className={styles.friendsWrapper}>
-                    <div className={styles.friendList}></div>
+                {/* === FÖLJARE === */}
+                <section className={styles.followWrapper}>
+                    <div className={styles.followList}>
+                        <div className={styles.following}>
+                            Vilka jag följer:
+                            <span className={styles.followingPicture}></span>
+                            <span className={styles.followingUsername}></span>
+                        </div>
+                        <div className={styles.sectionDivider}></div>
+                        <div className={styles.followers}>
+                            Vilka följer mig:
+                            <span className={styles.followersPicture}></span>
+                            <span className={styles.followersUsername}></span>
+                        </div>
+                    </div>
                 </section>
 
                 {/* === POSTS === */}

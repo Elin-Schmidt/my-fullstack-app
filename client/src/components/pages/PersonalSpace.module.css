@@ -256,9 +256,9 @@ img {
     white-space: pre-wrap;
 }
 
-/* ===== FRIENDS SECTION ===== */
+/* ===== FOLLOWER SECTION ===== */
 
-.friendsWrapper {
+.followWrapper {
     grid-area: friends;
     width: 95%;
     height: 150px;
