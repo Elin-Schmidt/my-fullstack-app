@@ -6,6 +6,8 @@ import LoginForm from '../components/auth/LoginForm.tsx';
 import RegisterForm from '../components/auth/RegisterForm.tsx';
 import PersonalSpace from '@/components/pages/PersonalSpace.tsx';
 import SettingsPage from '../components/pages/SettingsPage.tsx';
+import AllUsers from '../components/pages/AllUsers.tsx';
+import UserSpace from '../components/pages/UserSpace.tsx';
 
 const AppRoutes: React.FC = () => {
     return (
@@ -16,6 +18,8 @@ const AppRoutes: React.FC = () => {
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/personal-space" element={<PersonalSpace />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/all-users" element={<AllUsers />} />
+            <Route path="/user/:id" element={<UserSpace />} />
             {/* Lägg till fler rutter här */}
         </Routes>
     );
