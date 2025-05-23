@@ -123,7 +123,13 @@ function NavbarMobile() {
 
                                     {extraMenuOpen && (
                                         <ul className={styles.expandMenu}>
-                                            <li>Alla användare</li>
+                                            <li
+                                                onClick={() =>
+                                                    navigate('/all-users')
+                                                }
+                                            >
+                                                Alla användare
+                                            </li>
                                             <li>Suboption B</li>
                                             <li>Suboption C</li>
                                         </ul>

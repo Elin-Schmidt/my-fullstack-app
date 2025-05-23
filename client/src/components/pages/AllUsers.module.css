@@ -1,0 +1,72 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 2rem 0;
+    background: #e8f0ff;
+    min-height: 100vh;
+    align-content: flex-start;
+}
+
+.userCard {
+    background: linear-gradient(145deg, #f2f8ff, #d6e6ff);
+    border-radius: 16px;
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        0 1.5px 4px rgba(106, 135, 230, 0.1);
+    padding: 1.5rem 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    height: 200px; /* Gör kortet kvadratiskt */
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+    margin: 0.5rem 2rem;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.userCard:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.15),
+        0 3px 8px rgba(106, 135, 230, 0.15);
+}
+
+.profilePicture {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    border: 3px solid #8cb1e9;
+    background: #fff;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 2px 8px rgba(140, 177, 233, 0.15);
+    transition: box-shadow 0.2s;
+}
+
+.username {
+    font-size: 1.3rem;
+    font-weight: 850;
+    color: #444;
+    margin: 0;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.2rem;
+    }
+    .userCard {
+        width: 90vw;
+        max-width: 320px;
+        height: 90vw;
+        max-height: 320px;
+    }
+}

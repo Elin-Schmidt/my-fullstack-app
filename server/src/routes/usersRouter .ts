@@ -23,6 +23,18 @@ const coverStorage = multer.diskStorage({
 });
 export const uploadCover = multer({ storage: coverStorage });
 
+router.get('/', async (_req: Request, res: Response) => {
+    try {
+        const result = await db.query(
+            'SELECT id, username, profile_picture FROM users'
+        );
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Fel vid hämtning av användare:', error);
+        res.status(500).json({ message: 'Kunde inte hämta användare' });
+    }
+});
+
 router.get('/:id', async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
     try {
