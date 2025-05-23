@@ -27,11 +27,11 @@ Teknikkrav
 
 # Funktionalitet – Socialt nätverk (G-nivå)
 
-· Visa lista över användare
+· Visa lista över användare ✅
 
-· Visa användarprofiler
+· Visa användarprofiler ✅
 
-· Skapa och visa inlägg kopplade till användare
+· Skapa och visa inlägg kopplade till användare ✅
 
 · Databas: Användare + inlägg
 
