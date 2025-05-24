@@ -1,75 +1,102 @@
-# React + TypeScript + Vite Project
+# Boply – Fullstack Social App
 
 ## Beskrivning
 
-Det här projektet är en webbaserad applikation byggd med React, TypeScript och Vite. Fokus ligger på att skapa en modern, responsiv och användarvänlig gränssnittskomponent med flera olika delar och funktioner.
+Det här projektet är en fullstack-applikation byggd med **React**, **TypeScript**, **Node.js/Express** och **PostgreSQL**. Applikationen är ett socialt nätverk där användare kan skapa konto, logga in, posta inlägg, gilla och kommentera andras inlägg, samt hantera sin profil. Gränssnittet är modernt, responsivt och användarvänligt.
 
-Projektet innehåller bland annat:
+**Funktioner:**
 
--   Dynamiska komponenter
--   Användarinteraktioner
--   Responsiv design
--   Exempel på hantering av state med React Hooks
--   Modularisering av komponenter för enkel återanvändning
--   Exempel på flyout-menyer, sökfält och klockvisning
+-   Skapa konto och logga in
+-   Profil med omslagsbild, profilbild och bio
+-   Skapa, visa och ta bort inlägg
+-   Gilla andras inlägg (en gång per inlägg)
+-   Kommentera inlägg (med användarnamn och datum)
+-   Se alla användare
+-   Responsiv design för mobil och desktop
+-   Logout-funktion
+-   Flyout-menyer och sökfält
 
 ## Tekniker och verktyg
 
--   React
--   TypeScript
+-   React (med TypeScript)
 -   Vite
+-   Node.js + Express
+-   PostgreSQL
 -   CSS Modules
 -   Ikonbibliotek: react-icons
+-   Axios för API-anrop
 -   ESLint för kodkvalitet
 
 ## Kom igång
 
-Klona repot och installera beroenden:
+1. **Klona repot och installera beroenden:**
 
-```bash
-git clone https://github.com/ditt-användarnamn/ditt-repo.git
-cd ditt-repo
-npm install
-npm run dev
+    ```bash
+    git clone https://github.com/ditt-användarnamn/ditt-repo.git
+    cd ditt-repo
+    npm install
+    cd server
+    npm install
+    cd ../client
+    npm install
+    ```
 
+2. **Starta backend:**
 
-=======
-```
+    ```bash
+    cd server
+    npm run dev
+    ```
+
+3. **Starta frontend:**
+
+    ```bash
+    cd client
+    npm run dev
+    ```
+
+4. **Miljövariabler:**
+    - Se till att `.env`-filer finns i både `/server` och `/client` med rätt inställningar för databas och API-url.
 
 ## Struktur
 
-Exempel på projektstruktur:
-
-src/
+```
+my-fullstack-app/
 │
-├── components/
-│ ├── NavbarDesktop/
-│ ├── DigitalClock/
-│ └── ...
+├── client/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── layout/
+│   │   │   ├── pages/
+│   │   │   ├── auth/
+│   │   │   └── ...
+│   │   ├── context/
+│   │   ├── routes/
+│   │   ├── utils/
+│   │   └── index.css
+│   ├── public/
+│   └── ...
 │
-├── App.js
-├── main.js
-└── index.css
-=======
-src/
+├── server/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── routes/
+│   │   ├── db/
+│   │   └── ...
+│   ├── uploads/
+│   └── ...
 │
-├── components/
-│ ├── NavbarDesktop/
-│ ├── DigitalClock/
-│ └── ...
-│
-├── App.js
-├── main.js
-└── index.css
+└── dokumentation/
+    └── Laboration 3 Fullstackapplikation.md
+```
 
-## Planerade funktioner
+## Funktioner
 
-Projektet är under utveckling och kommer att utökas med fler komponenter och funktioner, t.ex:
-
--   Fler navigationskomponenter
--   Dynamisk innehållshantering
--   Förbättrad sökfunktionalitet
--   Användarautentisering (framtida plan)
+-   **Användarhantering:** Registrering, inloggning, profilredigering, profil- och omslagsbild.
+-   **Inlägg:** Skapa, visa, ta bort, gilla (en gång per användare och inlägg).
+-   **Kommentarer:** Skriv och visa kommentarer, med användarnamn och datum.
+-   **Responsivitet:** Anpassad för både mobil och desktop.
+-   **Sök och navigering:** Sökfält, flyout-menyer, logout.
 
 ## Licens
 
