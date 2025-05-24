@@ -5,6 +5,7 @@ import axios, { isAxiosError } from 'axios';
 import { uploadProfilePicture } from '@/utils/uploadProfilePicture.ts';
 import { uploadCoverImage } from '@/utils/uploadCoverImage.ts';
 import { Camera } from 'lucide-react';
+import { FaUserPlus, FaEnvelope } from 'react-icons/fa';
 import PostForm from '../../layout/PostForm/PostForm.tsx';
 import { useAppContext } from '../../../context/LoginHandler.tsx';
 
@@ -269,52 +270,57 @@ function PersonalSpace() {
                 </div>
             </section>
 
-            {/* === PROFILE IMAGE === */}
-            <div
-                className={styles.profileImageWrapper}
-                style={{
-                    position: 'absolute',
-                    left: '50%',
-                    top: '100px',
-                    transform: 'translateX(-50%)',
-                    zIndex: 2
-                }}
-            >
-                <div className={styles.imageHoverWrapper}>
-                    <img
-                        className={styles.profileImage}
-                        src={
-                            user.profile_picture
-                                ? `http://localhost:5000${user.profile_picture}`
-                                : '/images/default_profile.png'
-                        }
-                        onError={(e) => {
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.src = '/images/default_profile.png';
-                        }}
-                        alt="Profile Picture"
-                    />
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleProfilePictureChange}
-                        className={styles.uploadInput}
-                        id="upload-input"
-                    />
+            {/* === PROFILE TOP === */}
+            <div className={styles.profileTop}>
+                <div className={styles.profileImageWrapper}>
+                    <div className={styles.imageHoverWrapper}>
+                        <img
+                            className={styles.profileImage}
+                            src={
+                                user.profile_picture
+                                    ? `http://localhost:5000${user.profile_picture}`
+                                    : '/images/default_profile.png'
+                            }
+                            onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src =
+                                    '/images/default_profile.png';
+                            }}
+                            alt="Profile Picture"
+                        />
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleProfilePictureChange}
+                            className={styles.uploadInput}
+                            id="upload-input"
+                        />
+                    </div>
+                    <label
+                        htmlFor="upload-input"
+                        className={styles.iconOverlay}
+                    >
+                        <Camera size={20} color="white" />
+                    </label>
                 </div>
-                <label htmlFor="upload-input" className={styles.iconOverlay}>
-                    <Camera size={20} color="white" />
-                </label>
+                <div className={styles.profileIcons}>
+                    <button
+                        className={styles.iconButton}
+                        title="Lägg till som följare"
+                    >
+                        <FaUserPlus size={22} />
+                    </button>
+                    <button
+                        className={styles.iconButton}
+                        title="Skicka meddelande"
+                    >
+                        <FaEnvelope size={22} />
+                    </button>
+                </div>
             </div>
 
             {/* === PROFILE SECTION === */}
             <section className={styles.profileWrapper}>
-                {/* === ICONS === */}
-                <section className={styles.iconWrapper}>
-                    <div className={styles.addFriend}></div>
-                    <div className={styles.sendMessage}></div>
-                </section>
-
                 {/* === USERNAME === */}
                 <div className={styles.username}>{user.username}</div>
 
