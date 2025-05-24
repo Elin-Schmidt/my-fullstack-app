@@ -33,7 +33,7 @@ Teknikkrav
 
 · Skapa och visa inlägg kopplade till användare ✅
 
-· Databas: Användare + inlägg
+· Databas: Användare + inlägg ✅
 
 # Krav för VG-nivå (Väl godkänt)
 
@@ -52,7 +52,7 @@ Teknikkrav (utöver G)
 
 · Vänförfrågningar / följare
 
-· Kommentera och gilla inlägg
+· Kommentera och gilla inlägg ✅
 
 · Notifikationer
 
