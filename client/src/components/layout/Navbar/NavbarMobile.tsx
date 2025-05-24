@@ -76,6 +76,7 @@ function NavbarMobile() {
             <div className={styles.wrapper}>
                 <ul className={styles.links}>
                     <li onClick={() => navigate('/')}>Home</li>
+                    <li>Meddelanden</li>
                 </ul>
             </div>
 
