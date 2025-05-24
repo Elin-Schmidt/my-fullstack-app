@@ -1,12 +1,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../components/pages/Home.tsx';
-import AuthPage from '../components/pages/AuthPage.tsx';
+import AuthPage from '../components/pages/Auth/AuthPage.tsx';
 import LoginForm from '../components/auth/LoginForm.tsx';
 import RegisterForm from '../components/auth/RegisterForm.tsx';
-import PersonalSpace from '@/components/pages/PersonalSpace.tsx';
-import SettingsPage from '../components/pages/SettingsPage.tsx';
-import AllUsers from '../components/pages/AllUsers.tsx';
+import PersonalSpace from '@/components/pages/PersonalSpace/PersonalSpace.tsx';
+import SettingsPage from '../components/pages/Settings/SettingsPage.tsx';
+import AllUsers from '../components/pages/AllUsers/AllUsers.tsx';
 import UserSpace from '../components/pages/UserSpace.tsx';
 
 const AppRoutes: React.FC = () => {

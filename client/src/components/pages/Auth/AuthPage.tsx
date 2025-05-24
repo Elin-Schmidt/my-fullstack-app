@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import LoginForm from '../auth/LoginForm.tsx';
-import RegisterForm from '../auth/RegisterForm.tsx';
+import LoginForm from '../../auth/LoginForm.tsx';
+import RegisterForm from '../../auth/RegisterForm.tsx';
 import './AuthPage.module.css'; // Importera CSS för AuthPage
 
 const AuthPage = () => {
