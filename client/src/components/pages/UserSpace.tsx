@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import styles from './PersonalSpace.module.css'; // Återanvänd stilar
+import styles from './PersonalSpace/PersonalSpace.module.css';
 import axios from 'axios';
+import { FaHeart } from 'react-icons/fa';
+import { useAppContext } from '../../context/LoginHandler.tsx'; // Om du har denna
 
 interface User {
     id: number;
@@ -27,12 +29,29 @@ const UserSpace = () => {
     const { id } = useParams<{ id: string }>();
     const [user, setUser] = useState<User | null>(null);
     const [posts, setPosts] = useState<Post[]>([]);
+    const { user: currentUser } = useAppContext(); // För att veta inloggad användare
 
     useEffect(() => {
         if (!id) return;
         axios.get(`/api/users/${id}`).then((res) => setUser(res.data));
         axios.get(`/api/posts/user/${id}`).then((res) => setPosts(res.data));
     }, [id]);
+
+    // Like handler
+    const likeHandler = async (postId: number) => {
+        try {
+            const res = await axios.patch(`/api/posts/${postId}/like`);
+            setPosts((prevPosts) =>
+                prevPosts.map((post) =>
+                    post.id === postId
+                        ? { ...post, likes: res.data.likes }
+                        : post
+                )
+            );
+        } catch (error) {
+            console.error('Kunde inte gilla post:', error);
+        }
+    };
 
     if (!user) return <div>Laddar...</div>;
 
@@ -101,7 +120,46 @@ const UserSpace = () => {
                         {posts.map((post) => (
                             <div key={post.id} className={styles.postItem}>
                                 <p>{post.content}</p>
-                                <span>{post.likes} likes</span>
+                                <div className={styles.postLikes}>
+                                    {/* Endast klickbar om det INTE är din egen post */}
+                                    <button
+                                        className={styles.likeButton}
+                                        onClick={() => likeHandler(post.id)}
+                                        disabled={
+                                            post.user_id === currentUser?.id
+                                        }
+                                        title={
+                                            post.user_id === currentUser?.id
+                                                ? 'Du kan inte gilla dina egna inlägg'
+                                                : 'Gilla inlägg'
+                                        }
+                                        style={{
+                                            background: 'transparent',
+                                            border: 'none',
+                                            cursor:
+                                                post.user_id === currentUser?.id
+                                                    ? 'not-allowed'
+                                                    : 'pointer',
+                                            padding: 0,
+                                            marginRight: '6px',
+                                            fontSize: '1.2rem',
+                                            display: 'flex',
+                                            alignItems: 'center'
+                                        }}
+                                    >
+                                        <FaHeart
+                                            color={
+                                                post.user_id === currentUser?.id
+                                                    ? '#ccc'
+                                                    : '#e25555'
+                                            }
+                                            style={{
+                                                verticalAlign: 'middle'
+                                            }}
+                                        />
+                                    </button>
+                                    <span>{post.likes}</span>
+                                </div>
                             </div>
                         ))}
                     </div>
