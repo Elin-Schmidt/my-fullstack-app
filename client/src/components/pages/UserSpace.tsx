@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import styles from './PersonalSpace.module.css';
+import styles from './PersonalSpace/PersonalSpace.module.css';
 import axios from 'axios';
 import { FaHeart } from 'react-icons/fa';
 import { useAppContext } from '../../context/LoginHandler.tsx'; // Om du har denna

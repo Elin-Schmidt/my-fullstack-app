@@ -1,12 +1,12 @@
 /* === IMPORTS === */
-import { ChangeEvent, useEffect, useState } from 'react';
-import styles from './PersonalSpace/PersonalSpace.module.css';
+import { ChangeEvent, useEffect, useState, useRef } from 'react';
+import styles from './PersonalSpace.module.css';
 import axios, { isAxiosError } from 'axios';
 import { uploadProfilePicture } from '@/utils/uploadProfilePicture.ts';
 import { uploadCoverImage } from '@/utils/uploadCoverImage.ts';
 import { Camera } from 'lucide-react';
-import PostForm from '../layout/PostForm/PostForm.tsx';
-import { useAppContext } from '../../context/LoginHandler.tsx';
+import PostForm from '../../layout/PostForm/PostForm.tsx';
+import { useAppContext } from '../../../context/LoginHandler.tsx';
 
 /* === INTERFACES === */
 interface User {
@@ -30,6 +30,7 @@ interface Post {
 }
 interface Comment {
     id: number;
+    post_id: number;
     content: string;
     username: string;
     created_at: string;
@@ -44,6 +45,26 @@ function PersonalSpace() {
     const [openCommentFor, setOpenCommentFor] = useState<number | null>(null);
     const [commentInput, setCommentInput] = useState<string>('');
     const { user: currentUser } = useAppContext();
+    const commentFormRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        if (openCommentFor === null) return;
+
+        function handleClickOutside(event: MouseEvent) {
+            if (
+                commentFormRef.current &&
+                !commentFormRef.current.contains(event.target as Node)
+            ) {
+                setOpenCommentFor(null);
+                setCommentInput('');
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [openCommentFor]);
 
     /* === IMAGE HANDLERS === */
     const handleCoverImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -180,8 +201,11 @@ function PersonalSpace() {
     };
 
     const handleAddComment = async (postId: number, content: string) => {
+        if (!user) return;
+
         try {
             const res = await axios.post(`/api/posts/${postId}/comments`, {
+                userId: user.id,
                 content
             });
             setPosts((prevPosts) =>
@@ -376,13 +400,26 @@ function PersonalSpace() {
                                         </span>
                                     )}
                                 </div>
-                                <button
-                                    onClick={() => setOpenCommentFor(post.id)}
-                                >
-                                    Kommentera
-                                </button>
+                                <div className={styles.commentButtonWrapper}>
+                                    <button
+                                        className={`${styles.commentButton} ${
+                                            openCommentFor === post.id
+                                                ? styles.commentButtonInactive
+                                                : ''
+                                        }`}
+                                        onClick={() =>
+                                            setOpenCommentFor(post.id)
+                                        }
+                                        disabled={openCommentFor === post.id}
+                                    >
+                                        💬 Kommentera
+                                    </button>
+                                </div>
                                 {openCommentFor === post.id && (
-                                    <div className={styles.commentFlyout}>
+                                    <div
+                                        className={styles.commentFormWrapper}
+                                        ref={commentFormRef}
+                                    >
                                         <form
                                             onSubmit={(e) => {
                                                 e.preventDefault();
@@ -393,6 +430,9 @@ function PersonalSpace() {
                                             }}
                                         >
                                             <textarea
+                                                className={
+                                                    styles.commentTextarea
+                                                }
                                                 value={commentInput}
                                                 onChange={(e) =>
                                                     setCommentInput(
@@ -401,9 +441,20 @@ function PersonalSpace() {
                                                 }
                                                 placeholder="Skriv en kommentar..."
                                             />
-                                            <button type="submit">
-                                                Skicka
-                                            </button>
+                                            <div
+                                                className={
+                                                    styles.commentFormActions
+                                                }
+                                            >
+                                                <button
+                                                    type="submit"
+                                                    className={
+                                                        styles.commentButton
+                                                    }
+                                                >
+                                                    Skicka
+                                                </button>
+                                            </div>
                                         </form>
                                     </div>
                                 )}
@@ -426,7 +477,7 @@ function PersonalSpace() {
                                                 {comment.username} •{' '}
                                                 {new Date(
                                                     comment.created_at
-                                                ).toLocaleString()}
+                                                ).toLocaleDateString()}
                                             </div>
                                         </div>
                                     ))}

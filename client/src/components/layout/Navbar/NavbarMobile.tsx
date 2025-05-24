@@ -76,9 +76,6 @@ function NavbarMobile() {
             <div className={styles.wrapper}>
                 <ul className={styles.links}>
                     <li onClick={() => navigate('/')}>Home</li>
-                    <li>About</li>
-                    <li>Services</li>
-                    <li>Contact</li>
                 </ul>
             </div>
 
@@ -115,7 +112,7 @@ function NavbarMobile() {
                                             setExtraMenuOpen((prev) => !prev)
                                         }
                                     >
-                                        Relationer
+                                        Extra alternativ
                                         <span className={styles.arrow}>
                                             {extraMenuOpen ? '▼' : '▶'}
                                         </span>
@@ -130,8 +127,8 @@ function NavbarMobile() {
                                             >
                                                 Alla användare
                                             </li>
-                                            <li>Suboption B</li>
-                                            <li>Suboption C</li>
+                                            <li>Notebook</li>
+                                            <li>To-Do Lista</li>
                                         </ul>
                                     )}
                                 </li>

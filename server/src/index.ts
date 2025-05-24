@@ -57,6 +57,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/users/all-users', usersRouter);
+app.use('/api/posts', postsRouter);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
