@@ -156,7 +156,7 @@ function PersonalSpace() {
         if (!user) return;
 
         try {
-            const res = await axios.post('${API_BASE_URL}/api/posts', {
+            const res = await axios.post(`${API_BASE_URL}/api/posts`, {
                 userId: user.id,
                 content
             });
