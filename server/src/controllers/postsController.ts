@@ -13,10 +13,7 @@ export const getUserPosts: RequestHandler<{ userId: string }> = async (
     req,
     res
 ) => {
-    console.log(
-        '📨 [GET USER POSTS] Request received for user ID:',
-        req.params.userId
-    );
+    console.log('[getUserPosts] Called with userId:', req.params.userId);
     const userId = Number(req.params.userId);
 
     if (isNaN(userId)) {
