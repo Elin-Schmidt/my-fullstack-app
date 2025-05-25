@@ -41,12 +41,14 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 if (process.env.SERVE_FRONTEND === 'true') {
     // Serve static files from the frontend
-    app.use(express.static(path.resolve(__dirname, '../client/dist')));
+    app.use(express.static(path.resolve(__dirname, '../../client/dist')));
 
     // Serve frontend for unknown routes
     app.use((req, res, next) => {
         if (!req.url.startsWith('/api')) {
-            res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
+            res.sendFile(
+                path.resolve(__dirname, '../../client/dist/index.html')
+            );
         } else {
             next();
         }
