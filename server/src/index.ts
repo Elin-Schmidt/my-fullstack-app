@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRouter'; // auth.ts
-import usersRouter from './routes/usersRouter ';
+import usersRouter from './routes/usersRouter'; // users.ts
 import postsRouter from './routes/postsRouter'; // posts.ts
 import cors from 'cors';
 import path from 'path';
