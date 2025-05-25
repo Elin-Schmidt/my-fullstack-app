@@ -250,7 +250,7 @@ function PersonalSpace() {
                     <img
                         src={
                             user.cover_image
-                                ? `http://localhost:5000${user.cover_image}`
+                                ? `${API_BASE_URL}${user.cover_image}`
                                 : '/images/default_cover_2.png'
                         }
                         onError={(e) => {
@@ -284,7 +284,7 @@ function PersonalSpace() {
                             className={styles.profileImage}
                             src={
                                 user.profile_picture
-                                    ? `http://localhost:5000${user.profile_picture}`
+                                    ? `${API_BASE_URL}${user.profile_picture}`
                                     : '/images/default_profile.png'
                             }
                             onError={(e) => {
