@@ -5,6 +5,7 @@ import axios, { isAxiosError } from 'axios';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useAuthContext } from '@/context/LoginHandler.tsx';
 import styles from './SettingsPage.module.css';
+import { API_BASE_URL } from '@/utils/api.ts';
 
 interface FormData {
     username: string;
@@ -37,7 +38,7 @@ export default function SettingsPage() {
         const fetchUserData = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:5000/api/users/${userId}`
+                    `${API_BASE_URL}/api/users/${userId}`
                 );
                 const data = response.data;
                 setFormData({
@@ -86,7 +87,7 @@ export default function SettingsPage() {
 
         try {
             const response = await axios.put(
-                `http://localhost:5000/api/users/${userId}`,
+                `${API_BASE_URL}/api/users/${userId}`,
                 updateData
             );
 

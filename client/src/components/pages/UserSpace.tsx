@@ -4,6 +4,7 @@ import styles from './PersonalSpace/PersonalSpace.module.css';
 import axios from 'axios';
 import { FaHeart } from 'react-icons/fa';
 import { useAppContext } from '../../context/LoginHandler.tsx';
+import { API_BASE_URL } from '../../utils/api.ts';
 
 interface User {
     id: number;
@@ -45,13 +46,15 @@ const UserSpace = () => {
 
     useEffect(() => {
         if (!id) return;
-        axios.get(`/api/users/${id}`).then((res) => setUser(res.data));
-        axios.get(`/api/posts/user/${id}`).then(async (res) => {
+        axios
+            .get(`${API_BASE_URL}/api/users/${id}`)
+            .then((res) => setUser(res.data));
+        axios.get(`${API_BASE_URL}/api/posts/user/${id}`).then(async (res) => {
             // Hämta kommentarer för varje post
             const postsWithComments = await Promise.all(
                 res.data.map(async (post: Post) => {
                     const commentsRes = await axios.get<Comment[]>(
-                        `/api/posts/${post.id}/comments`
+                        `${API_BASE_URL}/api/posts/${post.id}/comments`
                     );
                     return { ...post, comments: commentsRes.data };
                 })
@@ -81,7 +84,9 @@ const UserSpace = () => {
     // Like handler
     const likeHandler = async (postId: number) => {
         try {
-            const res = await axios.patch(`/api/posts/${postId}/like`);
+            const res = await axios.patch(
+                `${API_BASE_URL}/api/posts/${postId}/like`
+            );
             setPosts((prevPosts) =>
                 prevPosts.map((post) =>
                     post.id === postId
@@ -98,10 +103,13 @@ const UserSpace = () => {
     const handleAddComment = async (postId: number, content: string) => {
         if (!currentUser) return;
         try {
-            const res = await axios.post(`/api/posts/${postId}/comments`, {
-                userId: currentUser.id,
-                content
-            });
+            const res = await axios.post(
+                `${API_BASE_URL}/api/posts/${postId}/comments`,
+                {
+                    userId: currentUser.id,
+                    content
+                }
+            );
             setPosts((prevPosts) =>
                 prevPosts.map((post) =>
                     post.id === postId
@@ -128,7 +136,7 @@ const UserSpace = () => {
                 <img
                     src={
                         user.cover_image
-                            ? `http://localhost:5000${user.cover_image}`
+                            ? `${API_BASE_URL}${user.cover_image}`
                             : '/images/default_cover_2.png'
                     }
                     onError={(e) => {
@@ -144,7 +152,7 @@ const UserSpace = () => {
                     className={styles.profileImage}
                     src={
                         user.profile_picture
-                            ? `http://localhost:5000${user.profile_picture}`
+                            ? `${API_BASE_URL}${user.profile_picture}`
                             : '/images/default_profile.png'
                     }
                     onError={(e) => {

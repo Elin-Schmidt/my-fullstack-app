@@ -6,7 +6,8 @@ export default defineConfig({
     plugins: [react()],
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, './src') // Alias för "src"-mappen
+            '@': path.resolve(__dirname, './src'), // Alias för "src"-mappen
+            '@utils': path.resolve(__dirname, './src/utils')
         }
     },
     server: {

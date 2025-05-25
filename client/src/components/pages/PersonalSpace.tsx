@@ -7,6 +7,7 @@ import { uploadCoverImage } from '@/utils/uploadCoverImage.ts';
 import { Camera } from 'lucide-react';
 import PostForm from '../layout/PostForm/PostForm.tsx';
 import { useAppContext } from '../../context/LoginHandler.tsx';
+import { API_BASE_URL } from '@/utils/api.ts';
 
 /* === INTERFACES === */
 interface User {
@@ -107,13 +108,13 @@ function PersonalSpace() {
 
             // Hämta användardata
             axios
-                .get<User>(`/api/users/${id}`)
+                .get<User>(`${API_BASE_URL}/api/users/${id}`)
                 .then((res) => setUser(res.data))
                 .catch(console.error);
 
             // Hämta poster för användaren
             axios
-                .get<Post[]>(`/api/posts/user/${id}`)
+                .get<Post[]>(`${API_BASE_URL}/api/posts/user/${id}`)
                 .then((res) =>
                     setPosts(
                         res.data.map((post) => ({
@@ -133,7 +134,7 @@ function PersonalSpace() {
         if (!user) return;
 
         try {
-            const res = await axios.post('/api/posts', {
+            const res = await axios.post(`${API_BASE_URL}/api/posts`, {
                 userId: user.id,
                 content
             });
@@ -153,7 +154,9 @@ function PersonalSpace() {
     // Like handler implementation
     const likeHandler = async (id: number) => {
         try {
-            const res = await axios.post(`/api/posts/${id}/like`);
+            const res = await axios.post(
+                `${API_BASE_URL}/api/posts/${id}/like`
+            );
             setPosts((prevPosts) =>
                 prevPosts.map((post) =>
                     post.id === id ? { ...post, likes: res.data.likes } : post
@@ -181,9 +184,12 @@ function PersonalSpace() {
 
     const handleAddComment = async (postId: number, content: string) => {
         try {
-            const res = await axios.post(`/api/posts/${postId}/comments`, {
-                content
-            });
+            const res = await axios.post(
+                `${API_BASE_URL}/api/posts/${postId}/comments`,
+                {
+                    content
+                }
+            );
             setPosts((prevPosts) =>
                 prevPosts.map((post) =>
                     post.id === postId
@@ -219,7 +225,7 @@ function PersonalSpace() {
                     <img
                         src={
                             user.cover_image
-                                ? `http://localhost:5000${user.cover_image}`
+                                ? `${API_BASE_URL}${user.cover_image}`
                                 : '/images/default_cover_2.png'
                         }
                         onError={(e) => {
@@ -261,7 +267,7 @@ function PersonalSpace() {
                         className={styles.profileImage}
                         src={
                             user.profile_picture
-                                ? `http://localhost:5000${user.profile_picture}`
+                                ? `${API_BASE_URL}${user.profile_picture}`
                                 : '/images/default_profile.png'
                         }
                         onError={(e) => {

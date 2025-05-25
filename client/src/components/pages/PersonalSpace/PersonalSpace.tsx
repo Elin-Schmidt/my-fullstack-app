@@ -8,6 +8,7 @@ import { Camera } from 'lucide-react';
 import { FaUserPlus, FaEnvelope } from 'react-icons/fa';
 import PostForm from '../../layout/PostForm/PostForm.tsx';
 import { useAppContext } from '../../../context/LoginHandler.tsx';
+import { API_BASE_URL } from '@/utils/api.ts';
 
 /* === INTERFACES === */
 interface User {
@@ -129,13 +130,13 @@ function PersonalSpace() {
 
             // Hämta användardata
             axios
-                .get<User>(`/api/users/${id}`)
+                .get<User>(`${API_BASE_URL}/api/users/${id}`)
                 .then((res) => setUser(res.data))
                 .catch(console.error);
 
             // Hämta poster för användaren
             axios
-                .get<Post[]>(`/api/posts/user/${id}`)
+                .get<Post[]>(`${API_BASE_URL}/api/posts/user/${id}`)
                 .then((res) =>
                     setPosts(
                         res.data.map((post) => ({
@@ -155,7 +156,7 @@ function PersonalSpace() {
         if (!user) return;
 
         try {
-            const res = await axios.post('/api/posts', {
+            const res = await axios.post('${API_BASE_URL}/api/posts', {
                 userId: user.id,
                 content
             });
@@ -175,7 +176,9 @@ function PersonalSpace() {
     // Like handler implementation
     const likeHandler = async (id: number) => {
         try {
-            const res = await axios.post(`/api/posts/${id}/like`);
+            const res = await axios.post(
+                `${API_BASE_URL}/api/posts/${id}/like`
+            );
             setPosts((prevPosts) =>
                 prevPosts.map((post) =>
                     post.id === id ? { ...post, likes: res.data.likes } : post
@@ -205,10 +208,13 @@ function PersonalSpace() {
         if (!user) return;
 
         try {
-            const res = await axios.post(`/api/posts/${postId}/comments`, {
-                userId: user.id,
-                content
-            });
+            const res = await axios.post(
+                `${API_BASE_URL}/api/posts/${postId}/comments`,
+                {
+                    userId: user.id,
+                    content
+                }
+            );
             setPosts((prevPosts) =>
                 prevPosts.map((post) =>
                     post.id === postId

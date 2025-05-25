@@ -1,5 +1,6 @@
 // src/utils/uploadCoverImage.ts
 import axios from 'axios';
+import { API_BASE_URL } from './api.ts'; // Din API bas URL
 
 export async function uploadCoverImage(file: File, userId: string) {
     const formData = new FormData();
@@ -7,7 +8,7 @@ export async function uploadCoverImage(file: File, userId: string) {
 
     try {
         const response = await axios.post(
-            `/api/users/${userId}/upload-cover-image`,
+            `${API_BASE_URL}/api/users/${userId}/upload-cover-image`,
             formData,
             {
                 headers: {

@@ -1,7 +1,9 @@
 // components/UserList.tsx
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import styles from './AllUsers.module.css';
+import { API_BASE_URL } from '@/utils/api.ts';
 
 // types/User.ts
 export interface User {
@@ -16,10 +18,10 @@ const UserList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('/api/users')
-            .then((res) => res.json())
-            .then((data: User[]) => {
-                setUsers(data);
+        axios
+            .get(`${API_BASE_URL}/api/users`)
+            .then((res) => {
+                setUsers(res.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -42,7 +44,7 @@ const UserList = () => {
                     <img
                         src={
                             user.profile_picture
-                                ? `http://localhost:5000${user.profile_picture}`
+                                ? `${API_BASE_URL}${user.profile_picture}`
                                 : '/default-profile.png'
                         }
                         onError={(e) => {
