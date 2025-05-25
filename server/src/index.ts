@@ -59,7 +59,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
     console.log(`Servern körs på port ${PORT}`);
 });
