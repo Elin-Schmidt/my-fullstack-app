@@ -59,6 +59,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
 
+app.get('/api/posts/test', (req, res) => {
+    res.send('Test route works!');
+});
+
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
     console.log(`Servern körs på port ${PORT}`);
