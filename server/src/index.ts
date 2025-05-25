@@ -8,6 +8,11 @@ import path from 'path';
 dotenv.config();
 
 const app = express();
+
+app.get('/test', (req, res) => {
+    res.send('Root test works!');
+});
+
 app.use(express.json());
 
 app.use(
