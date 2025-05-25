@@ -18,6 +18,7 @@ export const getAllUsers = async (_req: Request, res: Response) => {
 
 // GET enskild användare
 export const getUserById = async (req: Request, res: Response) => {
+     console.log('[getUserById] Called with id:', req.params.id);
     const { id } = req.params;
     try {
         const result = await db.query(
