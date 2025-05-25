@@ -27,7 +27,10 @@ export const getComments: RequestHandler = async (req, res) => {
              ORDER BY c.created_at ASC`,
             [postId]
         );
-        res.json(result.rows);
+
+        // Efter att du hämtat kommentarer från databasen:
+        const comments: Comment[] = result.rows;
+        res.json(comments);
     } catch (error) {
         console.error('Error fetching comments:', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -49,7 +52,7 @@ export const createComment: RequestHandler = async (req, res) => {
              RETURNING *`,
             [userId, postId, content]
         );
-        const comment = insertResult.rows[0];
+        const comment: Comment = insertResult.rows[0];
 
         // Hämta username via JOIN
         const userResult = await db.query(
