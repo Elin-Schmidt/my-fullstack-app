@@ -328,7 +328,10 @@ function PersonalSpace() {
             {/* === PROFILE SECTION === */}
             <section className={styles.profileWrapper}>
                 {/* === USERNAME === */}
-                <div className={styles.username}>{user.username}</div>
+                <div className={styles.username}>
+                    <p className={styles.usernameStyled}>{user.username}</p>
+                    <p className={styles.usernameText}>{user.username}</p>
+                </div>
 
                 {/* === USER INFO === */}
                 <section className={styles.userInfoWrapper}>

@@ -187,7 +187,10 @@ const UserSpace = () => {
 
             {/* PROFILE SECTION */}
             <section className={styles.profileWrapper}>
-                <div className={styles.username}>{user.username}</div>
+                <div className={styles.username}>
+                    <p className={styles.usernameStyled}>{user.username}</p>
+                    <p className={styles.usernameText}>{user.username}</p>
+                </div>
                 <section className={styles.userInfoWrapper}>
                     <div>
                         Förnamn:{' '}

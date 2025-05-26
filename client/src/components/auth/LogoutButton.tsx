@@ -1,7 +1,7 @@
 // src/components/LogoutButton.tsx
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../context/LoginHandler.tsx'; // Din kontext
-import { FiLogOut } from 'react-icons/fi';
+import { BiLogOut } from 'react-icons/bi'; // Byt ut FiLogOut mot MdLogout
 import styles from './LogoutButton.module.css'; // Importera din CSS-modul
 
 const LogoutButton = () => {
@@ -23,7 +23,7 @@ const LogoutButton = () => {
 
     return (
         <button className={styles.logoutButton} onClick={handleLogout}>
-            <FiLogOut className={styles.icon} />
+            <BiLogOut className={styles.icon} />
             Logga ut
         </button>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Home from '../components/pages/Home.tsx';
+import Home from '../components/pages/Home/Home.tsx';
 import AuthPage from '../components/pages/Auth/AuthPage.tsx';
 import LoginForm from '../components/auth/LoginForm.tsx';
 import RegisterForm from '../components/auth/RegisterForm.tsx';

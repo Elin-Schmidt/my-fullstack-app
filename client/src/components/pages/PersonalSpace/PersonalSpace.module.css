@@ -260,7 +260,15 @@ img {
             KingthingsBloone,
             SundayFunniesBoldoutline
 */
+
 .username {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.usernameStyled {
+    margin-top: -10px;
     grid-area: username;
     font-size: 4rem;
     font-family:
@@ -276,7 +284,19 @@ img {
     animation: glow 4.5s infinite alternate;
     text-transform: uppercase;
     text-align: center;
-    margin-bottom: 20px;
+    opacity: 0.6;
+}
+.usernameText {
+    margin-top: -125px;
+    font-size: 2rem;
+    color: black;
+    text-shadow:
+        0 0 4px #d6e6ff,
+        0 0 8px #d6e6ff,
+        0 0 16px #d6e6ff;
+    font-family: 'Backso', sans-serif;
+    text-transform: uppercase;
+    z-index: 10;
 }
 
 @keyframes glow {
@@ -375,6 +395,7 @@ img {
     font-style: italic; /* valfritt, för att ge en skrivstilskänsla */
     font-size: 1rem;
     color: #333;
+    padding-left: 10px;
 }
 
 /* -- SECTION DIVIDER -- */

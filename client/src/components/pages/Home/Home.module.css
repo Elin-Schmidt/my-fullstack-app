@@ -1,0 +1,38 @@
+.homeContainer {
+    background-image: url('../public/images/dileepa-nipun-5bakUnqvBo0-unsplash.jpg');
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 5rem;
+    color: white;
+    text-align: center;
+}
+.title {
+    font-size: 3rem;
+    margin-bottom: 4rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    margin-bottom: 2rem;
+}
+
+.welcomeImage {
+    width: 40%;
+    height: auto;
+    max-width: 600px;
+    border-radius: 25%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0.6;
+    justify-self: center;
+    border: 2px dotted white;
+    transition: opacity 0.3s ease;
+}
+.subtitle {
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    width: 80%;
+    justify-self: center;
+}
