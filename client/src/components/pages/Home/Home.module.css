@@ -1,5 +1,5 @@
 .homeContainer {
-    background-image: url('../public/images/dileepa-nipun-5bakUnqvBo0-unsplash.jpg');
+    background-image: url('/images/dileepa-nipun-5bakUnqvBo0-unsplash.jpg');
     min-height: 100vh;
     background-size: cover;
     background-position: center;
