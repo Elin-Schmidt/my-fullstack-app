@@ -473,26 +473,39 @@ function PersonalSpace() {
 
                                 {/* Visa kommentarer */}
                                 <div className={styles.commentsSection}>
-                                    {post.comments?.map((comment) => (
-                                        <div
-                                            key={comment.id}
-                                            className={styles.commentItem}
-                                        >
+                                    {post.comments
+                                        ?.slice()
+                                        .sort(
+                                            (a, b) =>
+                                                new Date(
+                                                    b.created_at
+                                                ).getTime() -
+                                                new Date(a.created_at).getTime()
+                                        )
+                                        .map((comment) => (
                                             <div
-                                                className={
-                                                    styles.commentContent
-                                                }
+                                                key={comment.id}
+                                                className={styles.commentItem}
                                             >
-                                                {comment.content}
+                                                <div
+                                                    className={
+                                                        styles.commentContent
+                                                    }
+                                                >
+                                                    {comment.content}
+                                                </div>
+                                                <div
+                                                    className={
+                                                        styles.commentMeta
+                                                    }
+                                                >
+                                                    {comment.username} •{' '}
+                                                    {new Date(
+                                                        comment.created_at
+                                                    ).toLocaleDateString()}
+                                                </div>
                                             </div>
-                                            <div className={styles.commentMeta}>
-                                                {comment.username} •{' '}
-                                                {new Date(
-                                                    comment.created_at
-                                                ).toLocaleDateString()}
-                                            </div>
-                                        </div>
-                                    ))}
+                                        ))}
                                 </div>
                             </div>
                         ))}

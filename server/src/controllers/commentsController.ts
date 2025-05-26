@@ -24,7 +24,7 @@ export const getComments: RequestHandler = async (req, res) => {
              FROM comments c
              JOIN users u ON u.id = c.user_id
              WHERE c.post_id = $1
-             ORDER BY c.created_at ASC`,
+             ORDER BY c.created_at DESC`,
             [postId]
         );
 

@@ -174,7 +174,7 @@ img {
 .iconOverlay {
     position: absolute;
     left: 50%;
-    top: 7.5%;
+    top: 6.5%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
@@ -671,5 +671,9 @@ img {
         width: 150px;
         height: 150px;
         margin-top: -75px; /* Justera för mindre skärm */
+    }
+    .iconOverlay {
+        top: 6%;
+        
     }
 }
