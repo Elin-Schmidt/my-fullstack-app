@@ -139,6 +139,7 @@ img {
     z-index: 2;
     grid-area: profileTop;
     background: #8cb1e9;
+    padding: 20px 0;
 }
 
 /* ===== PROFILE IMAGE ===== */
@@ -152,7 +153,7 @@ img {
     z-index: 10;
     overflow: hidden;
     display: flex;
-    margin-top: -100px; /* Gör att profilbilden överlappar coverbilden snyggt */
+    margin-top: -125px; /* Gör att profilbilden överlappar coverbilden snyggt */
 }
 
 .profileImage {
@@ -670,10 +671,9 @@ img {
     .profileImageWrapper {
         width: 150px;
         height: 150px;
-        margin-top: -75px; /* Justera för mindre skärm */
+        margin-top: -100px; /* Justera för mindre skärm */
     }
     .iconOverlay {
         top: 6%;
-        
     }
 }
