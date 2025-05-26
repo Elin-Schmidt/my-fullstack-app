@@ -2,8 +2,9 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './PersonalSpace/PersonalSpace.module.css';
 import axios from 'axios';
-import { FaHeart } from 'react-icons/fa';
+import { FaHeart, FaUserPlus, FaEnvelope } from 'react-icons/fa';
 import { useAppContext } from '../../context/LoginHandler.tsx';
+import { API_BASE_URL } from '../../utils/api.ts';
 
 interface User {
     id: number;
@@ -45,13 +46,15 @@ const UserSpace = () => {
 
     useEffect(() => {
         if (!id) return;
-        axios.get(`/api/users/${id}`).then((res) => setUser(res.data));
-        axios.get(`/api/posts/user/${id}`).then(async (res) => {
+        axios
+            .get(`${API_BASE_URL}/api/users/${id}`)
+            .then((res) => setUser(res.data));
+        axios.get(`${API_BASE_URL}/api/posts/user/${id}`).then(async (res) => {
             // Hämta kommentarer för varje post
             const postsWithComments = await Promise.all(
                 res.data.map(async (post: Post) => {
                     const commentsRes = await axios.get<Comment[]>(
-                        `/api/posts/${post.id}/comments`
+                        `${API_BASE_URL}/api/posts/${post.id}/comments`
                     );
                     return { ...post, comments: commentsRes.data };
                 })
@@ -81,7 +84,9 @@ const UserSpace = () => {
     // Like handler
     const likeHandler = async (postId: number) => {
         try {
-            const res = await axios.patch(`/api/posts/${postId}/like`);
+            const res = await axios.patch(
+                `${API_BASE_URL}/api/posts/${postId}/like`
+            );
             setPosts((prevPosts) =>
                 prevPosts.map((post) =>
                     post.id === postId
@@ -98,10 +103,13 @@ const UserSpace = () => {
     const handleAddComment = async (postId: number, content: string) => {
         if (!currentUser) return;
         try {
-            const res = await axios.post(`/api/posts/${postId}/comments`, {
-                userId: currentUser.id,
-                content
-            });
+            const res = await axios.post(
+                `${API_BASE_URL}/api/posts/${postId}/comments`,
+                {
+                    userId: currentUser.id,
+                    content
+                }
+            );
             setPosts((prevPosts) =>
                 prevPosts.map((post) =>
                     post.id === postId
@@ -123,12 +131,12 @@ const UserSpace = () => {
 
     return (
         <main className={styles.main}>
-            {/* ...cover/profile... */}
+            {/* COVER IMAGE */}
             <section className={styles.coverImage}>
                 <img
                     src={
                         user.cover_image
-                            ? `http://localhost:5000${user.cover_image}`
+                            ? `${API_BASE_URL}${user.cover_image}`
                             : '/images/default_cover_2.png'
                     }
                     onError={(e) => {
@@ -139,21 +147,45 @@ const UserSpace = () => {
                     className={styles.coverImageDisplay}
                 />
             </section>
-            <div className={styles.profileImageWrapper}>
-                <img
-                    className={styles.profileImage}
-                    src={
-                        user.profile_picture
-                            ? `http://localhost:5000${user.profile_picture}`
-                            : '/images/default_profile.png'
-                    }
-                    onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src = '/images/default_profile.png';
-                    }}
-                    alt="Profile"
-                />
+
+            {/* === PROFILE TOP === */}
+            <div className={styles.profileTop}>
+                <div className={styles.profileImageWrapper}>
+                    <div className={styles.imageHoverWrapper}>
+                        <img
+                            className={styles.profileImage}
+                            src={
+                                user.profile_picture
+                                    ? `${API_BASE_URL}${user.profile_picture}`
+                                    : '/images/default_profile.png'
+                            }
+                            onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src =
+                                    '/images/default_profile.png';
+                            }}
+                            alt="Profile Picture"
+                        />
+                    </div>
+                    {/* Här kan du lägga overlay-ikoner om du vill */}
+                </div>
+                <div className={styles.profileIcons}>
+                    <button
+                        className={styles.iconButton}
+                        title="Lägg till som följare"
+                    >
+                        <FaUserPlus size={22} />
+                    </button>
+                    <button
+                        className={styles.iconButton}
+                        title="Skicka meddelande"
+                    >
+                        <FaEnvelope size={22} />
+                    </button>
+                </div>
             </div>
+
+            {/* PROFILE SECTION */}
             <section className={styles.profileWrapper}>
                 <div className={styles.username}>{user.username}</div>
                 <section className={styles.userInfoWrapper}>
@@ -179,7 +211,8 @@ const UserSpace = () => {
                         <p className={styles.aboutMeContent}>{user.bio}</p>
                     </div>
                 </section>
-                {/* Visa användarens inlägg */}
+
+                {/* POSTS */}
                 <section className={styles.postsWrapper}>
                     <div className={styles.posts}>
                         {posts.length === 0 && <p>Inga inlägg än...</p>}
@@ -284,26 +317,39 @@ const UserSpace = () => {
                                     </div>
                                 )}
                                 <div className={styles.commentsSection}>
-                                    {post.comments?.map((comment) => (
-                                        <div
-                                            key={comment.id}
-                                            className={styles.commentItem}
-                                        >
+                                    {post.comments
+                                        ?.slice()
+                                        .sort(
+                                            (a, b) =>
+                                                new Date(
+                                                    b.created_at
+                                                ).getTime() -
+                                                new Date(a.created_at).getTime()
+                                        )
+                                        .map((comment) => (
                                             <div
-                                                className={
-                                                    styles.commentContent
-                                                }
+                                                key={comment.id}
+                                                className={styles.commentItem}
                                             >
-                                                {comment.content}
+                                                <div
+                                                    className={
+                                                        styles.commentContent
+                                                    }
+                                                >
+                                                    {comment.content}
+                                                </div>
+                                                <div
+                                                    className={
+                                                        styles.commentMeta
+                                                    }
+                                                >
+                                                    {comment.username} •{' '}
+                                                    {new Date(
+                                                        comment.created_at
+                                                    ).toLocaleDateString()}
+                                                </div>
                                             </div>
-                                            <div className={styles.commentMeta}>
-                                                {comment.username} •{' '}
-                                                {new Date(
-                                                    comment.created_at
-                                                ).toLocaleDateString()}
-                                            </div>
-                                        </div>
-                                    ))}
+                                        ))}
                                 </div>
                             </div>
                         ))}

@@ -35,6 +35,7 @@
     flex-direction: column;
     gap: 1.25rem;
     margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
 }
 
 .settingsForm label {

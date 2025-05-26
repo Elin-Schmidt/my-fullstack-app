@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useAppContext } from '../../context/LoginHandler.tsx'; // Din kontext
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '@utils/api.ts'; // Din API bas URL
 
 const LoginForm = () => {
     const { setLoginStatus, setUser } = useAppContext();
@@ -19,7 +20,7 @@ const LoginForm = () => {
 
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
+                `${API_BASE_URL}/api/auth/login`,
                 {
                     email,
                     password

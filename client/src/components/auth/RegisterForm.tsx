@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '@utils/api.ts'; // Din API bas URL
 
 const RegisterForm = () => {
     const [username, setUsername] = useState('');
@@ -16,7 +17,7 @@ const RegisterForm = () => {
 
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/api/auth/register`,
+                `${API_BASE_URL}/api/auth/register`,
                 {
                     username,
                     firstname,

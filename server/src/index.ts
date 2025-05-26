@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRouter'; // auth.ts
-import usersRouter from './routes/usersRouter ';
+import usersRouter from './routes/usersRouter'; // users.ts
 import postsRouter from './routes/postsRouter'; // posts.ts
 import cors from 'cors';
 import path from 'path';
@@ -10,21 +10,20 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+app.get('/test', (req, res) => {
+    res.send('Root test works!');
+});
+
 app.use(
     cors({
         origin:
             process.env.NODE_ENV === 'production'
                 ? 'https://boply.onrender.com'
                 : 'http://localhost:5173',
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Lägg till PATCH här!
         credentials: true
     })
 );
-
-app.use((req, res, next) => {
-    console.log(`Incoming request: ${req.method} ${req.url}`);
-    next();
-});
 
 app.use(
     (
@@ -33,7 +32,6 @@ app.use(
         next: express.NextFunction
     ) => {
         console.log(`Inkommande förfrågan: ${req.method} ${req.url}`);
-        console.log('Body:', req.body);
         next();
     }
 );
@@ -41,12 +39,12 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 if (process.env.SERVE_FRONTEND === 'true') {
     // Serve static files from the frontend
-    app.use(express.static(path.resolve(__dirname, '../client/dist')));
+    app.use(express.static(path.resolve(__dirname, '../../client/dist')));
 
     // Serve frontend for unknown routes
     app.use((req, res, next) => {
-        if (!req.url.startsWith('/api')) {
-            res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
+        if (!req.url.startsWith('/api') && !req.url.startsWith('/uploads')) {
+            res.sendFile(path.join(process.cwd(), 'client/dist/index.html'));
         } else {
             next();
         }
@@ -56,10 +54,15 @@ if (process.env.SERVE_FRONTEND === 'true') {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
-app.use('/api/users/all-users', usersRouter);
-app.use('/api/posts', postsRouter);
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
     console.log(`Servern körs på port ${PORT}`);
 });
+
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('__dirname:', __dirname);
+console.log(
+    'Förväntad index.html:',
+    path.join(process.cwd(), 'client/dist/index.html')
+);

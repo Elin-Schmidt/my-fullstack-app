@@ -5,8 +5,10 @@ import axios, { isAxiosError } from 'axios';
 import { uploadProfilePicture } from '@/utils/uploadProfilePicture.ts';
 import { uploadCoverImage } from '@/utils/uploadCoverImage.ts';
 import { Camera } from 'lucide-react';
+import { FaUserPlus, FaEnvelope } from 'react-icons/fa';
 import PostForm from '../../layout/PostForm/PostForm.tsx';
 import { useAppContext } from '../../../context/LoginHandler.tsx';
+import { API_BASE_URL } from '@/utils/api.ts';
 
 /* === INTERFACES === */
 interface User {
@@ -128,13 +130,13 @@ function PersonalSpace() {
 
             // Hämta användardata
             axios
-                .get<User>(`/api/users/${id}`)
+                .get<User>(`${API_BASE_URL}/api/users/${id}`)
                 .then((res) => setUser(res.data))
                 .catch(console.error);
 
             // Hämta poster för användaren
             axios
-                .get<Post[]>(`/api/posts/user/${id}`)
+                .get<Post[]>(`${API_BASE_URL}/api/posts/user/${id}`)
                 .then((res) =>
                     setPosts(
                         res.data.map((post) => ({
@@ -154,7 +156,7 @@ function PersonalSpace() {
         if (!user) return;
 
         try {
-            const res = await axios.post('/api/posts', {
+            const res = await axios.post(`${API_BASE_URL}/api/posts`, {
                 userId: user.id,
                 content
             });
@@ -174,7 +176,9 @@ function PersonalSpace() {
     // Like handler implementation
     const likeHandler = async (id: number) => {
         try {
-            const res = await axios.post(`/api/posts/${id}/like`);
+            const res = await axios.post(
+                `${API_BASE_URL}/api/posts/${id}/like`
+            );
             setPosts((prevPosts) =>
                 prevPosts.map((post) =>
                     post.id === id ? { ...post, likes: res.data.likes } : post
@@ -204,10 +208,13 @@ function PersonalSpace() {
         if (!user) return;
 
         try {
-            const res = await axios.post(`/api/posts/${postId}/comments`, {
-                userId: user.id,
-                content
-            });
+            const res = await axios.post(
+                `${API_BASE_URL}/api/posts/${postId}/comments`,
+                {
+                    userId: user.id,
+                    content
+                }
+            );
             setPosts((prevPosts) =>
                 prevPosts.map((post) =>
                     post.id === postId
@@ -243,7 +250,7 @@ function PersonalSpace() {
                     <img
                         src={
                             user.cover_image
-                                ? `http://localhost:5000${user.cover_image}`
+                                ? `${API_BASE_URL}${user.cover_image}`
                                 : '/images/default_cover_2.png'
                         }
                         onError={(e) => {
@@ -269,52 +276,57 @@ function PersonalSpace() {
                 </div>
             </section>
 
-            {/* === PROFILE IMAGE === */}
-            <div
-                className={styles.profileImageWrapper}
-                style={{
-                    position: 'absolute',
-                    left: '50%',
-                    top: '100px',
-                    transform: 'translateX(-50%)',
-                    zIndex: 2
-                }}
-            >
-                <div className={styles.imageHoverWrapper}>
-                    <img
-                        className={styles.profileImage}
-                        src={
-                            user.profile_picture
-                                ? `http://localhost:5000${user.profile_picture}`
-                                : '/images/default_profile.png'
-                        }
-                        onError={(e) => {
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.src = '/images/default_profile.png';
-                        }}
-                        alt="Profile Picture"
-                    />
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleProfilePictureChange}
-                        className={styles.uploadInput}
-                        id="upload-input"
-                    />
+            {/* === PROFILE TOP === */}
+            <div className={styles.profileTop}>
+                <div className={styles.profileImageWrapper}>
+                    <div className={styles.imageHoverWrapper}>
+                        <img
+                            className={styles.profileImage}
+                            src={
+                                user.profile_picture
+                                    ? `${API_BASE_URL}${user.profile_picture}`
+                                    : '/images/default_profile.png'
+                            }
+                            onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src =
+                                    '/images/default_profile.png';
+                            }}
+                            alt="Profile Picture"
+                        />
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleProfilePictureChange}
+                            className={styles.uploadInput}
+                            id="upload-input"
+                        />
+                    </div>
+                    <label
+                        htmlFor="upload-input"
+                        className={styles.iconOverlay}
+                    >
+                        <Camera size={20} color="white" />
+                    </label>
                 </div>
-                <label htmlFor="upload-input" className={styles.iconOverlay}>
-                    <Camera size={20} color="white" />
-                </label>
+                <div className={styles.profileIcons}>
+                    <button
+                        className={styles.iconButton}
+                        title="Lägg till som följare"
+                    >
+                        <FaUserPlus size={22} />
+                    </button>
+                    <button
+                        className={styles.iconButton}
+                        title="Skicka meddelande"
+                    >
+                        <FaEnvelope size={22} />
+                    </button>
+                </div>
             </div>
 
             {/* === PROFILE SECTION === */}
             <section className={styles.profileWrapper}>
-                {/* === ICONS === */}
-                <section className={styles.iconWrapper}>
-                    <div className={styles.addFriend}></div>
-                    <div className={styles.sendMessage}></div>
-                </section>
-
                 {/* === USERNAME === */}
                 <div className={styles.username}>{user.username}</div>
 
@@ -461,26 +473,39 @@ function PersonalSpace() {
 
                                 {/* Visa kommentarer */}
                                 <div className={styles.commentsSection}>
-                                    {post.comments?.map((comment) => (
-                                        <div
-                                            key={comment.id}
-                                            className={styles.commentItem}
-                                        >
+                                    {post.comments
+                                        ?.slice()
+                                        .sort(
+                                            (a, b) =>
+                                                new Date(
+                                                    b.created_at
+                                                ).getTime() -
+                                                new Date(a.created_at).getTime()
+                                        )
+                                        .map((comment) => (
                                             <div
-                                                className={
-                                                    styles.commentContent
-                                                }
+                                                key={comment.id}
+                                                className={styles.commentItem}
                                             >
-                                                {comment.content}
+                                                <div
+                                                    className={
+                                                        styles.commentContent
+                                                    }
+                                                >
+                                                    {comment.content}
+                                                </div>
+                                                <div
+                                                    className={
+                                                        styles.commentMeta
+                                                    }
+                                                >
+                                                    {comment.username} •{' '}
+                                                    {new Date(
+                                                        comment.created_at
+                                                    ).toLocaleDateString()}
+                                                </div>
                                             </div>
-                                            <div className={styles.commentMeta}>
-                                                {comment.username} •{' '}
-                                                {new Date(
-                                                    comment.created_at
-                                                ).toLocaleDateString()}
-                                            </div>
-                                        </div>
-                                    ))}
+                                        ))}
                                 </div>
                             </div>
                         ))}

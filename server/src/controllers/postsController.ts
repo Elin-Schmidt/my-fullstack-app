@@ -1,7 +1,5 @@
-import express, { RequestHandler } from 'express';
+import { RequestHandler } from 'express';
 import db from '../db/BoplyDB';
-
-const router = express.Router();
 
 type CreatePostBody = {
     userId: number;
@@ -11,7 +9,11 @@ type CreatePostBody = {
 };
 
 // GET /api/posts/user/:userId
-export const getUserPosts: RequestHandler<{ userId: string }> = async (req, res) => {
+export const getUserPosts: RequestHandler<{ userId: string }> = async (
+    req,
+    res
+) => {
+    console.log('[getUserPosts] Called with userId:', req.params.userId);
     const userId = Number(req.params.userId);
 
     if (isNaN(userId)) {
@@ -55,10 +57,11 @@ export const getUserPosts: RequestHandler<{ userId: string }> = async (req, res)
 };
 
 // POST /api/posts
-export const createPost: RequestHandler<unknown, unknown, CreatePostBody> = async (
-    req,
-    res
-) => {
+export const createPost: RequestHandler<
+    unknown,
+    unknown,
+    CreatePostBody
+> = async (req, res) => {
     const { userId, content, image_url } = req.body;
 
     if (typeof userId !== 'number' || !content) {
