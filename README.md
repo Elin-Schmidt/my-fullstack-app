@@ -8,13 +8,13 @@ Det här projektet är en fullstack-applikation byggd med **React**, **TypeScrip
 
 -   Skapa konto och logga in
 -   Profil med omslagsbild, profilbild och bio
--   Skapa, visa och ta bort inlägg
+-   Skapa och visa inlägg
 -   Gilla andras inlägg (en gång per inlägg)
 -   Kommentera inlägg (med användarnamn och datum)
 -   Se alla användare
 -   Responsiv design för mobil och desktop
 -   Logout-funktion
--   Flyout-menyer och sökfält
+-   Flyout-menyer
 
 ## Tekniker och verktyg
 
