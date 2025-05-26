@@ -1,5 +1,51 @@
-/* ===== BASE STYLES ===== */
+/* ===== FONTS ===== */
 
+@font-face {
+    font-family: 'Backso';
+    src:
+        url('/fonts/Backso.otf') format('opentype'),
+        url('/fonts/Backso.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ChubbyDotty';
+    src: url('/fonts/ChubbyDotty-6YeBD.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'EmilysCandy';
+    src: url('/fonts/EmilysCandy-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Florabet';
+    src: url('/fonts/Florabet-jDv9.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Kingthings Lupineless';
+    src: url('/fonts/Kingthings Lupineless.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'KingthingsBloone';
+    src: url('/fonts/KingthingsBloone-3926.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SundayFunniesBoldoutline';
+    src: url('/fonts/SundayFunniesBoldoutline-e9zn.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ===== BASE STYLES ===== */
 *,
 *::before,
 *::after {
@@ -204,37 +250,45 @@ img {
 }
 
 /* -- USERNAME -- */
+/* Fonts:   Backso,
+            ChubbyDotty,
+            EmilysCandy,
+            Florabet,
+            Kingthings Lupineless,
+            KingthingsBloone,
+            SundayFunniesBoldoutline
+*/
 .username {
     grid-area: username;
     font-size: 4rem;
+    font-family:
+        'KingthingsBloone',
+        Kingthings Lupineless,
+        sans-serif;
     color: #fff;
     text-shadow:
-        0 0 5px #1574da,
-        0 0 10px #1574da,
-        0 0 20px #1574da,
-        0 0 40px #1574da,
-        0 0 80px #1574da;
+        0 0 8px #1574da,
+        0 0 16px #1574da,
+        0 0 32px #1574da;
+
     animation: glow 4.5s infinite alternate;
     text-transform: uppercase;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 @keyframes glow {
     0% {
         text-shadow:
-            0 0 5px #1574da,
-            0 0 10px #1574da,
-            0 0 20px #1574da,
-            0 0 40px #1574da,
-            0 0 80px #1574da;
+            0 0 8px #1574da,
+            0 0 16px #1574da,
+            0 0 32px #1574da;
     }
     100% {
         text-shadow:
-            0 0 10px #64b9eb,
-            0 0 20px #64b9eb,
-            0 0 40px #64b9eb,
-            0 0 80px #64b9eb,
-            0 0 160px #64b9eb;
+            0 0 12px #d6e6ff,
+            0 0 24px #d6e6ff,
+            0 0 48px #d6e6ff;
     }
 }
 
@@ -606,4 +660,16 @@ img {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+}
+
+@media (max-width: 400px) {
+    .username {
+        font-size: 2.5rem;
+        text-align: center;
+    }
+    .profileImageWrapper {
+        width: 150px;
+        height: 150px;
+        margin-top: -75px; /* Justera för mindre skärm */
+    }
 }

@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './PersonalSpace/PersonalSpace.module.css';
 import axios from 'axios';
-import { FaHeart } from 'react-icons/fa';
+import { FaHeart, FaUserPlus, FaEnvelope } from 'react-icons/fa';
 import { useAppContext } from '../../context/LoginHandler.tsx';
 import { API_BASE_URL } from '../../utils/api.ts';
 
@@ -131,7 +131,7 @@ const UserSpace = () => {
 
     return (
         <main className={styles.main}>
-            {/* ...cover/profile... */}
+            {/* COVER IMAGE */}
             <section className={styles.coverImage}>
                 <img
                     src={
@@ -147,21 +147,45 @@ const UserSpace = () => {
                     className={styles.coverImageDisplay}
                 />
             </section>
-            <div className={styles.profileImageWrapper}>
-                <img
-                    className={styles.profileImage}
-                    src={
-                        user.profile_picture
-                            ? `${API_BASE_URL}${user.profile_picture}`
-                            : '/images/default_profile.png'
-                    }
-                    onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src = '/images/default_profile.png';
-                    }}
-                    alt="Profile"
-                />
+
+            {/* === PROFILE TOP === */}
+            <div className={styles.profileTop}>
+                <div className={styles.profileImageWrapper}>
+                    <div className={styles.imageHoverWrapper}>
+                        <img
+                            className={styles.profileImage}
+                            src={
+                                user.profile_picture
+                                    ? `${API_BASE_URL}${user.profile_picture}`
+                                    : '/images/default_profile.png'
+                            }
+                            onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src =
+                                    '/images/default_profile.png';
+                            }}
+                            alt="Profile Picture"
+                        />
+                    </div>
+                    {/* Här kan du lägga overlay-ikoner om du vill */}
+                </div>
+                <div className={styles.profileIcons}>
+                    <button
+                        className={styles.iconButton}
+                        title="Lägg till som följare"
+                    >
+                        <FaUserPlus size={22} />
+                    </button>
+                    <button
+                        className={styles.iconButton}
+                        title="Skicka meddelande"
+                    >
+                        <FaEnvelope size={22} />
+                    </button>
+                </div>
             </div>
+
+            {/* PROFILE SECTION */}
             <section className={styles.profileWrapper}>
                 <div className={styles.username}>{user.username}</div>
                 <section className={styles.userInfoWrapper}>
@@ -187,7 +211,8 @@ const UserSpace = () => {
                         <p className={styles.aboutMeContent}>{user.bio}</p>
                     </div>
                 </section>
-                {/* Visa användarens inlägg */}
+
+                {/* POSTS */}
                 <section className={styles.postsWrapper}>
                     <div className={styles.posts}>
                         {posts.length === 0 && <p>Inga inlägg än...</p>}
