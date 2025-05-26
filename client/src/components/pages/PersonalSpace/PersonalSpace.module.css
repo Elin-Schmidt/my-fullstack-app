@@ -128,7 +128,7 @@ img {
 .iconOverlay {
     position: absolute;
     left: 50%;
-    top: 10%;
+    top: 9%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
