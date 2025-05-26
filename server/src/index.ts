@@ -44,9 +44,7 @@ if (process.env.SERVE_FRONTEND === 'true') {
     // Serve frontend for unknown routes
     app.use((req, res, next) => {
         if (!req.url.startsWith('/api') && !req.url.startsWith('/uploads')) {
-            res.sendFile(
-                path.resolve(__dirname, '../../client/dist/index.html')
-            );
+            res.sendFile(path.join(process.cwd(), 'client/dist/index.html'));
         } else {
             next();
         }
@@ -66,5 +64,5 @@ console.log('NODE_ENV:', process.env.NODE_ENV);
 console.log('__dirname:', __dirname);
 console.log(
     'Förväntad index.html:',
-    path.resolve(__dirname, '../../client/dist/index.html')
+    path.join(process.cwd(), 'client/dist/index.html')
 );
