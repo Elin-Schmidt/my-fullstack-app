@@ -20,7 +20,7 @@ app.use(
             process.env.NODE_ENV === 'production'
                 ? 'https://boply.onrender.com'
                 : 'http://localhost:5173',
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Lägg till PATCH här!
         credentials: true
     })
 );
