@@ -48,11 +48,14 @@ if (process.env.SERVE_FRONTEND === 'true') {
     // Serve static files from the frontend
     app.use(express.static(path.resolve(__dirname, '../../client/dist')));
 
-    app.get('*', (req, res) => {
+    // Serve frontend for unknown routes
+    app.use((req, res, next) => {
         if (!req.url.startsWith('/api')) {
             res.sendFile(
                 path.resolve(__dirname, '../../client/dist/index.html')
             );
+        } else {
+            next();
         }
     });
 }
@@ -60,10 +63,6 @@ if (process.env.SERVE_FRONTEND === 'true') {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
-
-app.get('/api/posts/test', (req, res) => {
-    res.send('Test route works!');
-});
 
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
