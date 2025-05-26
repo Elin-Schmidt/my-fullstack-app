@@ -61,3 +61,10 @@ const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
     console.log(`Servern körs på port ${PORT}`);
 });
+
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('__dirname:', __dirname);
+console.log(
+    'Förväntad index.html:',
+    path.resolve(__dirname, '../../client/dist/index.html')
+);
