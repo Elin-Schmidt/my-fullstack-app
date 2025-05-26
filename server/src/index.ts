@@ -37,7 +37,6 @@ app.use(
         next: express.NextFunction
     ) => {
         console.log(`Inkommande förfrågan: ${req.method} ${req.url}`);
-        console.log('Body:', req.body);
         next();
     }
 );
