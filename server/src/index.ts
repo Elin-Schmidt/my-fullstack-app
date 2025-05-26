@@ -50,7 +50,7 @@ if (process.env.SERVE_FRONTEND === 'true') {
 
     // Serve frontend for unknown routes
     app.use((req, res, next) => {
-        if (!req.url.startsWith('/api')) {
+        if (!req.url.startsWith('/api') && !req.url.startsWith('/uploads')) {
             res.sendFile(
                 path.resolve(__dirname, '../../client/dist/index.html')
             );
