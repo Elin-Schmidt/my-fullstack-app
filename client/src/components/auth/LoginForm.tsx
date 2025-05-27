@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useAppContext } from '../../context/LoginHandler.tsx'; // Din kontext
+import { useAppContext } from '../../context/LoginHandler.tsx';
 import { useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from '@utils/api.ts'; // Din API bas URL
+import { API_BASE_URL } from '@utils/api.ts';
+import styles from '../pages/Auth/AuthPage.module.css';
 
 const LoginForm = () => {
     const { setLoginStatus, setUser } = useAppContext();
@@ -16,36 +17,26 @@ const LoginForm = () => {
         e.preventDefault();
         setError('');
 
-        console.log('Inloggningsuppgifter:', { email, password });
-
         try {
             const response = await axios.post(
                 `${API_BASE_URL}/api/auth/login`,
-                {
-                    email,
-                    password
-                }
+                { email, password }
             );
 
             if (response.status === 200) {
-                console.log('Login Successful'); // Logga vid lyckad inloggning
                 const { token, user } = response.data;
-
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(user));
                 localStorage.setItem('isLoggedIn', 'true');
-
                 setLoginStatus(true);
                 setUser(user);
-                navigate('/personal-space'); // Navigera till personlig sida
+                navigate('/personal-space');
             }
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {
                 if (err.response?.status === 401) {
-                    console.log('Login Failed');
                     setError('Fel e-post eller lösenord.');
                 } else {
-                    console.log('Login Failed: Server error');
                     setError('Ett fel uppstod. Försök igen senare.');
                 }
             } else {
@@ -57,36 +48,65 @@ const LoginForm = () => {
     return (
         <form
             onSubmit={handleLogin}
-            className="max-w-md mx-auto p-6 bg-white shadow rounded"
+            className={styles.formContainer}
+            autoComplete="on"
         >
-            <h2 className="text-2xl font-semibold mb-4">Logga in</h2>
-            {error && <p className="text-red-600 mb-2">{error}</p>}
+            <h2
+                style={{
+                    color: '#d8e7ff',
+                    fontWeight: 600,
+                    fontSize: '1.6rem',
+                    marginBottom: '1.2rem'
+                }}
+            >
+                Logga in
+            </h2>
+            {error && (
+                <p style={{ color: '#ffb3b3', marginBottom: '1rem' }}>
+                    {error}
+                </p>
+            )}
 
-            <label className="block mb-2">
-                E-post
+            <div style={{ width: '100%', marginBottom: '1.2rem' }}>
+                <label
+                    htmlFor="login-email"
+                    style={{ color: '#d8e7ff', fontWeight: 500 }}
+                >
+                    E-post
+                </label>
                 <input
+                    id="login-email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full p-2 border border-gray-300 rounded mt-1"
+                    className={styles.input}
+                    autoComplete="email"
                 />
-            </label>
+            </div>
 
-            <label className="block mb-4">
-                Lösenord
+            <div style={{ width: '100%', marginBottom: '1.2rem' }}>
+                <label
+                    htmlFor="login-password"
+                    style={{ color: '#d8e7ff', fontWeight: 500 }}
+                >
+                    Lösenord
+                </label>
                 <input
+                    id="login-password"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="w-full p-2 border border-gray-300 rounded mt-1"
+                    className={styles.input}
+                    autoComplete="current-password"
                 />
-            </label>
+            </div>
 
             <button
                 type="submit"
-                className="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700"
+                className={styles.toggleButton}
+                style={{ width: '100%', marginTop: '0.5rem' }}
             >
                 Logga in
             </button>

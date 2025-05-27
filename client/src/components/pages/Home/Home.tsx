@@ -12,8 +12,12 @@ function Home() {
                     className={styles.welcomeImage}
                 />
                 <p className={styles.subtitle}>
-                    <p>En plats för kod, kreativitet och gemenskap.</p>
-                    <p>Skapa din profil, dela inlägg och upptäck nya vänner!</p>
+                    <p>
+                        En plats där du kan dela dina tankar, läsa andras
+                        berättelser och hitta nya vänner genom ord.
+                    </p>
+                    ---
+                    <p>Skapa din profil och bli en del av gemenskapen!</p>
                 </p>
             </div>
         </div>

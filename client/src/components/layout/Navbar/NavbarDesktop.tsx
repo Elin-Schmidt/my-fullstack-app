@@ -77,8 +77,11 @@ function NavbarDesktop() {
 
             <div className={styles.wrapper}>
                 <ul className={styles.bottomLinks}>
+                    <span className={styles.linksDivider}></span>
                     <li onClick={() => navigate('/')}>Home</li>
+                    <span className={styles.linksDivider}></span>
                     <li>Meddelanden</li>
+                    <span className={styles.linksDivider}></span>
                 </ul>
             </div>
 

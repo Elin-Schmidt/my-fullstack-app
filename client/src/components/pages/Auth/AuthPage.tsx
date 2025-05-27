@@ -1,32 +1,25 @@
-import { useState } from 'react';
+import { FaUserCircle } from 'react-icons/fa';
+
 import LoginForm from '../../auth/LoginForm.tsx';
 import RegisterForm from '../../auth/RegisterForm.tsx';
-import './AuthPage.module.css'; // Importera CSS för AuthPage
+import styles from './AuthPage.module.css';
 
 const AuthPage = () => {
-    const [showRegister, setShowRegister] = useState(false);
-
-    const toggleRegisterForm = () => {
-        setShowRegister((prev) => !prev);
-    };
-
     return (
-        <div className="auth-page">
-            <h1>Välkommen</h1>
-            <div className="form-container">
+        <div className={styles.authPage}>
+            <div className={styles.authCard}>
+                <FaUserCircle
+                    size={48}
+                    color="#d8e7ff"
+                    style={{ marginBottom: '0.5rem' }}
+                />
+                <h1 className={styles.authTitle}>Välkommen</h1>
+                <p className={styles.welcomeText}>
+                    Välkommen tillbaka! Logga in för att fortsätta.
+                </p>
                 <LoginForm />
-            </div>
-            <div className="form-container">
-                <button onClick={toggleRegisterForm}>
-                    {showRegister
-                        ? 'Stäng registreringsformulär'
-                        : 'Registrera dig'}
-                </button>
-                {showRegister && (
-                    <div className="register-form">
-                        <RegisterForm />
-                    </div>
-                )}
+                <div className={styles.divider}>eller</div>
+                <RegisterForm />
             </div>
         </div>
     );

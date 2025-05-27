@@ -1,9 +1,90 @@
-.auth-page {
+.authPage {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    justify-content: center;
+    /* Gradient inspirerad av Home och jpg */
+    background: linear-gradient(135deg, #313a57 0%, #014a68 60%, #8cb1e9 100%);
     padding: 2rem;
+}
+
+.authCard {
+    background: rgba(49, 58, 87, 0.38); /* Mörkblå med transparens */
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(49, 58, 87, 0.18);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid #b4c9e9;
+    padding: 2.5rem 2rem 2rem 2rem;
+    max-width: 400px;
+    width: 100%;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.toggleButton {
+    background-color: rgb(73, 128, 168);
+    border: 0;
+    border-radius: 56px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family:
+        system-ui,
+        -apple-system,
+        system-ui,
+        'Segoe UI',
+        Roboto,
+        Ubuntu,
+        'Helvetica Neue',
+        sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    outline: 0;
+    padding: 16px 21px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.toggleButton:before {
+    background-color: initial;
+    background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+    border-radius: 125px;
+    content: '';
+    height: 50%;
+    left: 4%;
+    opacity: 0.5;
+    position: absolute;
+    top: 0;
+    transition: all 0.3s;
+    width: 92%;
+}
+
+.toggleButton:hover {
+    box-shadow:
+        rgba(255, 255, 255, 0.2) 0 3px 15px inset,
+        rgba(0, 0, 0, 0.1) 0 3px 5px,
+        rgba(0, 0, 0, 0.1) 0 10px 13px;
+    transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
+    .toggleButton {
+        padding: 16px 48px;
+    }
+}
+
+.toggleButton:hover::after,
+.toggleButton:focus::after {
+    opacity: 1;
 }
 
 .form-container {
@@ -26,4 +107,84 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+@media (min-width: 768px) {
+    .authPage {
+        margin-top: 4.5rem;
+    }
+}
+@media (max-width: 768px) {
+    .authPage {
+        margin-bottom: 4.5rem;
+    }
+}
+
+.input {
+    background: rgba(140, 177, 233, 0.13); /* Ljusblå ton */
+    border: 1.5px solid #b4c9e9;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    color: #d8e7ff;
+    font-size: 1.1rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.2rem;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(49, 58, 87, 0.1);
+    transition:
+        border 0.2s,
+        box-shadow 0.2s;
+}
+.input:focus {
+    border: 1.5px solid #6a87e6;
+    outline: none;
+    box-shadow: 0 2px 12px rgba(106, 135, 230, 0.18);
+}
+
+.welcomeText {
+    color: #d8e7ff;
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+    text-align: center;
+    opacity: 0.85;
+}
+
+.authTitle {
+    color: #d8e7ff;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+    letter-spacing: 0.01em;
+    text-align: center;
+    text-shadow: 1px 2px 8px #313a5755;
+}
+
+/* CSS */
+.divider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 2rem 0 1.5rem 0;
+    color: #b4c9e9;
+    font-weight: 500;
+    font-size: 1.05rem;
+    opacity: 0.85;
+    letter-spacing: 0.03em;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1.5px;
+    background: linear-gradient(90deg, #313a57 0%, #8cb1e9 100%);
+    margin: 0 1rem;
+    border-radius: 2px;
+    opacity: 0.6;
+}
+
+.required {
+    color: #ef4444; /* röd */
+    font-weight: 600;
+    display: inline-block;
+    margin-right: 0.25rem;
 }

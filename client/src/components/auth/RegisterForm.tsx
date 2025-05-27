@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { API_BASE_URL } from '@utils/api.ts'; // Din API bas URL
+import { API_BASE_URL } from '@utils/api.ts';
+import styles from '../pages/Auth/AuthPage.module.css';
 
 const RegisterForm = () => {
     const [username, setUsername] = useState('');
@@ -8,7 +9,6 @@ const RegisterForm = () => {
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [profilePicture, setProfilePicture] = useState('');
     const [message, setMessage] = useState('');
 
     const handleRegister = async (e: React.FormEvent) => {
@@ -23,8 +23,7 @@ const RegisterForm = () => {
                     firstname,
                     lastname,
                     email,
-                    password,
-                    profile_picture: profilePicture || null
+                    password
                 }
             );
 
@@ -45,80 +44,112 @@ const RegisterForm = () => {
     return (
         <form
             onSubmit={handleRegister}
-            className="max-w-md mx-auto p-6 bg-white shadow rounded"
+            className={styles.formContainer}
+            autoComplete="on"
         >
-            <h2 className="text-2xl font-semibold mb-4">Registrera dig</h2>
-            {message && <p className="text-red-600 mb-2">{message}</p>}
+            <h2 className={styles.authTitle}>Registrera dig</h2>
+            {message && (
+                <p style={{ color: '#ffb3b3', marginBottom: '1rem' }}>
+                    {message}
+                </p>
+            )}
 
-            <label className="block mb-2">
-                Användarnamn
+            <div style={{ width: '100%', marginBottom: '1.2rem' }}>
+                <label
+                    htmlFor="register-username"
+                    style={{ color: '#d8e7ff', fontWeight: 500 }}
+                >
+                    <span className={styles.required}>*</span>
+                    Användarnamn
+                </label>
                 <input
+                    id="register-username"
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
-                    className="w-full p-2 border border-gray-300 rounded mt-1"
+                    className={styles.input}
                 />
-            </label>
+            </div>
 
-            <label className="block mb-2">
-                Förnamn
+            <div style={{ width: '100%', marginBottom: '1.2rem' }}>
+                <label
+                    htmlFor="register-firstname"
+                    style={{ color: '#d8e7ff', fontWeight: 500 }}
+                >
+                    <span className={styles.required}>*</span>
+                    Förnamn
+                </label>
                 <input
+                    id="register-firstname"
                     type="text"
                     value={firstname}
                     onChange={(e) => setFirstname(e.target.value)}
                     required
-                    className="w-full p-2 border border-gray-300 rounded mt-1"
+                    className={styles.input}
                 />
-            </label>
+            </div>
 
-            <label className="block mb-2">
-                Efternamn
+            <div style={{ width: '100%', marginBottom: '1.2rem' }}>
+                <label
+                    htmlFor="register-lastname"
+                    style={{ color: '#d8e7ff', fontWeight: 500 }}
+                >
+                    <span className={styles.required}>*</span>
+                    Efternamn
+                </label>
                 <input
+                    id="register-lastname"
                     type="text"
                     value={lastname}
                     onChange={(e) => setLastname(e.target.value)}
                     required
-                    className="w-full p-2 border border-gray-300 rounded mt-1"
+                    className={styles.input}
                 />
-            </label>
+            </div>
 
-            <label className="block mb-2">
-                E-post
+            <div style={{ width: '100%', marginBottom: '1.2rem' }}>
+                <label
+                    htmlFor="register-email"
+                    style={{ color: '#d8e7ff', fontWeight: 500 }}
+                >
+                    <span className={styles.required}>*</span>
+                    E-post
+                </label>
                 <input
+                    id="register-email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full p-2 border border-gray-300 rounded mt-1"
+                    className={styles.input}
+                    autoComplete="email"
                 />
-            </label>
+            </div>
 
-            <label className="block mb-2">
-                Lösenord
+            <div style={{ width: '100%', marginBottom: '1.2rem' }}>
+                <label
+                    htmlFor="register-password"
+                    style={{ color: '#d8e7ff', fontWeight: 500 }}
+                >
+                    <span className={styles.required}>*</span>
+                    Lösenord
+                </label>
                 <input
+                    id="register-password"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="w-full p-2 border border-gray-300 rounded mt-1"
+                    className={styles.input}
+                    autoComplete="new-password"
                 />
-            </label>
-
-            <label className="block mb-4">
-                Profilbild (valfritt)
-                <input
-                    type="text"
-                    value={profilePicture}
-                    onChange={(e) => setProfilePicture(e.target.value)}
-                    placeholder="URL till profilbild"
-                    className="w-full p-2 border border-gray-300 rounded mt-1"
-                />
-            </label>
+            </div>
 
             <button
                 type="submit"
-                className="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700"
+                className={styles.toggleButton}
+                style={{ width: '100%', marginTop: '0.5rem' }}
             >
                 Registrera
             </button>
