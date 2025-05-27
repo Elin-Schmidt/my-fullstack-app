@@ -6,12 +6,12 @@
 
     width: 100%;
     padding: 0.75rem 1rem;
-    background-color: #5a8a99; /* kallblå/grå */
-    color: white;
+    background-color: #8cb1e9; /* kallblå/grå */
+    color: #313a57;
     border: none;
     border-radius: 0.5rem;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition:
         background-color 0.3s ease,

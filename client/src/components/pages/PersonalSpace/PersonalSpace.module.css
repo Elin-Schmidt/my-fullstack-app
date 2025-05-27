@@ -130,6 +130,12 @@ img {
     z-index: 2;
 }
 
+@media (min-width: 768px) {
+    .coverIconOverlay {
+        bottom: 90px; /* Testa även 50px eller 80px för att se skillnad */
+    }
+}
+
 /* === PROFILE TOP === */
 
 .profileTop {
@@ -141,6 +147,7 @@ img {
     grid-area: profileTop;
     background: #8cb1e9;
     padding: 20px 0;
+    margin-top: 0;
 }
 
 /* ===== PROFILE IMAGE ===== */
@@ -176,7 +183,7 @@ img {
 .iconOverlay {
     position: absolute;
     left: 50%;
-    top: 6.5%;
+    top: 6%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
@@ -696,6 +703,23 @@ img {
         margin-top: -100px; /* Justera för mindre skärm */
     }
     .iconOverlay {
-        top: 6%;
+        top: 5.2%;
+    }
+}
+@media (min-width: 768px) {
+    .coverImageDisplay {
+        height: 400px; /* Högre coverbild på större skärmar */
+    }
+    .coverImageHoverWrapper {
+        height: 400px;
+    }
+    .profileTop {
+        margin-top: 120px; /* Flytta ner innehållet under högre omslagsbild */
+    }
+    .profileWrapper {
+        margin-top: 60px; /* Flytta ner resten av innehållet */
+    }
+    .iconOverlay {
+        top: 8.4%;
     }
 }

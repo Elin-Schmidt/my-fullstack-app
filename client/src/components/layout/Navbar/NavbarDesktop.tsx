@@ -1,55 +1,66 @@
-import { useRef, useEffect, useState } from 'react';
-import { RxAvatar } from 'react-icons/rx';
+import { useRef, useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
-import { FiClock, FiSearch } from 'react-icons/fi';
-import { useNavbarContext } from '../../../context/NavbarHandler.tsx';
+import { RxAvatar } from 'react-icons/rx';
+import { FiClock } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '@/context/LoginHandler.tsx';
 import styles from './NavbarDesktop.module.css';
 import DigitalClock from '../DigitalClock.tsx';
-import { Link, useNavigate } from 'react-router-dom';
+import LogoutButton from '../../auth/LogoutButton.tsx';
 
 function NavbarDesktop() {
-    // Använd kontexten istället för lokal state
-    const { menuOpen, toggleMenu } = useNavbarContext(); // Hämtar menuOpen och toggleMenu från kontexten
-    const [clockOpen, setClockOpen] = useState<boolean>(false);
+    const { isLoggedIn } = useAuthContext();
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [extraMenuOpen, setExtraMenuOpen] = useState(false);
+    const [clockOpen, setClockOpen] = useState(false);
+
+    const menuRef = useRef<HTMLDivElement | null>(null);
+    const extraMenuRef = useRef<HTMLLIElement | null>(null);
+    const clockRef = useRef<HTMLDivElement | null>(null);
     const navigate = useNavigate();
 
-    // Ref-typer
-    const menuRef = useRef<HTMLDivElement | null>(null);
-    const clockRef = useRef<HTMLDivElement | null>(null);
-
-    // Event handler för att stänga menyn och klockan om användaren klickar utanför
-    const handleClickOutside = (event: MouseEvent) => {
-        if (
-            menuRef.current &&
-            !menuRef.current.contains(event.target as Node)
-        ) {
-            toggleMenu(); // Använd toggleMenu från kontexten
-        }
-        if (
-            clockRef.current &&
-            !clockRef.current.contains(event.target as Node)
-        ) {
-            setClockOpen(false);
-        }
-    };
-
-    const handleProfileClick = () => {
-        navigate('/auth'); // Navigera till auth-sidan
-    };
-
-    // Lägg till event listener vid mount och ta bort den vid unmount
     useEffect(() => {
-        document.addEventListener(
-            'mousedown',
-            handleClickOutside as EventListener
-        );
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                menuOpen &&
+                menuRef.current &&
+                !menuRef.current.contains(event.target as Node)
+            ) {
+                setMenuOpen(false);
+            }
+            if (
+                clockRef.current &&
+                !clockRef.current.contains(event.target as Node)
+            ) {
+                setClockOpen(false);
+            }
+            if (
+                extraMenuRef.current &&
+                !extraMenuRef.current.contains(event.target as Node)
+            ) {
+                setExtraMenuOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [toggleMenu]);
+    }, [menuOpen]);
+
+    const handleProfileClick = () => {
+        if (isLoggedIn) {
+            setMenuOpen((prev) => !prev);
+        } else {
+            navigate('/auth');
+        }
+    };
 
     return (
-        <nav className={styles['navbar-desktop']}>
+        <nav
+            className={styles['navbar-mobile']}
+            style={{ position: 'fixed', top: 0, bottom: 'unset' }}
+        >
             <div className={styles.clock} ref={clockRef}>
                 <button
                     className={styles.clockButton}
@@ -65,40 +76,72 @@ function NavbarDesktop() {
             </div>
 
             <div className={styles.wrapper}>
-                <ul className={styles.links}>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
+                <ul className={styles.bottomLinks}>
+                    <li onClick={() => navigate('/')}>Home</li>
+                    <li>Meddelanden</li>
                 </ul>
             </div>
 
             <div className={styles.profileContainer}>
-                <div className={styles.searchContainer}>
-                    <FiSearch className={styles.searchIcon} />
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className={styles.searchBar}
-                    />
-                </div>
-                <button className={styles.profile} onClick={handleProfileClick}>
-                    {menuOpen ? <FaTimes /> : <RxAvatar />}
+                <button
+                    aria-label="Profilmeny"
+                    className={styles.profile}
+                    onClick={handleProfileClick}
+                >
+                    {menuOpen && isLoggedIn ? <FaTimes /> : <RxAvatar />}
                 </button>
-                {menuOpen && (
+
+                {menuOpen && isLoggedIn && (
                     <>
                         <div
                             className={styles.overlay}
-                            onClick={toggleMenu} // Stäng menyn när overlay klickas
+                            onClick={() => setMenuOpen(false)}
                         ></div>
                         <div
                             ref={menuRef}
                             className={`${styles.flyoutMenu} ${menuOpen ? styles.open : ''}`}
                         >
                             <ul>
-                                <li>Extra Link 1</li>
-                                <li>Extra Link 2</li>
-                                <li>Extra Link 3</li>
-                                <li>Extra Link 4</li>
+                                <li onClick={() => navigate('/personal-space')}>
+                                    Min sida
+                                </li>
+                                <li
+                                    ref={extraMenuRef}
+                                    className={styles.extraMenu}
+                                >
+                                    <button
+                                        className={`${styles.extraButton} ${extraMenuOpen ? styles.expanded : ''}`}
+                                        onClick={() =>
+                                            setExtraMenuOpen((prev) => !prev)
+                                        }
+                                    >
+                                        Extra alternativ
+                                        <span className={styles.arrow}>
+                                            {extraMenuOpen ? '▼' : '▶'}
+                                        </span>
+                                    </button>
+
+                                    {extraMenuOpen && (
+                                        <ul className={styles.expandMenu}>
+                                            <li
+                                                onClick={() =>
+                                                    navigate('/all-users')
+                                                }
+                                            >
+                                                Alla användare
+                                            </li>
+                                            <li>Notebook</li>
+                                            <li>To-Do Lista</li>
+                                        </ul>
+                                    )}
+                                </li>
+
+                                <li onClick={() => navigate('/settings')}>
+                                    Inställningar
+                                </li>
+                                <li>
+                                    <LogoutButton />
+                                </li>
                             </ul>
                         </div>
                     </>

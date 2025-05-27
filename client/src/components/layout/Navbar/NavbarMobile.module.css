@@ -7,12 +7,13 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #f5f7fa; /* ljus, neutral bakgrund */
-    color: #333; /* mörk textfärg för kontrast */
-    padding: 0.75rem 1.5rem; /* lite mer padding */
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1); /* mild skugga för lyft */
+    background: rgba(201, 205, 218, 0.7);
+    backdrop-filter: blur(8px);
+    color: #08142e;
+    padding: 0.75rem 1.5rem;
+    box-shadow: 0 -4px 20px rgba(1, 74, 104, 0.08);
     z-index: 1000;
-    border-top: 1px solid #ddd; /* diskret avgränsning */
+    border-top: 2px solid #303956;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -20,8 +21,14 @@
 .wrapper {
     display: flex;
     justify-content: center;
-    flex: 1; /* fyller ut mitten */
-    gap: 2rem; /* lite större mellanrum mellan länkar */
+    flex: 1;
+    gap: 2rem;
+}
+.bottomLinks li {
+    color: #08142e !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 /* Meny-länkar */
@@ -39,20 +46,24 @@
     cursor: pointer;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #555; /* lite mjukare textfärg */
+    color: #d8e7ff;
     transition:
         color 0.3s ease,
         transform 0.3s ease;
     padding: 0.25rem 0.5rem;
     border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .links li:hover,
 .navbar-mobile ul li:hover {
-    color: #016692; /* mörkare teal */
+    color: #8cb1e9;
     background-color: rgba(1, 102, 146, 0.1);
     transform: scale(1.05);
-    box-shadow: 0 0 6px rgba(1, 102, 146, 0.15); /* svag skugga */
+    box-shadow: 0 0 6px rgba(1, 102, 146, 0.15);
 }
 
 /* Profile container */
@@ -65,27 +76,25 @@
 
 /* Profilknapp */
 .profile {
-    background: none;
+    background: linear-gradient(135deg, #014a68 60%, #b6bac5 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(1, 74, 104, 0.15);
     border: none;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition:
+        background 0.3s,
+        transform 0.2s;
     font-size: 2rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-    color: #444;
-    border-radius: 50%;
-    padding: 0.3rem;
 }
 
 .profile:hover {
-    transform: scale(1.15);
-    box-shadow:
-        0 0 10px rgba(1, 102, 146, 0.6),
-        0 0 20px rgba(1, 102, 146, 0.4);
-    color: #016692;
+    background: linear-gradient(135deg, #016692 60%, #d8e7ff 100%);
+    transform: scale(1.12);
 }
 
 /* När menyn är öppen */
@@ -95,7 +104,7 @@
     bottom: 3.5rem;
     left: 0;
     right: 0;
-    background-color: #f5f7fa;
+    background-color: #b6bac5;
     padding: 1rem 0;
     box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
     border-radius: 12px 12px 0 0;
@@ -123,7 +132,6 @@
 /* Drop-up-meny */
 .menu {
     background-color: #fff;
-    color: #333;
     list-style: none;
     padding: 1.5rem 2rem;
     margin: 0 auto;
@@ -152,27 +160,26 @@
 /* Flyout-meny */
 .flyoutMenu {
     position: absolute;
-    bottom: 3.4rem;
+    bottom: 3.5rem;
     right: 0;
-    background-color: #fff;
-    color: #333;
+    background: linear-gradient(135deg, #313a57 80%, #014a68 100%);
+    color: #d8e7ff;
     padding: 0.75rem 1rem;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
     z-index: 1002;
     width: 15rem;
     opacity: 0;
-    transform: scaleY(0);
-    transform-origin: bottom;
+    transform: translateY(30px) scaleY(0.95);
     transition:
-        transform 0.3s ease,
-        opacity 0.3s ease;
+        transform 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        opacity 0.3s;
     overflow: hidden;
 }
 
 .flyoutMenu.open {
     opacity: 1;
-    transform: scaleY(1);
+    transform: translateY(0) scaleY(1);
 }
 
 .flyoutMenu ul {
@@ -185,35 +192,27 @@
 }
 
 .flyoutMenu li {
-    font-size: 1.1rem;
+    font-size: 1.18rem;
+    font-weight: 600;
     cursor: pointer;
     transition:
-        color 0.3s ease,
-        transform 0.3s ease;
-    text-align: right;
-    padding: 0.5rem 1.5rem;
-    border-radius: 6px;
-    position: relative;
-    overflow: hidden;
-}
-
-.flyoutMenu li::after {
-    content: '';
-    position: absolute;
-    left: 10%;
-    right: 10%;
-    bottom: 0;
-    height: 2px;
-    background: rgba(0, 0, 0, 0.1);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    pointer-events: none;
+        color 0.3s,
+        background 0.3s,
+        transform 0.2s;
+    text-align: left;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    letter-spacing: 0.02em;
 }
 
 .flyoutMenu li:hover {
-    color: #014a68;
-    background-color: rgba(1, 102, 146, 0.08);
-    transform: none;
-    box-shadow: 0 0 6px rgba(1, 102, 146, 0.15);
+    color: #fff;
+    background: rgba(1, 102, 146, 0.22);
+    transform: translateX(4px) scale(1.04);
+    box-shadow: 0 2px 10px rgba(1, 102, 146, 0.1);
 }
 
 /* FlyoutClock */
@@ -232,27 +231,26 @@
 }
 
 .clockButton {
-    background: none;
+    background: linear-gradient(135deg, #014a68 60%, #b6bac5 100%);
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(1, 74, 104, 0.15);
     border: none;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition:
+        background 0.3s,
+        transform 0.2s;
     cursor: pointer;
     color: #444;
     font-size: 1.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.15rem;
-    border-radius: 50%;
-    transition:
-        box-shadow 0.3s ease,
-        transform 0.3s ease;
 }
 
 .clockButton:hover {
-    transform: scale(1.15);
-    box-shadow:
-        0 0 12px rgba(1, 102, 146, 0.6),
-        0 0 20px rgba(1, 102, 146, 0.4);
-    color: #016692;
+    background: linear-gradient(135deg, #016692 60%, #d8e7ff 100%);
+    transform: scale(1.12);
 }
 
 /* Expandera undermeny */
@@ -270,7 +268,7 @@
     background: none;
     border: none;
     font-size: 1.1rem;
-    color: #555; /* lite mjukare textfärg */
+    color: #d8e7ff; /* lite mjukare textfärg */
     font-weight: 600;
     cursor: pointer;
     padding: 0.5rem 0;
@@ -278,7 +276,7 @@
     border-radius: 6px;
 }
 .extraButton:hover {
-    color: #016692; /* mörkare teal */
+    color: #acb0bb; /* mörkare teal */
 }
 
 .arrow {
@@ -311,7 +309,7 @@
 
 .expanded {
     opacity: 0.5; /* Mindre framträdande */
-    color: #016692; /* Valfritt: ljusare färg */
+    transform: scale(0.98); /* Liten minskning i storlek */
     font-weight: normal; /* Om du vill att den ska kännas mindre "viktig" */
     transition: all 0.3s ease;
 }
@@ -325,4 +323,26 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+@keyframes wobble {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-8deg);
+    }
+    50% {
+        transform: rotate(8deg);
+    }
+    75% {
+        transform: rotate(-4deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+.links li:hover svg,
+.flyoutMenu li:hover svg {
+    animation: wobble 0.5s;
 }

@@ -1,4 +1,5 @@
-.navbar-desktop {
+/* Grundlayout för Navbar-Mobile */
+.navbar-mobile {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -6,117 +7,179 @@
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #fff6f0;
-    color: black;
-    padding: 0.5rem 1rem;
+    background: rgba(201, 205, 218, 0.7);
+    backdrop-filter: blur(8px);
+    color: #08142e;
+    padding: 0.75rem 1.5rem;
+    box-shadow: 0 -4px 20px rgba(1, 74, 104, 0.08);
     z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-bottom: 2px solid #303956;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.links {
+/* Wrapper för innehåll i navbaren */
+.wrapper {
     display: flex;
+    justify-content: center;
+    flex: 1;
     gap: 2rem;
+}
+.bottomLinks li {
+    color: #08142e !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Meny-länkar */
+.links,
+.navbar-mobile ul {
     list-style: none;
+    display: flex;
+    gap: 1.5rem;
     margin: 0;
     padding: 0;
 }
 
-.links li {
+.links li,
+.navbar-mobile ul li {
     cursor: pointer;
-    font-size: 1.6rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #d8e7ff;
     transition:
         color 0.3s ease,
         transform 0.3s ease;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.links li:hover {
-    color: #016692;
-    transform: scale(1.2);
+.links li:hover,
+.navbar-mobile ul li:hover {
+    color: #8cb1e9;
+    background-color: rgba(1, 102, 146, 0.1);
+    transform: scale(1.05);
+    box-shadow: 0 0 6px rgba(1, 102, 146, 0.15);
 }
 
-.clock {
-    font-size: 1rem;
-}
-
+/* Profile container */
 .profileContainer {
-    display: flex;
-    align-items: center;
-    margin-right: 1rem;
-    justify-content: center;
-}
-
-.searchContainer {
+    flex-shrink: 0;
     position: relative;
+    margin-left: auto;
+    margin-right: 0;
 }
 
-.searchIcon {
-    position: absolute;
-    left: 0.8rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #888;
-}
-
-.searchBar {
-    padding: 0.4rem 0.8rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 1rem;
-    margin-right: 1rem;
-    background-color: #fff;
-    color: #000;
-    outline: none;
-    transition: border-color 0.3s ease;
-    padding-left: 2rem; /* Gör plats för ikonen */
-}
-
-.searchBar:focus {
-    border-color: #016692;
-}
-
+/* Profilknapp */
 .profile {
-    font-size: 2.8rem;
-    background: none;
+    background: linear-gradient(135deg, #014a68 60%, #b6bac5 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(1, 74, 104, 0.15);
+    border: none;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition:
+        background 0.3s,
+        transform 0.2s;
+    font-size: 2rem;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.3s ease;
 }
 
 .profile:hover {
-    transform: scale(1.2);
+    background: linear-gradient(135deg, #016692 60%, #d8e7ff 100%);
+    transform: scale(1.12);
+}
+
+/* När menyn är öppen */
+.menuOpen {
+    flex-direction: column;
+    position: absolute;
+    bottom: 3.5rem;
+    left: 0;
+    right: 0;
+    background-color: #b6bac5;
+    padding: 1rem 0;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px 12px 0 0;
+    z-index: 1001;
+}
+
+/* Overlay för att stänga menyn */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Drop-up-meny */
+.menu {
+    background-color: #fff;
+    list-style: none;
+    padding: 1.5rem 2rem;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+}
+
+.menu li {
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    padding: 0.5rem 0;
+}
+
+.menu li:hover {
+    color: #014a68;
 }
 
 /* Flyout-meny */
 .flyoutMenu {
     position: absolute;
-    top: 4rem; /* Justera för att placera flyouten ovanför */
-    right: 2rem;
-    background-color: #fff1e6;
-    color: black;
-    padding: 0.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    top: 3.5rem;
+    right: 0;
+    background: linear-gradient(135deg, #313a57 80%, #014a68 100%);
+    color: #d8e7ff;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
     z-index: 1002;
-    width: 13rem;
+    width: 15rem;
     opacity: 0;
-    transform: scaleY(0); /* Komprimerad vertikalt */
-    transform-origin: bottom;
+    transform: translateY(30px) scaleY(0.95);
     transition:
-        transform 0.3s ease,
-        opacity 0.3s ease;
-    overflow: hidden; /* Förhindrar att innehåll går utanför när det zoomas */
+        transform 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        opacity 0.3s;
+    overflow: hidden;
 }
 
 .flyoutMenu.open {
     opacity: 1;
-    transform: scaleY(1);
-}
-
-.flyoutMenu.open ul {
-    display: flex;
+    transform: translateY(0) scaleY(1);
 }
 
 .flyoutMenu ul {
@@ -129,60 +192,166 @@
 }
 
 .flyoutMenu li {
-    font-size: 1.2rem;
+    font-size: 1.18rem;
+    font-weight: 600;
     cursor: pointer;
     transition:
-        color 0.3s ease,
-        transform 0.3s ease;
-    text-align: right;
-    padding: 0.5rem 2rem;
-    position: relative;
-    overflow: hidden; /* Förhindrar overflow när elementet zoomar */
-}
-
-.flyoutMenu li::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 2px; /* Tunn linje */
-    background: rgba(0, 0, 0, 0.15); /* Diskret men tydlig */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow nedåt för layering */
-    pointer-events: none;
+        color 0.3s,
+        background 0.3s,
+        transform 0.2s;
+    text-align: left;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    letter-spacing: 0.02em;
 }
 
 .flyoutMenu li:hover {
-    color: rgb(20, 55, 70); /* Mörkare teal vid hover */
-    transform: scale(
-        1.05
-    ); /* Liten zoom vid hover istället för att förstora för mycket */
+    color: #fff;
+    background: rgba(1, 102, 146, 0.22);
+    transform: translateX(4px) scale(1.04);
+    box-shadow: 0 2px 10px rgba(1, 102, 146, 0.1);
 }
 
+/* FlyoutClock */
 .flyoutClock {
     position: absolute;
-    top: 4rem; /* Justera beroende på din navbar-höjd */
+    top: -2.5rem;
     left: 0;
-    background-color: white; /* Eller vad som passar din design */
+    background-color: white;
     padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 100;
-    color: black;
+    color: #333;
+    font-weight: 600;
+    font-size: 1rem;
 }
+
 .clockButton {
-    background: none;
+    background: linear-gradient(135deg, #014a68 60%, #b6bac5 100%);
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(1, 74, 104, 0.15);
     border: none;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition:
+        background 0.3s,
+        transform 0.2s;
     cursor: pointer;
-    color: black; /* eller annan färg */
+    color: #444;
     font-size: 1.8rem;
-    justify-content: center;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
+
 .clockButton:hover {
-    transform: scale(1.2); /* Förstoring vid hover */
-    text-shadow:
-        0 0 8px rgba(0, 0, 0, 0.2),
-        0 0 15px rgba(255, 255, 255, 0.5); /* Glittrande effekt */
+    background: linear-gradient(135deg, #016692 60%, #d8e7ff 100%);
+    transform: scale(1.12);
+}
+
+/* Expandera undermeny */
+.extraMenu {
+    display: flex;
+    flex-direction: column;
+}
+
+.extraButton {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    align-items: baseline;
+    width: 100%;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    color: #d8e7ff; /* lite mjukare textfärg */
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    transition: background-color 0.3s ease;
+    border-radius: 6px;
+}
+.extraButton:hover {
+    color: #acb0bb; /* mörkare teal */
+}
+
+.arrow {
+    transition: transform 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.expandMenu {
+    list-style: none;
+    margin: 0.3rem 0 0 1rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    animation: expandFade 0.2s ease-in-out;
+}
+
+.expandMenu li {
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.expandMenu li:hover {
+    background-color: rgba(1, 102, 146, 0.2);
+    color: #014a68;
+}
+
+.expanded {
+    opacity: 0.5; /* Mindre framträdande */
+    transform: scale(0.98); /* Liten minskning i storlek */
+    font-weight: normal; /* Om du vill att den ska kännas mindre "viktig" */
+    transition: all 0.3s ease;
+}
+
+@keyframes expandFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes wobble {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-8deg);
+    }
+    50% {
+        transform: rotate(8deg);
+    }
+    75% {
+        transform: rotate(-4deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+.links li:hover svg,
+.flyoutMenu li:hover svg {
+    animation: wobble 0.5s;
+}
+@media (min-width: 765px) {
+    main {
+        margin-top: 4.5rem; /* Justera för att undvika överlappning med navbaren */
+    }
+    .flyoutClock {
+        top: 4.6rem; /* Justera positionen för att passa den nya navbar-höjden */
+        font-size: 1.6rem;
+    }
 }

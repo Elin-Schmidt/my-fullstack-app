@@ -34,29 +34,33 @@ const UserList = () => {
 
     return (
         <div className={styles.container}>
-            {users.map((user) => (
-                <div
-                    key={user.id}
-                    className={styles.userCard}
-                    onClick={() => navigate(`/user/${user.id}`)}
-                    style={{ cursor: 'pointer' }}
-                >
-                    <img
-                        src={
-                            user.profile_picture
-                                ? `${API_BASE_URL}${user.profile_picture}`
-                                : '/default-profile.png'
-                        }
-                        onError={(e) => {
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.src = '/images/default_profile.png';
-                        }}
-                        alt={user.username}
-                        className={styles.profilePicture}
-                    />
-                    <h3 className={styles.username}>{user.username}</h3>
-                </div>
-            ))}
+            {users
+                .slice() // kopiera arrayen för att inte mutera state
+                .sort((a, b) => a.username.localeCompare(b.username))
+                .map((user) => (
+                    <div
+                        key={user.id}
+                        className={styles.userCard}
+                        onClick={() => navigate(`/user/${user.id}`)}
+                        style={{ cursor: 'pointer' }}
+                    >
+                        <img
+                            src={
+                                user.profile_picture
+                                    ? `${API_BASE_URL}${user.profile_picture}`
+                                    : '/default-profile.png'
+                            }
+                            onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src =
+                                    '/images/default_profile.png';
+                            }}
+                            alt={user.username}
+                            className={styles.profilePicture}
+                        />
+                        <h3 className={styles.username}>{user.username}</h3>
+                    </div>
+                ))}
         </div>
     );
 };

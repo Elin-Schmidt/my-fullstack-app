@@ -151,6 +151,24 @@ function PersonalSpace() {
         }
     }, []);
 
+    useEffect(() => {
+        if (!user) return;
+        axios
+            .get(`${API_BASE_URL}/api/posts/user/${user.id}`)
+            .then(async (res) => {
+                // Hämta kommentarer för varje post separat
+                const postsWithComments = await Promise.all(
+                    res.data.map(async (post: Post) => {
+                        const commentsRes = await axios.get<Comment[]>(
+                            `${API_BASE_URL}/api/posts/${post.id}/comments`
+                        );
+                        return { ...post, comments: commentsRes.data };
+                    })
+                );
+                setPosts(postsWithComments);
+            });
+    }, [user]);
+
     /* === ADD POST === */
     const addPost = async (content: string) => {
         if (!user) return;

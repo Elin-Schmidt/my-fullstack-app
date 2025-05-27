@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
 .homeContainer {
     background-image: url('/images/dileepa-nipun-5bakUnqvBo0-unsplash.jpg');
     min-height: 100vh;
@@ -10,12 +12,13 @@
     padding-top: 5rem;
     color: white;
     text-align: center;
+    position: relative;
 }
 .title {
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
     font-size: 3rem;
-    margin-bottom: 4rem;
+    margin-bottom: 3.5rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    margin-bottom: 2rem;
 }
 
 .welcomeImage {
@@ -28,11 +31,51 @@
     justify-self: center;
     border: 2px dotted white;
     transition: opacity 0.3s ease;
+    animation: fadeInZoom 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+@keyframes fadeInZoom {
+    from {
+        opacity: 0;
+        transform: scale(0.4);
+    }
+    to {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+}
+@keyframes pulseSubtitle {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.025);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 .subtitle {
     font-size: 1.2rem;
-    margin-top: 1.5rem;
+    margin-top: 3.5rem;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    width: 80%;
+    width: 65%;
     justify-self: center;
+    /* Glassmorphism med #313a57 */
+    background: rgba(49, 58, 87, 0.35);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 1.5rem 2rem;
+    animation: pulseSubtitle 2.2s infinite;
+}
+.homeOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+.contentBox {
+    position: relative;
+    z-index: 2;
 }

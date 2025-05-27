@@ -10,6 +10,7 @@ body {
     min-height: 100vh;
     align-content: flex-start;
     margin: 0 2rem;
+    justify-content: center;
 }
 
 .userCard {
@@ -75,6 +76,7 @@ body {
         height: auto; /* Anpassa höjden efter innehåll */
         max-height: none;
         margin: 0.5rem 0.5; /* Mindre sidomarginal */
+        gap: 0.5rem; /* Minska gapet mellan cards */
     }
     .profilePicture {
         width: 50px;
@@ -82,5 +84,16 @@ body {
     }
     .username {
         font-size: 1.1rem;
+    }
+    @media (max-width: 400px) {
+        .userCard {
+            width: 40%; /* En card per rad på mycket små skärmar */
+            margin: 0.5rem 0.5rem; /* Mindre sidomarginal */
+        }
+    }
+}
+@media (min-width: 768px) {
+    .container {
+        margin-top: 4.5rem;
     }
 }

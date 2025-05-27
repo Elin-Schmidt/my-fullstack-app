@@ -9,8 +9,9 @@
     Visa:
     -   Vilka har jag lagt till som favoriter?
     -   Vilka har lagt till mig som favorit?
--   Performance, Accessibility, Best Practices, SEO optimeringar!
+    -   Performance, Accessibility, Best Practices, SEO optimeringar!
     -   Lighthouse!
+    -   Klickbara username på kommentarer
 
 ---
 

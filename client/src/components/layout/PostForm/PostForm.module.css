@@ -74,3 +74,9 @@
 .postFormButton:active {
     transform: scale(0.95);
 }
+
+@media (min-width: 768px) {
+    .postformWrapper {
+        max-width: 170%;
+    }
+}
