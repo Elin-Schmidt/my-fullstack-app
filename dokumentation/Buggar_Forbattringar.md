@@ -1,10 +1,10 @@
 # Buggar
 
--   API-roters funkar inte på render
+-   API-roters funkar inte på render ✅
 -   Fel username på kommentarerna på PersonalSpace ✅
 -   Home-bild inte centrerad på Iphone
 -   IconOverlay på profilbilden hamnar fel
--   Fixa en margin på AllUsers
+-   Fixa en margin på AllUsers ✅
 
 ---
 

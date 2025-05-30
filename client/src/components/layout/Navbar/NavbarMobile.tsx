@@ -78,7 +78,13 @@ function NavbarMobile() {
                     <span className={styles.linksDivider}></span>
                     <li onClick={() => navigate('/')}>Home</li>
                     <span className={styles.linksDivider}></span>
-                    <li>Meddelanden</li>
+                    <li
+                        onClick={() =>
+                            navigate('/chased')
+                        }
+                    >
+                        Chased (Spel)
+                    </li>
                     <span className={styles.linksDivider}></span>
                 </ul>
             </div>
@@ -126,17 +132,31 @@ function NavbarMobile() {
                                         <ul className={styles.expandMenu}>
                                             <li
                                                 onClick={() =>
-                                                    navigate('/all-users')
+                                                    navigate('/messages')
                                                 }
                                             >
-                                                Alla användare
+                                                Meddelanden
                                             </li>
-                                            <li>Notebook</li>
-                                            <li>To-Do Lista</li>
+                                            <li
+                                                onClick={() =>
+                                                    navigate('/notebook')
+                                                }
+                                            >
+                                                Notebook
+                                            </li>
+                                            <li
+                                                onClick={() =>
+                                                    navigate('/to-do')
+                                                }
+                                            >
+                                                To-Do Lista
+                                            </li>
                                         </ul>
                                     )}
                                 </li>
-
+                                <li onClick={() => navigate('/all-users')}>
+                                    Alla användare
+                                </li>
                                 <li onClick={() => navigate('/settings')}>
                                     Inställningar
                                 </li>

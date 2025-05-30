@@ -10,7 +10,7 @@ body {
     min-height: 100vh;
     align-content: flex-start;
     margin: 0 2rem;
-    justify-content: center;
+    justify-content: flex-start;
     margin-bottom: 4.5rem;
 }
 
@@ -66,9 +66,6 @@ body {
 @media (max-width: 600px) {
     .container {
         flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: flex-start;
         gap: 1rem;
     }
     .userCard {
