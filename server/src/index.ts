@@ -37,23 +37,26 @@ app.use(
 );
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
+// API routes först!
+app.use('/api/auth', authRoutes);
+app.use('/api/users', usersRouter);
+app.use('/api/posts', postsRouter);
+
 if (process.env.SERVE_FRONTEND === 'true') {
     // Serve static files from the frontend
     app.use(express.static(path.resolve(__dirname, '../../client/dist')));
 
-    // Serve frontend for unknown routes
+    // SPA fallback
     app.use((req, res, next) => {
         if (!req.url.startsWith('/api') && !req.url.startsWith('/uploads')) {
-            res.sendFile(path.join(process.cwd(), 'client/dist/index.html'));
+            res.sendFile(
+                path.resolve(__dirname, '../../client/dist/index.html')
+            );
         } else {
             next();
         }
     });
 }
-
-app.use('/api/auth', authRoutes);
-app.use('/api/users', usersRouter);
-app.use('/api/posts', postsRouter);
 
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
