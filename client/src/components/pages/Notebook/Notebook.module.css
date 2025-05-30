@@ -1,7 +1,283 @@
-.toDoList {
+.notebook {
+    max-width: 600px;
+    margin: 3rem auto 2rem auto;
+    background: linear-gradient(135deg, #f7faff 80%, #e8f0ff 100%);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(49, 58, 87, 0.1);
+    padding: 2.5rem 2rem 2rem 2rem;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+    border: 2px solid #b4c9e9;
+    /* Simulera linjerat papper */
+    background-image: repeating-linear-gradient(
+        to bottom,
+        #e3eaff 0px,
+        #e3eaff 1px,
+        transparent 1px,
+        transparent 32px
+    );
+}
+@media (max-width: 767px) {
+    .notebook {
+        margin: 3rem auto 6.5rem auto;
+    }
+}
+@media (min-width: 768px) {
+    .notebook {
+        margin: 6.5rem auto 3rem auto;
+    }
+}
+
+.title {
+    font-family: 'EmilysCandy', cursive;
+    font-size: 2.2rem;
+    color: #313a57;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.notesContent {
     display: flex;
     flex-direction: column;
+    align-items: center; /* centrerar innehållet horisontellt */
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.textArea {
+    width: 100%;
+    min-height: 90px;
+    border-radius: 10px;
+    border: 1.5px solid #b4c9e9;
+    background: rgba(140, 177, 233, 0.13);
+    font-size: 1.1rem;
+    padding: 1rem;
+    margin-bottom: 1.2rem;
+    font-family: 'Playfair Display', serif;
+    resize: vertical;
+    box-shadow: 0 2px 8px rgba(140, 177, 233, 0.08);
+    outline: none;
+    transition: border 0.2s;
+}
+
+.textArea:focus {
+    border: 1.5px solid #8cb1e9;
+    background: #f7faff;
+}
+
+.button {
+    background: linear-gradient(90deg, #2d72d9 60%, #6dd5ed 100%);
+    color: #fff;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 0.8rem 2.2rem;
+    box-shadow: 0 2px 8px #0002;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    transition:
+        background 0.2s,
+        transform 0.1s;
+}
+
+.button:hover {
+    background: linear-gradient(90deg, #6dd5ed 0%, #2d72d9 100%);
+    transform: translateY(-2px) scale(1.03);
+}
+
+.entryContainer {
+    background: rgba(220, 232, 252, 0.85);
+    border-radius: 8px;
+    margin-bottom: 1.1rem;
+
+    box-shadow: 0 1px 4px rgba(140, 177, 233, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* <-- centrerar innehållet horisontellt */
+    justify-content: center;
     gap: 1rem;
+    width: 100%;
+    min-height: 85%;
+}
+
+.entry {
+    flex: 1;
+    font-size: 1.08rem;
+    color: #313a57;
+    font-family: 'Playfair Display', serif;
+    word-break: break-word;
+    background: whitesmoke;
+    min-width: 95%;
+    min-height: 95%;
+    margin-top: 4rem;
+    padding: 1.2rem;
+    overflow-y: scroll;
+}
+
+.actionText {
+    background: none;
+    border: none;
+    color: #2d72d9;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 0.7rem;
+    font-size: 1rem;
+    transition: color 0.2s;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+}
+
+.actionText:hover {
+    color: #014a68;
+    background: #e3eaff;
+}
+
+.emptyMessage {
+    color: #b4c9e9;
+    text-align: center;
+    font-style: italic;
+    margin-top: 2rem;
+    font-size: 1.1rem;
+}
+
+.actions {
+    display: flex;
+    gap: 0.3rem;
+    margin-top: 0.3rem;
     justify-content: center;
     align-items: center;
+}
+
+.quickNav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 4.5rem;
+}
+
+.quickNavLink {
+    background: #e3eaff;
+    color: #2d72d9;
+    padding: 0.3rem 0.9rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition:
+        background 0.2s,
+        color 0.2s;
+}
+
+.quickNavLink:hover {
+    background: #b4c9e9;
+    color: #014a68;
+}
+
+.notebookGrid {
+    display: flex;
+    gap: 2rem;
+    min-height: 400px;
+}
+
+.quickNavColumn {
+    min-width: 180px;
+    max-width: 220px;
+    background: #f7faff;
+    border-radius: 12px;
+    border: 2px solid #b4c9e9;
+    box-shadow: 0 2px 8px rgba(49, 58, 87, 0.07);
+    padding: 1rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 420px;
+    gap: 1rem;
+}
+
+/* Responsivitet för mobil och surfplatta */
+@media (max-width: 900px) {
+    .notebookGrid {
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+    .quickNavColumn {
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 100%;
+        min-width: 0;
+        margin-bottom: 1.2rem;
+        max-height: 150px; /* lite högre för bättre touch */
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0.5rem 0.2rem;
+        border-radius: 10px;
+        gap: 0.9rem;
+    }
+    .quickNavLink {
+        display: block;
+        min-width: 90px;
+        min-height: 44px; /* rekommenderad touch-yta */
+        padding: 0.7rem 1rem;
+        font-size: 1.1rem;
+        margin-bottom: 0.3rem;
+        border-radius: 10px;
+        text-align: center;
+        border-right: none;
+        border-bottom: 1px solid #e3eaff;
+    }
+    .quickNavLink:last-child {
+        border-bottom: none;
+    }
+    .notesContent {
+        min-width: 0;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* centrerar innehållet horisontellt */
+    }
+}
+
+/* Extra små skärmar */
+@media (max-width: 600px) {
+    .notebook {
+        padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    }
+    .title {
+        font-size: 1.3rem;
+    }
+    .textArea {
+        font-size: 1rem;
+        padding: 0.7rem;
+    }
+    .button {
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+    }
+    .entryContainer {
+        padding: 0.7rem 0.5rem;
+    }
+    .quickNavColumn {
+        flex-direction: column;
+        max-height: 220px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .quickNavLink {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.notesContent ul {
+    width: 100%;
+    max-width: 500px; /* eller vad du vill */
+    padding: 0;
+    margin: 0 auto;
+    list-style: none;
 }
