@@ -1,30 +1,62 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 import styles from './Notebook.module.css';
+import { API_BASE_URL } from '@/utils/api.ts';
+import { useAuthContext } from '@/context/LoginHandler.tsx'; // Om du har auth-context
+
+type Note = {
+    id: number;
+    user_id: number;
+    content: string;
+    created_at: string;
+};
 
 const Notebook: React.FC = () => {
+    const { user } = useAuthContext(); // Hämta inloggad användare
     const [diaryEntry, setDiaryEntry] = useState<string>('');
-    const [diaryEntries, setDiaryEntries] = useState<string[]>([]);
+    const [diaryEntries, setDiaryEntries] = useState<Note[]>([]);
     const [editIndex, setEditIndex] = useState<number | null>(null);
+    const [selectedNoteId, setSelectedNoteId] = useState<number | null>(null);
 
-    const addOrUpdateEntry = useCallback(() => {
+    // Hämta anteckningar från backend
+    useEffect(() => {
+        if (!user) return;
+        axios.get(`${API_BASE_URL}/api/notes/user/${user.id}`).then((res) => {
+            setDiaryEntries(res.data);
+            if (res.data.length > 0) setSelectedNoteId(res.data[0].id);
+        });
+    }, [user]);
+
+    // Lägg till eller uppdatera anteckning
+    const addOrUpdateEntry = useCallback(async () => {
+        if (!user) return;
         if (diaryEntry.trim()) {
-            const updatedEntries =
-                editIndex !== null
-                    ? [
-                          ...diaryEntries.slice(0, editIndex),
-                          diaryEntry,
-                          ...diaryEntries.slice(editIndex + 1)
-                      ]
-                    : [...diaryEntries, diaryEntry];
-
-            setDiaryEntries(updatedEntries);
+            if (editIndex !== null) {
+                const note = diaryEntries[editIndex];
+                const res = await axios.put(
+                    `${API_BASE_URL}/api/notes/${note.id}`,
+                    { content: diaryEntry }
+                );
+                const updated = [...diaryEntries];
+                updated[editIndex] = res.data;
+                setDiaryEntries(updated);
+            } else {
+                const res = await axios.post(`${API_BASE_URL}/api/notes`, {
+                    user_id: user.id,
+                    content: diaryEntry
+                });
+                setDiaryEntries([res.data, ...diaryEntries]);
+            }
             setDiaryEntry('');
             setEditIndex(null);
         }
-    }, [diaryEntry, diaryEntries, editIndex]);
+    }, [diaryEntry, diaryEntries, editIndex, user]);
 
+    // Radera anteckning
     const deleteEntry = useCallback(
-        (index: number): void => {
+        async (index: number): Promise<void> => {
+            const note = diaryEntries[index];
+            await axios.delete(`${API_BASE_URL}/api/notes/${note.id}`);
             setDiaryEntries(diaryEntries.filter((_, i) => i !== index));
         },
         [diaryEntries]
@@ -32,7 +64,7 @@ const Notebook: React.FC = () => {
 
     const startEditing = useCallback(
         (index: number): void => {
-            setDiaryEntry(diaryEntries[index]);
+            setDiaryEntry(diaryEntries[index].content);
             setEditIndex(index);
         },
         [diaryEntries]
@@ -54,31 +86,74 @@ const Notebook: React.FC = () => {
                     : 'Lägg till anteckning'}
             </button>
             <hr />
-            <ul>
-                {diaryEntries.length > 0 ? (
-                    diaryEntries.map((entry, index) => (
-                        <li key={index} className={styles.entryContainer}>
-                            <p className={styles.entry}>{entry}</p>
-                            <button
-                                className={styles.actionText}
-                                onClick={() => startEditing(index)}
-                            >
-                                Redigera
-                            </button>
-                            <button
-                                className={styles.actionText}
-                                onClick={() => deleteEntry(index)}
-                            >
-                                Radera
-                            </button>
-                        </li>
-                    ))
-                ) : (
-                    <p className={styles.emptyMessage}>
-                        Inga anteckningar ännu!
-                    </p>
-                )}
-            </ul>
+            <div className={styles.notebookGrid}>
+                <nav className={styles.quickNavColumn}>
+                    {diaryEntries.map((entry) => (
+                        <button
+                            key={entry.id}
+                            type="button"
+                            className={styles.quickNavLink}
+                            onClick={() => setSelectedNoteId(entry.id)}
+                        >
+                            {entry.content.slice(0, 20) || '...'}
+                        </button>
+                    ))}
+                </nav>
+                <div className={styles.notesContent}>
+                    {selectedNoteId ? (
+                        (() => {
+                            const entry = diaryEntries.find(
+                                (e) => e.id === selectedNoteId
+                            );
+                            return entry ? (
+                                <div
+                                    className={styles.entryContainer}
+                                    id={`note-${entry.id}`}
+                                >
+                                    <p className={styles.entry}>
+                                        {entry.content}
+                                    </p>
+                                    {/* Knapparna ligger nu under anteckningen */}
+                                    <div className={styles.actions}>
+                                        <button
+                                            className={styles.actionText}
+                                            onClick={() =>
+                                                startEditing(
+                                                    diaryEntries.findIndex(
+                                                        (e) => e.id === entry.id
+                                                    )
+                                                )
+                                            }
+                                        >
+                                            Redigera
+                                        </button>
+                                        <button
+                                            className={styles.actionText}
+                                            onClick={() =>
+                                                deleteEntry(
+                                                    diaryEntries.findIndex(
+                                                        (e) => e.id === entry.id
+                                                    )
+                                                )
+                                            }
+                                        >
+                                            Radera
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <p className={styles.emptyMessage}>
+                                    Anteckning hittades inte!
+                                </p>
+                            );
+                        })()
+                    ) : (
+                        <p className={styles.emptyMessage}>
+                            Välj en anteckning i listan!
+                        </p>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };

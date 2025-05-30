@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/authRouter'; // auth.ts
 import usersRouter from './routes/usersRouter'; // users.ts
 import postsRouter from './routes/postsRouter'; // posts.ts
+import notesRouter from './routes/notesRouter'; // notes.ts
 import cors from 'cors';
 import path from 'path';
 dotenv.config();
@@ -41,6 +42,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
+app.use('/api/notes', notesRouter);
 
 if (process.env.SERVE_FRONTEND === 'true') {
     // Serve static files from the frontend
