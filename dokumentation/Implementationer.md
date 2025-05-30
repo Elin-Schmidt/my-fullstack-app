@@ -1,6 +1,7 @@
 -   (<PrivateRoute />)
 -   JTW-Token
 -   React Hook Form
+-   Cloudinary eller Amazon S3 (För att bilderna ska kunna hämtas även efter ny deploy)
 
 ---
 
