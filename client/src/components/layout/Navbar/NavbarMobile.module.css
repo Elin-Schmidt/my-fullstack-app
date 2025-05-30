@@ -215,7 +215,7 @@
     letter-spacing: 0.02em;
     align-items: flex-start;
     text-align: left;
-    margin-right: auto;   /* Tvingar undermenyn till höger */
+    margin-right: auto; /* Tvingar undermenyn till höger */
     width: fit-content;
 }
 

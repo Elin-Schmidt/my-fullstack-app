@@ -183,7 +183,7 @@ img {
 .iconOverlay {
     position: absolute;
     left: 50%;
-    top: 6%;
+    top: 9%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
@@ -703,7 +703,7 @@ img {
         margin-top: -100px; /* Justera för mindre skärm */
     }
     .iconOverlay {
-        top: 5.2%;
+        top: 8.2%;
     }
 }
 @media (min-width: 768px) {
@@ -720,6 +720,6 @@ img {
         margin-top: 60px; /* Flytta ner resten av innehållet */
     }
     .iconOverlay {
-        top: 8.4%;
+        top: 12.5%;
     }
 }

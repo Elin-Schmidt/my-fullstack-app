@@ -11,6 +11,7 @@ body {
     align-content: flex-start;
     margin: 0 2rem;
     justify-content: center;
+    margin-bottom: 4.5rem;
 }
 
 .userCard {

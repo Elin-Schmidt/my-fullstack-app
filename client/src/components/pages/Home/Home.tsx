@@ -11,14 +11,14 @@ function Home() {
                     alt="Välkomstbild"
                     className={styles.welcomeImage}
                 />
-                <p className={styles.subtitle}>
+                <section className={styles.subtitle}>
                     <p>
                         En plats där du kan dela dina tankar, läsa andras
                         berättelser och hitta nya vänner genom ord.
                     </p>
                     ---
                     <p>Skapa din profil och bli en del av gemenskapen!</p>
-                </p>
+                </section>
             </div>
         </div>
     );
