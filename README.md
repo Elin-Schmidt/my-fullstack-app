@@ -9,7 +9,7 @@ Det här projektet är en fullstack-applikation byggd med **React**, **TypeScrip
 -   Skapa konto och logga in
 -   Profil med omslagsbild, profilbild och bio
 -   Skapa och visa inlägg
--   Gilla andras inlägg (en gång per inlägg)
+-   Gilla andras inlägg
 -   Kommentera inlägg (med användarnamn och datum)
 -   Se alla användare
 -   Responsiv design för mobil och desktop
