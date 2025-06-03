@@ -2,7 +2,7 @@
 
 ## Beskrivning
 
-Det här projektet är en fullstack-applikation byggd med **React**, **TypeScript**, **Node.js/Express** och **PostgreSQL**. Applikationen är ett socialt nätverk där användare kan skapa konto, logga in, posta inlägg, gilla och kommentera andras inlägg, samt hantera sin profil. Gränssnittet är modernt, responsivt och användarvänligt.
+Det här projektet är en fullstack-applikation byggd med **React**, **TypeScript**, **Node.js/Express** och **PostgreSQL**. Applikationen är ett socialt nätverk där användare kan skapa konto, logga in, posta inlägg, gilla och kommentera andras inlägg, samt hantera sin profil. Gränssnittet är lekfullt, responsivt och användarvänligt.
 
 **Funktioner:**
 
