@@ -21,6 +21,7 @@ Det här projektet är en fullstack-applikation byggd med **React**, **TypeScrip
 -   React (med TypeScript)
 -   Vite
 -   Node.js + Express
+-   Databashantering
 -   PostgreSQL
 -   CSS Modules
 -   Ikonbibliotek: react-icons
