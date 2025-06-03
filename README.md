@@ -26,6 +26,7 @@ Det här projektet är en fullstack-applikation byggd med **React**, **TypeScrip
 -   Ikonbibliotek: react-icons
 -   Axios för API-anrop
 -   ESLint för kodkvalitet
+-   Hashade lösenord
 
 ## Kom igång
 
