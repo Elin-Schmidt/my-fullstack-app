@@ -2,9 +2,11 @@
 
 -   API-roters funkar inte på render ✅
 -   Fel username på kommentarerna på PersonalSpace ✅
--   Home-bild inte centrerad på Iphone
--   IconOverlay på profilbilden hamnar fel
+-   Home-bild inte centrerad på Iphone ✅
+-   IconOverlay på profilbilden hamnar fel ✅
 -   Fixa en margin på AllUsers ✅
+-   Länken till Chased funkar inte på Desktop
+-   Chased-sidan behöver margin-top på Desktop
 
 ---
 
