@@ -1,4 +1,4 @@
-// src/pages/SettingsPage.tsx
+
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios, { isAxiosError } from 'axios';

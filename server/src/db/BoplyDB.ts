@@ -4,10 +4,9 @@ dotenv.config();
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false } // Render kräver detta
+    ssl: { rejectUnauthorized: false }
 });
 
-// Lägg till en enkel testfråga för att se om anslutningen fungerar
 pool.query('SELECT NOW()', (_err: Error, res: { rows: unknown[] }) => {
     if (_err) {
         console.error('Database connection error:', _err);
@@ -16,7 +15,6 @@ pool.query('SELECT NOW()', (_err: Error, res: { rows: unknown[] }) => {
     }
 });
 
-// Lägg till en fråga för att hämta alla användare
 pool.query('SELECT * FROM users', (_err, res) => {
     if (_err) {
         console.error('Database query error:', _err);
@@ -25,5 +23,4 @@ pool.query('SELECT * FROM users', (_err, res) => {
     }
 });
 
-// Exportera poolen
 export default pool;

@@ -8,7 +8,6 @@ type CreatePostBody = {
     likes?: number;
 };
 
-// GET /api/posts/user/:userId
 export const getUserPosts: RequestHandler<{ userId: string }> = async (
     req,
     res
@@ -56,7 +55,6 @@ export const getUserPosts: RequestHandler<{ userId: string }> = async (
     }
 };
 
-// POST /api/posts
 export const createPost: RequestHandler<
     unknown,
     unknown,
@@ -84,7 +82,6 @@ export const createPost: RequestHandler<
     }
 };
 
-// PATCH /api/posts/:id/like
 export const likePost: RequestHandler<{ id: string }> = async (req, res) => {
     const postId = parseInt(req.params.id, 10);
 

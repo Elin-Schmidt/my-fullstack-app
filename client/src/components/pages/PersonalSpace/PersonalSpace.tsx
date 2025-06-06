@@ -89,8 +89,7 @@ function PersonalSpace() {
                 console.error('Unexpected error:', error);
             }
         } finally {
-            // Den här koden körs alltid, oavsett fel eller ej
-            e.target.value = ''; // Töm fil-input så användaren kan välja samma fil igen
+            e.target.value = '';
         }
     };
 
@@ -116,7 +115,7 @@ function PersonalSpace() {
                 console.error('Unexpected error:', error);
             }
         } finally {
-            e.target.value = ''; // Rensa input så användaren kan ladda upp samma fil igen
+            e.target.value = '';
         }
     };
 
@@ -128,13 +127,11 @@ function PersonalSpace() {
             const parsedUser: { id: number } = JSON.parse(userData);
             const { id } = parsedUser;
 
-            // Hämta användardata
             axios
                 .get<User>(`${API_BASE_URL}/api/users/${id}`)
                 .then((res) => setUser(res.data))
                 .catch(console.error);
 
-            // Hämta poster för användaren
             axios
                 .get<Post[]>(`${API_BASE_URL}/api/posts/user/${id}`)
                 .then((res) =>
@@ -156,7 +153,6 @@ function PersonalSpace() {
         axios
             .get(`${API_BASE_URL}/api/posts/user/${user.id}`)
             .then(async (res) => {
-                // Hämta kommentarer för varje post separat
                 const postsWithComments = await Promise.all(
                     res.data.map(async (post: Post) => {
                         const commentsRes = await axios.get<Comment[]>(
@@ -191,7 +187,6 @@ function PersonalSpace() {
         }
     };
 
-    // Like handler implementation
     const likeHandler = async (id: number) => {
         try {
             const res = await axios.post(
@@ -203,10 +198,8 @@ function PersonalSpace() {
                 )
             );
 
-            // Lägg till post i likedPosts för att visa feedback
             setLikedPosts((prev) => [...prev, id]);
 
-            // Ta bort efter 3 sekunder så feedbacken försvinner
             setTimeout(() => {
                 setLikedPosts((prev) => prev.filter((postId) => postId !== id));
             }, 3000);
@@ -405,7 +398,6 @@ function PersonalSpace() {
                         {posts.map((post) => (
                             <div key={post.id} className={styles.postItem}>
                                 <p>{post.content}</p>
-                                {/* ... datum, likes, etc */}
                                 <div className={styles.postLikes}>
                                     <button
                                         className={`${styles.likeButton} ${
@@ -426,7 +418,6 @@ function PersonalSpace() {
                                     </button>
                                     <span>{post.likes}</span>
 
-                                    {/* Visa feedback när post.id finns i likedPosts */}
                                     {likedPosts.includes(post.id) && (
                                         <span className={styles.likeFeedback}>
                                             Gillat!
@@ -491,8 +482,6 @@ function PersonalSpace() {
                                         </form>
                                     </div>
                                 )}
-
-                                {/* Visa kommentarer */}
                                 <div className={styles.commentsSection}>
                                     {post.comments
                                         ?.slice()
@@ -531,7 +520,6 @@ function PersonalSpace() {
                             </div>
                         ))}
                     </div>
-
                     {/* === COMMENTS === */}
                     <div className={styles.commentWrapper}>
                         <div className={styles.comment}></div>

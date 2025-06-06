@@ -11,7 +11,6 @@ interface Comment {
     username?: string;
 }
 
-// GET-kommentarer för ett inlägg
 export const getComments: RequestHandler = async (req, res) => {
     const postId = Number(req.params.postId);
     if (isNaN(postId)) {
@@ -28,7 +27,6 @@ export const getComments: RequestHandler = async (req, res) => {
             [postId]
         );
 
-        // Efter att du hämtat kommentarer från databasen:
         const comments: Comment[] = result.rows;
         res.json(comments);
     } catch (error) {
@@ -37,7 +35,6 @@ export const getComments: RequestHandler = async (req, res) => {
     }
 };
 
-// POST-kommentar för ett inlägg
 export const createComment: RequestHandler = async (req, res) => {
     const postId = Number(req.params.postId);
     const { content, userId } = req.body;
@@ -45,7 +42,6 @@ export const createComment: RequestHandler = async (req, res) => {
         res.status(400).json({ error: 'postId, userId och content krävs' });
     }
     try {
-        // Skapa kommentaren
         const insertResult = await db.query(
             `INSERT INTO comments (user_id, post_id, content)
              VALUES ($1, $2, $3)
@@ -54,7 +50,6 @@ export const createComment: RequestHandler = async (req, res) => {
         );
         const comment: Comment = insertResult.rows[0];
 
-        // Hämta username via JOIN
         const userResult = await db.query(
             `SELECT username FROM users WHERE id = $1`,
             [userId]

@@ -1,17 +1,14 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-// Definiera typen för kontextens värde
 interface useNavbarContextType {
     menuOpen: boolean;
     toggleMenu: () => void;
 }
 
-// Skapa kontexten
 const NavbarContext = createContext<useNavbarContextType | undefined>(
     undefined
 );
 
-// Skapa en provider-komponent
 export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
     children
 }) => {
@@ -28,7 +25,6 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
     );
 };
 
-// Anpassad hook för att använda kontexten
 export const useNavbarContext = () => {
     const context = useContext(NavbarContext);
     if (!context) {

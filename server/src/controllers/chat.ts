@@ -13,19 +13,17 @@ if (!fs.existsSync(filesDir)) {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Gör katalogen 'files/' tillgänglig som en statisk resurs
 app.use('/files', express.static('files'));
 
 const messages: { name: string; text: unknown; image: string }[] = [];
 
-// Funktion för att rensa oanvända bilder
 function cleanUpUnusedImages() {
     const usedImages = messages.map((message) => message.image);
     const files = fs.readdirSync(path.join(__dirname, 'files'));
 
     files.forEach((file) => {
         if (!usedImages.includes(file)) {
-            fs.unlinkSync(path.join(__dirname, 'files', file)); // Ta bort filen
+            fs.unlinkSync(path.join(__dirname, 'files', file));
         }
     });
 }
@@ -84,7 +82,6 @@ app.post('/messages', upload.single('image'), (req, res) => {
         });
     }
 
-    // Rensa oanvända bilder efter att ett nytt meddelande har lagts till
     cleanUpUnusedImages();
 
     res.redirect('/messages');

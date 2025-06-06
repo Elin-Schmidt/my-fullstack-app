@@ -1,11 +1,9 @@
-// components/UserList.tsx
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from './AllUsers.module.css';
 import { API_BASE_URL } from '@/utils/api.ts';
 
-// types/User.ts
 export interface User {
     id: number;
     username: string;
@@ -35,7 +33,7 @@ const UserList = () => {
     return (
         <div className={styles.container}>
             {users
-                .slice() // kopiera arrayen för att inte mutera state
+                .slice()
                 .sort((a, b) => a.username.localeCompare(b.username))
                 .map((user) => (
                     <div

@@ -6,14 +6,14 @@ export default defineConfig({
     plugins: [react()],
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, './src'), // Alias för "src"-mappen
+            '@': path.resolve(__dirname, './src'),
             '@utils': path.resolve(__dirname, './src/utils')
         }
     },
     server: {
         proxy: {
             '/api': {
-                target: 'http://localhost:5000', // Din lokala backend
+                target: 'http://localhost:5000',
                 changeOrigin: true,
                 secure: false
             }

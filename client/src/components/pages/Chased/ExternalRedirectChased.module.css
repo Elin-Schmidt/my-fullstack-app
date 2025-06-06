@@ -168,3 +168,8 @@
         0 1.5px 0 #fff inset;
     transform: translateY(2px) scale(0.98);
 }
+@media (min-width: 768px) {
+    .chasedContainer {
+        margin-top: 4.5rem;
+    }
+}

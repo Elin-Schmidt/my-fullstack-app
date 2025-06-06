@@ -3,7 +3,6 @@ import db from '../db/BoplyDB';
 import path from 'path';
 import fs from 'fs';
 
-// GET alla användare
 export const getAllUsers = async (_req: Request, res: Response) => {
     try {
         const result = await db.query(
@@ -16,7 +15,6 @@ export const getAllUsers = async (_req: Request, res: Response) => {
     }
 };
 
-// GET enskild användare
 export const getUserById = async (req: Request, res: Response) => {
      console.log('[getUserById] Called with id:', req.params.id);
     const { id } = req.params;
@@ -36,7 +34,6 @@ export const getUserById = async (req: Request, res: Response) => {
     }
 };
 
-// PUT - uppdatera användare
 export const updateUser = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { username, firstname, lastname, email, bio } = req.body;
@@ -62,7 +59,6 @@ export const updateUser = async (req: Request, res: Response) => {
     }
 };
 
-// POST - profilbild
 export const uploadProfilePicture = async (req: Request, res: Response) => {
     const userId = req.params.userId;
     const file = req.file;
@@ -98,7 +94,7 @@ export const uploadProfilePicture = async (req: Request, res: Response) => {
     }
 };
 
-// POST - omslagsbild
+
 export const uploadCoverImage = async (req: Request, res: Response) => {
     const userId = req.params.userId;
     const file = req.file;

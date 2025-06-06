@@ -15,23 +15,18 @@ export const createAccount = async (
     req: Request<object, object, RegisterRequestBody>,
     res: Response
 ): Promise<void> => {
-    console.log('📨 [REGISTER] Begäran mottagen:', req.body);
-
     const { username, firstname, lastname, email, password, profile_picture } =
         req.body;
 
     if (!username || !firstname || !lastname || !email || !password) {
-        console.log('❌ [REGISTER] Saknas fält i begäran');
         res.status(400).json({ message: 'Missing required fields' });
         return;
     }
 
     try {
-        console.log('🔐 [REGISTER] Hashar lösenord...');
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        console.log('💾 [REGISTER] Försöker spara användare i databasen...');
         await db.query(
             `INSERT INTO users (username, firstname, lastname, email, password, profile_picture)
              VALUES ($1, $2, $3, $4, $5, $6)`,
@@ -45,18 +40,14 @@ export const createAccount = async (
             ]
         );
 
-        console.log('✅ [REGISTER] Användare registrerad:', email);
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error: unknown) {
-        console.error('💥 [REGISTER] Fel vid registrering:', error);
-
         if (
             error &&
             typeof error === 'object' &&
             'code' in error &&
             (error as { code?: string }).code === '23505'
         ) {
-            console.log('⚠️ [REGISTER] E-post eller användarnamn finns redan');
             res.status(400).json({
                 message: 'Email or username already exists'
             });

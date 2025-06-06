@@ -19,11 +19,11 @@ export default defineConfig([
         ...pluginReact.configs.flat.recommended,
         settings: {
             react: {
-                version: 'detect' // <-- Detta tar bort varningen om React-version
+                version: 'detect'
             }
         },
         rules: {
-            'react/react-in-jsx-scope': 'off' // <-- Detta tar bort JSX-felen
+            'react/react-in-jsx-scope': 'off'
         }
     }
 ]);

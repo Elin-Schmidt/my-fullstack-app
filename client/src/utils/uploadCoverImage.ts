@@ -1,6 +1,5 @@
-// src/utils/uploadCoverImage.ts
 import axios from 'axios';
-import { API_BASE_URL } from './api.ts'; // Din API bas URL
+import { API_BASE_URL } from './api.ts';
 
 export async function uploadCoverImage(file: File, userId: string) {
     const formData = new FormData();
@@ -16,7 +15,7 @@ export async function uploadCoverImage(file: File, userId: string) {
                 }
             }
         );
-        return response.data; // här ligger JSON-svaret
+        return response.data;
     } catch (error) {
         console.error(error);
         throw new Error('Misslyckades med att ladda upp omslagsbild');

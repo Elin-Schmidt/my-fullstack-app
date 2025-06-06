@@ -1,21 +1,19 @@
 import { createContext, useContext, useState } from 'react';
 
-// Skapa en ny kontext för inloggningsstatus
 interface AppContextType {
     menuOpen: boolean;
     toggleMenu: () => void;
-    isLoggedIn: boolean; // Här lagras inloggningsstatus
-    setLoginStatus: (status: boolean) => void; // För att uppdatera status
+    isLoggedIn: boolean;
+    setLoginStatus: (status: boolean) => void;
 
-    user: User | null; // <-- lägg till user
-    setUser: (user: User | null) => void; // <-- och setUser
+    user: User | null;
+    setUser: (user: User | null) => void;
 }
 
 interface User {
     id: number;
     username: string;
     email: string;
-    // ev fler fält beroende på vad du sparar i user-objektet
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);

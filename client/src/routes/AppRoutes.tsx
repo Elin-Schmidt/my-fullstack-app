@@ -26,7 +26,6 @@ const AppRoutes: React.FC = () => {
             <Route path="/all-users" element={<AllUsers />} />
             <Route path="/user/:id" element={<UserSpace />} />
             <Route path="/chased" element={<ExternalRedirectChased />} />
-            {/* Lägg till fler rutter här */}
         </Routes>
     );
 };

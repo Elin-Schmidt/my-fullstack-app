@@ -50,7 +50,6 @@ const UserSpace = () => {
             .get(`${API_BASE_URL}/api/users/${id}`)
             .then((res) => setUser(res.data));
         axios.get(`${API_BASE_URL}/api/posts/user/${id}`).then(async (res) => {
-            // Hämta kommentarer för varje post
             const postsWithComments = await Promise.all(
                 res.data.map(async (post: Post) => {
                     const commentsRes = await axios.get<Comment[]>(
@@ -63,7 +62,6 @@ const UserSpace = () => {
         });
     }, [id]);
 
-    // Stäng kommentarsformulär vid klick utanför
     useEffect(() => {
         if (openCommentFor === null) return;
         function handleClickOutside(event: MouseEvent) {
@@ -81,7 +79,6 @@ const UserSpace = () => {
         };
     }, [openCommentFor]);
 
-    // Like handler
     const likeHandler = async (postId: number) => {
         try {
             const res = await axios.patch(
@@ -99,7 +96,6 @@ const UserSpace = () => {
         }
     };
 
-    // Kommentera handler
     const handleAddComment = async (postId: number, content: string) => {
         if (!currentUser) return;
         try {
@@ -167,7 +163,6 @@ const UserSpace = () => {
                             alt="Profile Picture"
                         />
                     </div>
-                    {/* Här kan du lägga overlay-ikoner om du vill */}
                 </div>
                 <div className={styles.profileIcons}>
                     <button

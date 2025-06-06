@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import styles from './Notebook.module.css';
 import { API_BASE_URL } from '@/utils/api.ts';
-import { useAuthContext } from '@/context/LoginHandler.tsx'; // Om du har auth-context
+import { useAuthContext } from '@/context/LoginHandler.tsx';
 
 type Note = {
     id: number;
@@ -12,13 +12,12 @@ type Note = {
 };
 
 const Notebook: React.FC = () => {
-    const { user } = useAuthContext(); // Hämta inloggad användare
+    const { user } = useAuthContext();
     const [diaryEntry, setDiaryEntry] = useState<string>('');
     const [diaryEntries, setDiaryEntries] = useState<Note[]>([]);
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [selectedNoteId, setSelectedNoteId] = useState<number | null>(null);
 
-    // Hämta anteckningar från backend
     useEffect(() => {
         if (!user) return;
         axios.get(`${API_BASE_URL}/api/notes/user/${user.id}`).then((res) => {
@@ -27,7 +26,6 @@ const Notebook: React.FC = () => {
         });
     }, [user]);
 
-    // Lägg till eller uppdatera anteckning
     const addOrUpdateEntry = useCallback(async () => {
         if (!user) return;
         if (diaryEntry.trim()) {
@@ -52,7 +50,6 @@ const Notebook: React.FC = () => {
         }
     }, [diaryEntry, diaryEntries, editIndex, user]);
 
-    // Radera anteckning
     const deleteEntry = useCallback(
         async (index: number): Promise<void> => {
             const note = diaryEntries[index];
@@ -113,7 +110,7 @@ const Notebook: React.FC = () => {
                                     <p className={styles.entry}>
                                         {entry.content}
                                     </p>
-                                    {/* Knapparna ligger nu under anteckningen */}
+
                                     <div className={styles.actions}>
                                         <button
                                             className={styles.actionText}

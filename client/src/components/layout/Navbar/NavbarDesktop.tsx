@@ -80,7 +80,7 @@ function NavbarDesktop() {
                     <span className={styles.linksDivider}></span>
                     <li onClick={() => navigate('/')}>Home</li>
                     <span className={styles.linksDivider}></span>
-                    <li>Chased (Spel)</li>
+                    <li onClick={() => navigate('/chased')}>Chased (Spel)</li>
                     <span className={styles.linksDivider}></span>
                 </ul>
             </div>
