@@ -2,14 +2,14 @@
 
 ## Beskrivning
 
-Det här projektet är en fullstack-applikation byggd med **React**, **TypeScript**, **Node.js/Express** och **PostgreSQL**. Applikationen är ett socialt nätverk där användare kan skapa konto, logga in, posta inlägg, gilla och kommentera andras inlägg, samt hantera sin profil. Gränssnittet är modernt, responsivt och användarvänligt.
+Det här projektet är en fullstack-applikation byggd med **React**, **TypeScript**, **Node.js/Express** och **PostgreSQL**. Applikationen är ett socialt nätverk där användare kan skapa konto, logga in, posta inlägg, gilla och kommentera andras inlägg, samt hantera sin profil. Gränssnittet är lekfullt, responsivt och användarvänligt.
 
 **Funktioner:**
 
 -   Skapa konto och logga in
 -   Profil med omslagsbild, profilbild och bio
 -   Skapa och visa inlägg
--   Gilla andras inlägg (en gång per inlägg)
+-   Gilla andras inlägg
 -   Kommentera inlägg (med användarnamn och datum)
 -   Se alla användare
 -   Responsiv design för mobil och desktop
@@ -21,11 +21,13 @@ Det här projektet är en fullstack-applikation byggd med **React**, **TypeScrip
 -   React (med TypeScript)
 -   Vite
 -   Node.js + Express
+-   Databashantering
 -   PostgreSQL
 -   CSS Modules
 -   Ikonbibliotek: react-icons
 -   Axios för API-anrop
 -   ESLint för kodkvalitet
+-   Hashade lösenord
 
 ## Kom igång
 
